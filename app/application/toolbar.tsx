@@ -18,16 +18,25 @@ const ToolBar: React.FC<ToolBarProps> = ({ tool, setTool }) => {
 			<div className="font-bold text-2xl">{tool}</div>
 			<hr />
 			<div className="font-light text-neutral-500 text-xs">TOOL SELECTION</div>
-			<div className={commonCSS} onClick={() => handleToolChange("START")}>
+			<div
+				className={`${commonCSS} border-indigo-500`}
+				onClick={() => handleToolChange("START")}
+			>
 				START
 			</div>
-			<div className={commonCSS} onClick={() => handleToolChange("FINISH")}>
+			<div
+				className={`${commonCSS} border-green-500`}
+				onClick={() => handleToolChange("FINISH")}
+			>
 				FINISH
 			</div>
-			<div className={commonCSS} onClick={() => handleToolChange("PATH")}>
+			<div className={`${commonCSS}`} onClick={() => handleToolChange("PATH")}>
 				PATH
 			</div>
-			<div className={commonCSS} onClick={() => handleToolChange("WALL")}>
+			<div
+				className={`${commonCSS} border-slate-500`}
+				onClick={() => handleToolChange("WALL")}
+			>
 				WALL
 			</div>
 		</div>

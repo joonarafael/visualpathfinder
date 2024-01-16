@@ -5,7 +5,7 @@ import PathFinderClient from "./pathfinderclient";
 const PathFinderPage = async () => {
 	return (
 		<ClientOnly>
-			<PathFinderClient width={64} height={64} />
+			<PathFinderClient />
 		</ClientOnly>
 	);
 };
