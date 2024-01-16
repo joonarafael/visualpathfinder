@@ -11,8 +11,9 @@ import { Toaster } from "./components/ui/sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Blast Calc",
-	description: "Delay calculator for blasting",
+	title: "Visual Pathfinder",
+	description:
+		"Interactive pathfinder tool to compare some popular pathfinding algorithms.",
 };
 
 export default function RootLayout({

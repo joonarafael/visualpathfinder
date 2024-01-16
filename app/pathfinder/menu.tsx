@@ -39,13 +39,8 @@ const Menu: React.FC<MenuProps> = ({ zoom, setZoom }) => {
 								console.log("Clicked");
 							}}
 						>
-							New Plan
+							Empty Grid
 						</MenubarItem>
-						<MenubarSeparator />
-						<MenubarItem>Analyze</MenubarItem>
-						<MenubarSeparator />
-						<MenubarItem>Share</MenubarItem>
-						<MenubarItem>Print</MenubarItem>
 						<MenubarSeparator />
 						<MenubarItem onClick={() => window.open("/", "_self")}>
 							Exit to front page

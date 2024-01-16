@@ -23,7 +23,7 @@ const Footer = () => {
                 xl:px-20
             "
 		>
-			<div className="font-bold">BLAST CALC</div>
+			<div className="font-bold">VISUAL PATHFINDER</div>
 			<div className="font-light">by Joona Kettunen</div>
 			<div className="flex flex-row text-neutral-500 items-center align-center gap-2">
 				<DiMitlicence size={16} />
