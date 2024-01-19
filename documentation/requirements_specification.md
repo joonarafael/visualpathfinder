@@ -10,7 +10,7 @@ User will be first presented with an empty pixelmap (grid) where user may draw a
 
 ### Pathfinding algorithms to implement:
 
-- Djikstra
+- Dijkstra
 - A\*
 - IDA\*
 - Jump Point Search (JPS)
