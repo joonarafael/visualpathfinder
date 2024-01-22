@@ -1,5 +1,11 @@
 # SOFTWARE REQUIREMENTS SPECIFICATION
 
+## Important notice
+
+The software requirements were changed January 22nd as the course instructor gave feedback of the IDA\* algorithm > it's not really suitable for matrix (pixelmap) pathfinding.
+
+## General
+
 This is a simple interactive and visual application to compare the most common pathfinding algorithms.
 
 The application is a web-application running on a Node.js server, written mostly with TypeScript (JavaScript). Testing will be performed with Jest.
@@ -12,7 +18,6 @@ User will be first presented with an empty pixelmap (grid) where user may draw a
 
 - Dijkstra
 - A\*
-- IDA\*
 - Jump Point Search (JPS)
 
 After running the algorithm, user will be presented with results, whether the goal was found or not, how much time elapsed and how many tiles had to be traversed through.
