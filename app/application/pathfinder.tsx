@@ -1,15 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
-import Container from "../components/container";
-import Matrix from "./matrix";
-import Menu from "./menu";
-import ToolBar from "./toolbar";
-import RunBar from "./runbar";
+import Container from '../components/container';
+import Matrix from './drawing/matrix';
+import ToolBar from './drawing/toolbar';
+import Menu from './menu';
+import RunMatrix from './running/matrix';
+import RunBar from './running/runbar';
 
 const PathFinder = () => {
 	const [applicationState, setApplicationState] = useState("draw");
+	const [algorithm, setAlgorithm] = useState("dijkstra");
 
 	const field = Array.from({ length: 64 * 64 }, (_, index) => index);
 	const [fieldStatus, setFieldStatus] = useState(
@@ -46,7 +49,7 @@ const PathFinder = () => {
 				tmp[index] = 3;
 				setFieldStatus(tmp);
 			}
-		} else if (tool === "PATH") {
+		} else if (tool === "ERASER") {
 			let tmp = fieldStatus;
 
 			if (tmp[index] === 1) {
@@ -62,28 +65,56 @@ const PathFinder = () => {
 		}
 	};
 
-	const runDijkstra = () => {}
+	const startAndFinishExist = () => {
+		const start = fieldStatus.indexOf(2);
+		const end = fieldStatus.indexOf(3);
+
+		return start !== -1 && end !== -1;
+	};
+
+	const runDijkstra = () => {
+		const approve = startAndFinishExist();
+
+		if (approve) {
+			setAlgorithm("dijkstra");
+			setApplicationState("run");
+		} else {
+			toast("Start and/or Finish missing.");
+		}
+	};
 
 	return (
 		<Container>
 			<div className="flex flex-col gap-4">
-				<Menu zoom={zoom} setZoom={setZoom} setFieldStatus={setFieldStatus} applicationState={applicationState} setApplicationState={setApplicationState} dijkstra={runDijkstra} />
+				<Menu
+					zoom={zoom}
+					setZoom={setZoom}
+					setFieldStatus={setFieldStatus}
+					applicationState={applicationState}
+					setApplicationState={setApplicationState}
+					dijkstra={runDijkstra}
+				/>
 				<div className="flex flex-row gap-4">
 					<div className="border rounded-lg w-5/6 h-[80svh] overflow-scroll">
 						<div className="w-max">
 							{applicationState === "draw" && (
 								<Matrix
-								width={64}
-								height={64}
-								field={field}
-								fieldStatus={fieldStatus}
-								zoom={zoom}
-								tileClick={tileClick}
-							/>
+									width={64}
+									height={64}
+									field={field}
+									fieldStatus={fieldStatus}
+									zoom={zoom}
+									tileClick={tileClick}
+								/>
 							)}
 							{applicationState === "run" && (
-								
-								<div>Mitös vuttyua</div>
+								<RunMatrix
+									width={64}
+									height={64}
+									field={field}
+									fieldStatus={fieldStatus}
+									zoom={zoom}
+								/>
 							)}
 						</div>
 					</div>
@@ -92,7 +123,7 @@ const PathFinder = () => {
 							{applicationState === "draw" ? (
 								<ToolBar tool={tool} setTool={setTool} />
 							) : (
-								<RunBar />
+								<RunBar algorithm={algorithm} />
 							)}
 						</div>
 					</div>

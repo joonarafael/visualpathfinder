@@ -30,8 +30,11 @@ const ToolBar: React.FC<ToolBarProps> = ({ tool, setTool }) => {
 			>
 				FINISH
 			</div>
-			<div className={`${commonCSS}`} onClick={() => handleToolChange("PATH")}>
-				PATH
+			<div
+				className={`${commonCSS}`}
+				onClick={() => handleToolChange("ERASER")}
+			>
+				ERASER
 			</div>
 			<div
 				className={`${commonCSS} border-slate-500`}
