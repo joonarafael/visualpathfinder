@@ -7,6 +7,9 @@ import {
 	MenubarMenu,
 	MenubarSeparator,
 	MenubarShortcut,
+	MenubarSub,
+	MenubarSubContent,
+	MenubarSubTrigger,
 	MenubarTrigger,
 } from "@/app/components/ui/menubar";
 
@@ -14,9 +17,12 @@ interface MenuProps {
 	zoom: number;
 	setZoom: (value: number) => void;
 	setFieldStatus: (array: number[]) => void;
+	setApplicationState: (value: string) => void;
+	dijkstra: () => void;
+	applicationState: string;
 }
 
-const Menu: React.FC<MenuProps> = ({ zoom, setZoom, setFieldStatus }) => {
+const Menu: React.FC<MenuProps> = ({ zoom, setZoom, setFieldStatus, applicationState, setApplicationState, dijkstra }) => {
 	const zoomIn = () => {
 		if (zoom < 6) {
 			setZoom(zoom + 1);
@@ -37,27 +43,49 @@ const Menu: React.FC<MenuProps> = ({ zoom, setZoom, setFieldStatus }) => {
 		setZoom(6);
 	};
 
+	const runDijkstra = () => {
+		setApplicationState("run");
+		dijkstra();
+	}
+
 	return (
 		<div>
 			<Menubar>
 				<MenubarMenu>
 					<MenubarTrigger>File</MenubarTrigger>
 					<MenubarContent>
-						<MenubarItem onClick={() => {}}>Run pathfinding</MenubarItem>
+						<MenubarSub>
+							<MenubarSubTrigger>Run Algorithm...</MenubarSubTrigger>
+							<MenubarSubContent>
+								<MenubarItem onClick={runDijkstra}>
+									Djikstra
+								</MenubarItem>
+							</MenubarSubContent>
+						</MenubarSub>
+						{applicationState === "run" ? <MenubarItem onClick={() =>{setApplicationState("draw");}}>Edit Grid</MenubarItem> : <MenubarItem disabled>Edit Grid</MenubarItem>}
 						<MenubarSeparator />
-						<MenubarItem
-							onClick={() => {
+
+						<MenubarSub>
+							<MenubarSubTrigger>Empty Grid</MenubarSubTrigger>
+							<MenubarSubContent>
+								<MenubarItem onClick={() => {
 								setFieldStatus(
 									Array.from({ length: 64 * 64 }, (_, index) => 0)
 								);
-							}}
-						>
-							Empty Grid
-						</MenubarItem>
+							}}>
+									Click to Confirm
+								</MenubarItem>
+							</MenubarSubContent>
+						</MenubarSub>
 						<MenubarSeparator />
-						<MenubarItem onClick={() => window.open("/", "_self")}>
-							Exit to front page
-						</MenubarItem>
+						<MenubarSub>
+							<MenubarSubTrigger>Exit</MenubarSubTrigger>
+							<MenubarSubContent>
+								<MenubarItem onClick={() => window.open("/", "_self")}>
+									Click to Confirm
+								</MenubarItem>
+							</MenubarSubContent>
+						</MenubarSub>
 					</MenubarContent>
 				</MenubarMenu>
 				<MenubarMenu>

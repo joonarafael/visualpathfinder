@@ -6,6 +6,7 @@ import Container from "../components/container";
 import Matrix from "./matrix";
 import Menu from "./menu";
 import ToolBar from "./toolbar";
+import RunBar from "./runbar";
 
 const PathFinder = () => {
 	const [applicationState, setApplicationState] = useState("draw");
@@ -61,14 +62,17 @@ const PathFinder = () => {
 		}
 	};
 
+	const runDijkstra = () => {}
+
 	return (
 		<Container>
 			<div className="flex flex-col gap-4">
-				<Menu zoom={zoom} setZoom={setZoom} setFieldStatus={setFieldStatus} />
+				<Menu zoom={zoom} setZoom={setZoom} setFieldStatus={setFieldStatus} applicationState={applicationState} setApplicationState={setApplicationState} dijkstra={runDijkstra} />
 				<div className="flex flex-row gap-4">
 					<div className="border rounded-lg w-5/6 h-[80svh] overflow-scroll">
 						<div className="w-max">
-							<Matrix
+							{applicationState === "draw" && (
+								<Matrix
 								width={64}
 								height={64}
 								field={field}
@@ -76,6 +80,11 @@ const PathFinder = () => {
 								zoom={zoom}
 								tileClick={tileClick}
 							/>
+							)}
+							{applicationState === "run" && (
+								
+								<div>Mitös vuttyua</div>
+							)}
 						</div>
 					</div>
 					<div className="border rounded-lg w-1/6">
@@ -83,7 +92,7 @@ const PathFinder = () => {
 							{applicationState === "draw" ? (
 								<ToolBar tool={tool} setTool={setTool} />
 							) : (
-								<div>Jaahas nyt</div>
+								<RunBar />
 							)}
 						</div>
 					</div>
