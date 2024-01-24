@@ -1,14 +1,15 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
-import Container from '../components/container';
-import Matrix from './drawing/matrix';
-import ToolBar from './drawing/toolbar';
-import Menu from './menu';
-import RunMatrix from './running/matrix';
-import RunBar from './running/runbar';
+import Container from "../components/container";
+import generateAdjacencyList from "./algorithms/generateadjacencylist";
+import Matrix from "./drawing/matrix";
+import ToolBar from "./drawing/toolbar";
+import Menu from "./menu";
+import RunMatrix from "./running/matrix";
+import RunBar from "./running/runbar";
 
 const PathFinder = () => {
 	const [applicationState, setApplicationState] = useState("draw");
@@ -16,6 +17,9 @@ const PathFinder = () => {
 
 	const field = Array.from({ length: 64 * 64 }, (_, index) => index);
 	const [fieldStatus, setFieldStatus] = useState(
+		Array.from({ length: 64 * 64 }, (_, index) => 0)
+	);
+	const [runFieldStatus, setRunFieldStatus] = useState(
 		Array.from({ length: 64 * 64 }, (_, index) => 0)
 	);
 
@@ -78,6 +82,9 @@ const PathFinder = () => {
 		if (approve) {
 			setAlgorithm("dijkstra");
 			setApplicationState("run");
+
+			setRunFieldStatus([...fieldStatus]);
+			const adjacencyList = generateAdjacencyList(fieldStatus);
 		} else {
 			toast("Start and/or Finish missing.");
 		}
@@ -112,7 +119,7 @@ const PathFinder = () => {
 									width={64}
 									height={64}
 									field={field}
-									fieldStatus={fieldStatus}
+									fieldStatus={runFieldStatus}
 									zoom={zoom}
 								/>
 							)}
