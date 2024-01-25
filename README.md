@@ -8,10 +8,12 @@ It's recommended to check all documentation provided [here](https://github.com/j
 
 ## General
 
-This is a visual pathfinder web application, allowing custom user pixelmaps and detailed comparing of different types of pathfinding algorithms. Included algorithms are Dijkstra, A*, and JPS.
+This is a visual pathfinder web application, allowing custom user pixel maps and detailed comparing of different types of pathfinding algorithms. Included algorithms are Dijkstra, A*, and JPS.
 
 ## Technical overview
 
 Application built with TypeScript utilizing the React *framework :)*, running on a Node.js server. All application logic is calculated on the client machine to safeguard the server.
 
-When a pathfinding algorithm is run, a simple adjacency list is generated from the 64*64 pixelmap.
+Automatic unittesting enabled by the Jest library, tests cover the core application logic. The user interface is not covered by automatic testing.
+
+When a pathfinding algorithm is run, a simple adjacency list is generated from the 64*64 pixel map.
