@@ -2,7 +2,7 @@
 
 ## Important notice
 
-The software requirements were changed January 22nd as the course instructor gave feedback of the IDA\* algorithm > it's not really suitable for matrix (pixelmap) pathfinding.
+The software requirements were changed on the January 22nd as the course instructor gave feedback of the IDA\* algorithm > it's not really suitable for matrix (pixelmap) pathfinding.
 
 ## General
 

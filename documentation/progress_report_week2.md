@@ -4,6 +4,6 @@
 
 - Added some more user functionality and updated the interface.
 
-- Added more automated tests.
+- Added automated tests for Dijkstra.
 
-Hours spent: 5 h (course total 9 h)
+Hours spent: 6 h (course total 10 h)
