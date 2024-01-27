@@ -3,21 +3,18 @@
 type AdjacencyList = Record<number, number[]>;
 
 export default function generateAdjacencyList(
-	fieldStatus: number[]
+	fieldStatus: number[],
+	width: number
 ): AdjacencyList {
-	console.log(fieldStatus);
-	const dimensions = Math.sqrt(fieldStatus.length);
-
-	if (Number.isInteger(dimensions) === false) {
-		return {};
-	}
+	const colCount = width;
+	const rowCount = fieldStatus.length / colCount;
 
 	const adjacencyList: AdjacencyList = {};
 
-	const getIndex = (row: number, col: number): number => row * dimensions + col;
+	const getIndex = (row: number, col: number): number => row * colCount + col;
 
-	for (let row = 0; row < dimensions; row++) {
-		for (let col = 0; col < dimensions; col++) {
+	for (let row = 0; row < rowCount; row++) {
+		for (let col = 0; col < colCount; col++) {
 			const currentIndex = getIndex(row, col);
 
 			if (fieldStatus[currentIndex] === 1) {
@@ -30,7 +27,7 @@ export default function generateAdjacencyList(
 				neighbors.push(getIndex(row - 1, col));
 			}
 
-			if (row < dimensions - 1 && fieldStatus[getIndex(row + 1, col)] !== 1) {
+			if (row < rowCount - 1 && fieldStatus[getIndex(row + 1, col)] !== 1) {
 				neighbors.push(getIndex(row + 1, col));
 			}
 
@@ -38,15 +35,13 @@ export default function generateAdjacencyList(
 				neighbors.push(getIndex(row, col - 1));
 			}
 
-			if (col < dimensions - 1 && fieldStatus[getIndex(row, col + 1)] !== 1) {
+			if (col < colCount - 1 && fieldStatus[getIndex(row, col + 1)] !== 1) {
 				neighbors.push(getIndex(row, col + 1));
 			}
 
 			adjacencyList[currentIndex] = neighbors;
 		}
 	}
-
-	console.log(adjacencyList);
 
 	return adjacencyList;
 }

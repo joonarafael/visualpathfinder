@@ -19,7 +19,10 @@ const HomeClient = () => {
 						<div className="font-light text-neutral-500">
 							Joona Rafael Kettunen
 						</div>
-						<Button onClick={() => window.open("/application", "_self")}>
+						<Button
+							variant={"secondary"}
+							onClick={() => window.open("/application", "_self")}
+						>
 							LAUNCH PATHFINDER
 						</Button>
 					</div>

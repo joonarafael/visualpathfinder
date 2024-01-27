@@ -6,4 +6,4 @@
 
 - Added more automated tests.
 
-Hours spent: 4 h (course total 4 h)
+Hours spent: 5 h (course total 9 h)

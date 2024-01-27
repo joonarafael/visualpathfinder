@@ -1,18 +1,18 @@
 import generateAdjacencyList from "@/app/application/algorithms/generateadjacencylist";
 
 describe("basic functionality for generateAdjacencyList", () => {
-	it("should generate adjacency list for 64 * 64 input", () => {
-		const fieldStatus = Array.from({ length: 64 * 64 }, (_, index) => 0);
+	it("should generate adjacency list for 72 * 48 input", () => {
+		const fieldStatus = Array.from({ length: 72 * 48 }, (_, index) => 0);
 
-		const adjacencyList = generateAdjacencyList(fieldStatus);
+		const adjacencyList = generateAdjacencyList(fieldStatus, 72);
 
-		expect(Object.keys(adjacencyList).length).toEqual(4096);
+		expect(Object.keys(adjacencyList).length).toEqual(3456);
 	});
 
-	it("should return empty for non-symmetrical input", () => {
-		const fieldStatus = Array.from({ length: 5 * 4 }, (_, index) => 0);
+	it("should return empty for full wall grid", () => {
+		let fieldStatus = Array.from({ length: 4 * 4 }, (_, index) => 1);
 
-		const adjacencyList = generateAdjacencyList(fieldStatus);
+		const adjacencyList = generateAdjacencyList(fieldStatus, 4);
 
 		expect(adjacencyList).toEqual({});
 	});
@@ -26,7 +26,7 @@ describe("logic in generateAdjacencyList", () => {
 		fieldStatus[10] = 1;
 		fieldStatus[14] = 1;
 
-		const adjacencyList = generateAdjacencyList(fieldStatus);
+		const adjacencyList = generateAdjacencyList(fieldStatus, 4);
 
 		expect(Object.keys(adjacencyList).length).toEqual(13);
 		expect("9" in adjacencyList).toEqual(false);
@@ -34,18 +34,10 @@ describe("logic in generateAdjacencyList", () => {
 		expect("14" in adjacencyList).toEqual(false);
 	});
 
-	it("should return empty for full wall grid", () => {
-		let fieldStatus = Array.from({ length: 4 * 4 }, (_, index) => 1);
-
-		const adjacencyList = generateAdjacencyList(fieldStatus);
-
-		expect(adjacencyList).toEqual({});
-	});
-
 	it("detect corners and edges", () => {
 		let fieldStatus = Array.from({ length: 4 * 4 }, (_, index) => 0);
 
-		const adjacencyList = generateAdjacencyList(fieldStatus);
+		const adjacencyList = generateAdjacencyList(fieldStatus, 4);
 
 		expect(adjacencyList["0"]).toEqual([4, 1]);
 		expect(adjacencyList["1"]).toEqual([5, 0, 2]);

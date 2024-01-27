@@ -1,5 +1,8 @@
 "use client";
 
+// Main UI logic is provided by this element.
+// Master data structures where grid state and other variables are stored are initialized here.
+
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -17,12 +20,12 @@ const PathFinder = () => {
 	const [applicationState, setApplicationState] = useState("draw");
 	const [algorithm, setAlgorithm] = useState("dijkstra");
 
-	const field = Array.from({ length: 64 * 64 }, (_, index) => index);
+	const field = Array.from({ length: 72 * 46 }, (_, index) => index);
 	const [fieldStatus, setFieldStatus] = useState(
-		Array.from({ length: 64 * 64 }, (_, index) => 0)
+		Array.from({ length: 72 * 46 }, (_, index) => 0)
 	);
 	const [runFieldStatus, setRunFieldStatus] = useState(
-		Array.from({ length: 64 * 64 }, (_, index) => 0)
+		Array.from({ length: 72 * 46 }, (_, index) => 0)
 	);
 
 	const [zoom, setZoom] = useState(4);
@@ -85,17 +88,20 @@ const PathFinder = () => {
 			setAlgorithm("dijkstra");
 			setApplicationState("run");
 
-			const adjacencyList = generateAdjacencyList(tmp);
-			const dijkstraReturn = dijkstra(adjacencyList, tmp.indexOf(2));
-
-			const result = dijkstraReturn.distances[tmp.indexOf(3)];
+			const adjacencyList = generateAdjacencyList(tmp, 72);
+			const dijkstraReturn = dijkstra(
+				adjacencyList,
+				tmp.indexOf(2),
+				tmp.indexOf(3)
+			);
 
 			updateUserView(
 				tmp,
 				setRunFieldStatus,
 				dijkstraReturn.visited,
 				tmp.indexOf(2),
-				tmp.indexOf(3)
+				tmp.indexOf(3),
+				dijkstraReturn.shortestPath
 			);
 		} else {
 			toast("Start and/or Finish missing.");
@@ -118,8 +124,8 @@ const PathFinder = () => {
 						<div className="w-max">
 							{applicationState === "draw" && (
 								<Matrix
-									width={64}
-									height={64}
+									width={72}
+									height={46}
 									field={field}
 									fieldStatus={fieldStatus}
 									zoom={zoom}
@@ -128,8 +134,8 @@ const PathFinder = () => {
 							)}
 							{applicationState === "run" && (
 								<RunMatrix
-									width={64}
-									height={64}
+									width={72}
+									height={46}
 									field={field}
 									fieldStatus={runFieldStatus}
 									zoom={zoom}

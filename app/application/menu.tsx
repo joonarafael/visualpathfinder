@@ -1,5 +1,7 @@
 "use client";
 
+// Menu bar component.
+
 import {
 	Menubar,
 	MenubarContent,
@@ -55,7 +57,7 @@ const Menu: React.FC<MenuProps> = ({
 	};
 
 	const emptyGrid = () => {
-		setFieldStatus(Array.from({ length: 64 * 64 }, (_, index) => 0));
+		setFieldStatus(Array.from({ length: 72 * 46 }, (_, index) => 0));
 		setApplicationState("draw");
 	};
 
@@ -76,7 +78,9 @@ const Menu: React.FC<MenuProps> = ({
 						<MenubarSub>
 							<MenubarSubTrigger>Run Algorithm...</MenubarSubTrigger>
 							<MenubarSubContent>
-								<MenubarItem onClick={dijkstra}>Djikstra</MenubarItem>
+								<MenubarItem onClick={dijkstra}>Dijkstra</MenubarItem>
+								<MenubarItem disabled>A*</MenubarItem>
+								<MenubarItem disabled>Jump Point Search</MenubarItem>
 							</MenubarSubContent>
 						</MenubarSub>
 						{applicationState === "run" ? (

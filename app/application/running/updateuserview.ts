@@ -5,13 +5,18 @@ export default function updateUserView(
 	setRunFieldStatus: (value: number[]) => void,
 	visitedList: { [node: number]: boolean },
 	start: number,
-	end: number
+	end: number,
+	shortestPath?: number[] | null
 ) {
 	const tmp = [...fieldStatus];
 
 	for (let node in visitedList) {
 		if (visitedList[node] === true) {
 			tmp[node] = 4;
+
+			if (shortestPath && shortestPath.includes(parseInt(node, 10))) {
+				tmp[node] = 5;
+			}
 		}
 	}
 
