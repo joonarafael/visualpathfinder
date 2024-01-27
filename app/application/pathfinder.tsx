@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import Container from "../components/container";
+import dijkstra from "./algorithms/dijkstra";
 import generateAdjacencyList from "./algorithms/generateadjacencylist";
 import Matrix from "./drawing/matrix";
 import ToolBar from "./drawing/toolbar";
 import Menu from "./menu";
 import RunMatrix from "./running/matrix";
 import RunBar from "./running/runbar";
+import updateUserView from "./running/updateuserview";
 
 const PathFinder = () => {
 	const [applicationState, setApplicationState] = useState("draw");
@@ -28,7 +30,7 @@ const PathFinder = () => {
 
 	const tileClick = (index: number) => {
 		if (tool === "START") {
-			let tmp = fieldStatus;
+			let tmp = [...fieldStatus];
 
 			const prevStart = tmp.indexOf(2);
 
@@ -41,7 +43,7 @@ const PathFinder = () => {
 				setFieldStatus(tmp);
 			}
 		} else if (tool === "FINISH") {
-			let tmp = fieldStatus;
+			let tmp = [...fieldStatus];
 
 			const prevStart = tmp.indexOf(3);
 
@@ -54,14 +56,14 @@ const PathFinder = () => {
 				setFieldStatus(tmp);
 			}
 		} else if (tool === "ERASER") {
-			let tmp = fieldStatus;
+			let tmp = [...fieldStatus];
 
 			if (tmp[index] === 1) {
 				tmp[index] = 0;
 				setFieldStatus(tmp);
 			}
 		} else if (tool === "WALL") {
-			let tmp = fieldStatus;
+			let tmp = [...fieldStatus];
 			if (tmp[index] === 0) {
 				tmp[index] = 1;
 				setFieldStatus(tmp);
@@ -77,14 +79,24 @@ const PathFinder = () => {
 	};
 
 	const runDijkstra = () => {
-		const approve = startAndFinishExist();
-
-		if (approve) {
+		if (startAndFinishExist()) {
+			const tmp = [...fieldStatus];
+			setRunFieldStatus(tmp);
 			setAlgorithm("dijkstra");
 			setApplicationState("run");
 
-			setRunFieldStatus([...fieldStatus]);
-			const adjacencyList = generateAdjacencyList(fieldStatus);
+			const adjacencyList = generateAdjacencyList(tmp);
+			const dijkstraReturn = dijkstra(adjacencyList, tmp.indexOf(2));
+
+			const result = dijkstraReturn.distances[tmp.indexOf(3)];
+
+			updateUserView(
+				tmp,
+				setRunFieldStatus,
+				dijkstraReturn.visited,
+				tmp.indexOf(2),
+				tmp.indexOf(3)
+			);
 		} else {
 			toast("Start and/or Finish missing.");
 		}

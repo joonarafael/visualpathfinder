@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
-import Tile from './tile';
+import Tile from "./tile";
 
 interface MatrixProps {
 	width: number;
@@ -52,7 +52,7 @@ const Matrix: React.FC<MatrixProps> = ({
 
 			setTimeout(() => {
 				setRequestRender(0); // Reset to 0 after the debounce time
-			}, 500);
+			}, 100);
 		}
 	};
 

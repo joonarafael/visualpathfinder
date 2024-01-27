@@ -5,6 +5,7 @@ type AdjacencyList = Record<number, number[]>;
 export default function generateAdjacencyList(
 	fieldStatus: number[]
 ): AdjacencyList {
+	console.log(fieldStatus);
 	const dimensions = Math.sqrt(fieldStatus.length);
 
 	if (Number.isInteger(dimensions) === false) {
@@ -44,6 +45,8 @@ export default function generateAdjacencyList(
 			adjacencyList[currentIndex] = neighbors;
 		}
 	}
+
+	console.log(adjacencyList);
 
 	return adjacencyList;
 }

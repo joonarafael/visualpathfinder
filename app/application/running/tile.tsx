@@ -17,6 +17,8 @@ const RunTile: React.FC<RunTileProps> = ({ index, status, zoom }) => {
 		bgColor = "bg-indigo-500";
 	} else if (status === 3) {
 		bgColor = "bg-green-500";
+	} else if (status === 4) {
+		bgColor = "bg-orange-800";
 	}
 
 	let size = "min-w-4 min-h-4";

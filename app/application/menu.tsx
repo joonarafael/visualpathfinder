@@ -54,6 +54,19 @@ const Menu: React.FC<MenuProps> = ({
 		setZoom(6);
 	};
 
+	const emptyGrid = () => {
+		setFieldStatus(Array.from({ length: 64 * 64 }, (_, index) => 0));
+		setApplicationState("draw");
+	};
+
+	const toggleFullscreen = () => {
+		if (!document.fullscreenElement) {
+			document.documentElement.requestFullscreen();
+		} else {
+			document.exitFullscreen();
+		}
+	};
+
 	return (
 		<div>
 			<Menubar>
@@ -82,15 +95,7 @@ const Menu: React.FC<MenuProps> = ({
 						<MenubarSub>
 							<MenubarSubTrigger>Empty Grid</MenubarSubTrigger>
 							<MenubarSubContent>
-								<MenubarItem
-									onClick={() => {
-										setFieldStatus(
-											Array.from({ length: 64 * 64 }, (_, index) => 0)
-										);
-									}}
-								>
-									Click to Confirm
-								</MenubarItem>
+								<MenubarItem onClick={emptyGrid}>Click to Confirm</MenubarItem>
 							</MenubarSubContent>
 						</MenubarSub>
 						<MenubarSeparator />
@@ -112,8 +117,12 @@ const Menu: React.FC<MenuProps> = ({
 						<MenubarSeparator />
 						<MenubarItem onClick={zoomDefault}>Zoom Default</MenubarItem>
 						<MenubarSeparator />
-						<MenubarItem onClick={zoomMin}>Minimum zoom</MenubarItem>
-						<MenubarItem onClick={zoomMax}>Maximum zoom</MenubarItem>
+						<MenubarItem onClick={zoomMin}>Minimum Zoom</MenubarItem>
+						<MenubarItem onClick={zoomMax}>Maximum Zoom</MenubarItem>
+						<MenubarSeparator />
+						<MenubarItem onClick={toggleFullscreen}>
+							Toggle Fullscreen
+						</MenubarItem>
 					</MenubarContent>
 				</MenubarMenu>
 			</Menubar>

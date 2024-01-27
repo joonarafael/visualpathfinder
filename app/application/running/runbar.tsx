@@ -14,7 +14,9 @@ const RunBar: React.FC<RunBarProps> = ({ algorithm }) => {
 			</div>
 			<div className="font-bold text-2xl">{algorithm.toUpperCase()}</div>
 			<hr />
-			<div className="font-light text-neutral-500 text-xs">RECENT RUNS</div>
+			<div className="font-light text-neutral-500 text-xs">
+				VIEW RECENT RUNS
+			</div>
 			<div className={`${commonCSS} border-indigo-500`}>DIJKSTRA</div>
 			<div className={`${commonCSS} border-green-500`}>A*</div>
 			<div className={`${commonCSS}`}>JPS</div>
