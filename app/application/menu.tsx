@@ -61,6 +61,16 @@ const Menu: React.FC<MenuProps> = ({
 		setApplicationState("draw");
 	};
 
+	const generateRandom = (walls: number) => {
+		setFieldStatus(
+			Array.from({ length: 72 * 46 }, (_, index) => {
+				const randomValue = Math.random() * 100; // Generate a random number between 0 and 100
+				return randomValue <= walls ? 1 : 0; // Set to 1 if random value is less than or equal to walls input, otherwise set to 0
+			})
+		);
+		setApplicationState("draw");
+	};
+
 	const toggleFullscreen = () => {
 		if (!document.fullscreenElement) {
 			document.documentElement.requestFullscreen();
@@ -95,7 +105,53 @@ const Menu: React.FC<MenuProps> = ({
 							<MenubarItem disabled>Edit Grid</MenubarItem>
 						)}
 						<MenubarSeparator />
-
+						<MenubarSub>
+							<MenubarSubTrigger>Load Ready Map</MenubarSubTrigger>
+							<MenubarSubContent>
+								<MenubarSub>
+									<MenubarSubTrigger>Randomly Generated</MenubarSubTrigger>
+									<MenubarSubContent>
+										<MenubarItem
+											onClick={() => {
+												generateRandom(10);
+											}}
+										>
+											10% walls
+										</MenubarItem>
+										<MenubarItem
+											onClick={() => {
+												generateRandom(30);
+											}}
+										>
+											30% walls
+										</MenubarItem>
+										<MenubarItem
+											onClick={() => {
+												generateRandom(50);
+											}}
+										>
+											50% walls
+										</MenubarItem>
+									</MenubarSubContent>
+								</MenubarSub>
+								<MenubarSub>
+									<MenubarSubTrigger>Labyrinths</MenubarSubTrigger>
+									<MenubarSubContent>
+										<MenubarItem disabled>Labyrinth 1</MenubarItem>
+										<MenubarItem disabled>Labyrinth 2</MenubarItem>
+										<MenubarItem disabled>Labyrinth 3</MenubarItem>
+									</MenubarSubContent>
+								</MenubarSub>
+								<MenubarSub>
+									<MenubarSubTrigger>Cities</MenubarSubTrigger>
+									<MenubarSubContent>
+										<MenubarItem disabled>City 1</MenubarItem>
+										<MenubarItem disabled>City 2</MenubarItem>
+										<MenubarItem disabled>City 3</MenubarItem>
+									</MenubarSubContent>
+								</MenubarSub>
+							</MenubarSubContent>
+						</MenubarSub>
 						<MenubarSub>
 							<MenubarSubTrigger>Empty Grid</MenubarSubTrigger>
 							<MenubarSubContent>

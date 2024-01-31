@@ -7,51 +7,65 @@ import { Button } from "@/app/components/ui/button";
 
 interface RunBarProps {
 	algorithm: string;
+	runsStats: any;
+	setApplicationState: (view: string) => void;
 }
 
-const RunBar: React.FC<RunBarProps> = ({ algorithm }) => {
-	const commonCSS = `text-lg rounded border p-2 cursor-pointer hover:underline hover:pl-3`;
-
-	const [infoPanel, setInfoPanel] = useState<string | null>(null);
-
-	const clickDijkstra = () => {
-		if (infoPanel === "dijkstra") {
-			setInfoPanel(null);
-		} else {
-			setInfoPanel("dijkstra");
-		}
-	};
+const RunBar: React.FC<RunBarProps> = ({
+	algorithm,
+	runsStats,
+	setApplicationState,
+}) => {
+	const commonCSS = `text-lg rounded border p-2 font-semibold`;
 
 	return (
 		<div className="flex flex-col p-2 gap-2 w-full">
-			<div className="font-light text-neutral-500 text-xs">
-				CURRENT ALGORITHM
-			</div>
+			<Button
+				onClick={() => {
+					setApplicationState("draw");
+				}}
+				className="font-bold"
+				variant={"secondary"}
+			>
+				EDIT GRID
+			</Button>
+			<hr />
+			<div className="font-light text-neutral-500 text-xs">ALGORITHM</div>
 			<div className="font-bold text-2xl">{algorithm.toUpperCase()}</div>
 			<hr />
 			<div className="font-light text-neutral-500 text-xs">
-				VIEW RECENT RUNS
+				COMPARE TO OTHERS
 			</div>
-			<div onClick={clickDijkstra} className={`${commonCSS} border-indigo-500`}>
+			<div className={`${commonCSS} border-indigo-500`}>
 				DIJKSTRA
-			</div>
-			{infoPanel === "dijkstra" && (
-				<div className="flex flex-col gap-1 py-1 border rounded-lg p-2">
-					<p className="font-light text-neutral-500 text-xs">RUNTIME</p>
-					<p>N/A</p>
-					<p className="font-light text-neutral-500 text-xs">NODES VISITED</p>
-					<p>N/A</p>
-					<Button
-						className="flex flex-row gap-2"
-						disabled
-						variant={"secondary"}
-					>
-						PLAY <FaPlay />
-					</Button>
+				<hr className="mt-1 py-1" />
+				<div className="flex flex-col gap-1 font-light">
+					<p className="text-neutral-500 text-xs">RUNTIME</p>
+					<p>{runsStats.dijkstra.time} ms</p>
+					<p className="text-neutral-500 text-xs">NODES VISITED</p>
+					<p>{runsStats.dijkstra.visited_nodes}</p>
 				</div>
-			)}
-			<div className={`${commonCSS} border-green-500`}>A*</div>
-			<div className={`${commonCSS} border-orange-500`}>JPS</div>
+			</div>
+			<div className={`${commonCSS} border-green-500`}>
+				A*
+				<hr className="mt-1 py-1" />
+				<div className="flex flex-col gap-1 font-light">
+					<p className="text-neutral-500 text-xs">RUNTIME</p>
+					<p>{runsStats.a_star.time} ms</p>
+					<p className="text-neutral-500 text-xs">NODES VISITED</p>
+					<p>{runsStats.a_star.visited_nodes}</p>
+				</div>
+			</div>
+			<div className={`${commonCSS} border-orange-500`}>
+				JPS
+				<hr className="mt-1 py-1" />
+				<div className="flex flex-col gap-1 font-light">
+					<p className="text-neutral-500 text-xs">RUNTIME</p>
+					<p>{runsStats.jps.time} ms</p>
+					<p className="text-neutral-500 text-xs">NODES VISITED</p>
+					<p>{runsStats.jps.visited_nodes}</p>
+				</div>
+			</div>
 		</div>
 	);
 };

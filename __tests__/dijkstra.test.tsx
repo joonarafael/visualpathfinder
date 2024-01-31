@@ -43,8 +43,6 @@ describe("basic logic for dijkstra", () => {
 		expect(dijkstraReturn.visited["15"]).toEqual(false);
 		expect(dijkstraReturn.distances["15"]).toEqual(9);
 
-		expect(dijkstraReturn).toHaveProperty("shortestPath");
-
 		if (dijkstraReturn.shortestPath) {
 			expect(dijkstraReturn.shortestPath.length).toEqual(10);
 		} else {

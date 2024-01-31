@@ -19,6 +19,20 @@ import updateUserView from "./running/updateuserview";
 const PathFinder = () => {
 	const [applicationState, setApplicationState] = useState("draw");
 	const [algorithm, setAlgorithm] = useState("dijkstra");
+	const [runsStats, setRunsStats] = useState({
+		dijkstra: {
+			time: 0,
+			visited_nodes: 0,
+		},
+		a_star: {
+			time: 0,
+			visited_nodes: 0,
+		},
+		jps: {
+			time: 0,
+			visited_nodes: 0,
+		},
+	});
 
 	const field = Array.from({ length: 72 * 46 }, (_, index) => index);
 	const [fieldStatus, setFieldStatus] = useState(
@@ -84,9 +98,12 @@ const PathFinder = () => {
 	const runDijkstra = () => {
 		if (startAndFinishExist()) {
 			const tmp = [...fieldStatus];
+			console.log(tmp);
 			setRunFieldStatus(tmp);
 			setAlgorithm("dijkstra");
 			setApplicationState("run");
+
+			const startTime = performance.now();
 
 			const adjacencyList = generateAdjacencyList(tmp, 72);
 			const dijkstraReturn = dijkstra(
@@ -94,6 +111,28 @@ const PathFinder = () => {
 				tmp.indexOf(2),
 				tmp.indexOf(3)
 			);
+
+			const endTime = performance.now();
+
+			const trueCount: number = Object.values(dijkstraReturn.visited).reduce(
+				(count, value) => count + (value ? 1 : 0),
+				0
+			);
+
+			setRunsStats({
+				dijkstra: {
+					time: Math.round((endTime - startTime + Number.EPSILON) * 100) / 100,
+					visited_nodes: trueCount,
+				},
+				a_star: {
+					time: runsStats.a_star.time,
+					visited_nodes: runsStats.a_star.visited_nodes,
+				},
+				jps: {
+					time: runsStats.jps.time,
+					visited_nodes: runsStats.jps.visited_nodes,
+				},
+			});
 
 			updateUserView(
 				tmp,
@@ -146,9 +185,17 @@ const PathFinder = () => {
 					<div className="border rounded-lg w-1/6">
 						<div className="w-full">
 							{applicationState === "draw" ? (
-								<ToolBar tool={tool} setTool={setTool} />
+								<ToolBar
+									tool={tool}
+									setTool={setTool}
+									setApplicationState={setApplicationState}
+								/>
 							) : (
-								<RunBar algorithm={algorithm} />
+								<RunBar
+									runsStats={runsStats}
+									algorithm={algorithm}
+									setApplicationState={setApplicationState}
+								/>
 							)}
 						</div>
 					</div>

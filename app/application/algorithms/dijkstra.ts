@@ -38,6 +38,7 @@ export default function dijkstra(
 	}
 
 	distances[start] = 0;
+	let direction = 0;
 
 	while (true) {
 		let shortestDistance = Number.MAX_VALUE;
@@ -70,17 +71,31 @@ export default function dijkstra(
 			return { distances, visited, shortestPath };
 		}
 
-		for (let neighbor of adjacencyList[currentNode]) {
-			const distanceToNeighbor = shortestDistance + 1;
+		if (direction % 2 === 0) {
+			for (let neighbor of adjacencyList[currentNode]) {
+				const distanceToNeighbor = shortestDistance + 1;
 
-			if (distanceToNeighbor < distances[neighbor]) {
-				distances[neighbor] = distanceToNeighbor;
+				if (distanceToNeighbor <= distances[neighbor]) {
+					distances[neighbor] = distanceToNeighbor;
 
-				// to display the shortest path, we add the parent for later path finding
-				parents[neighbor] = currentNode;
+					// to display the shortest path, we add the parent for later path finding
+					parents[neighbor] = currentNode;
+				}
+			}
+		} else {
+			for (let neighbor of adjacencyList[currentNode]) {
+				const distanceToNeighbor = shortestDistance + 1;
+
+				if (distanceToNeighbor < distances[neighbor]) {
+					distances[neighbor] = distanceToNeighbor;
+
+					// to display the shortest path, we add the parent for later path finding
+					parents[neighbor] = currentNode;
+				}
 			}
 		}
 
+		direction = direction + 1;
 		visited[currentNode] = true;
 	}
 }

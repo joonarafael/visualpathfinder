@@ -23,7 +23,7 @@ const HomeClient = () => {
 							variant={"secondary"}
 							onClick={() => window.open("/application", "_self")}
 						>
-							LAUNCH PATHFINDER
+							LAUNCH APPLICATION
 						</Button>
 					</div>
 				</div>

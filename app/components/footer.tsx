@@ -3,6 +3,7 @@
 // site footer
 
 import { DiMitlicence } from "react-icons/di";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 const Footer = () => {
 	return (
@@ -23,7 +24,20 @@ const Footer = () => {
                 xl:px-20
             "
 		>
-			<div className="font-bold">VISUAL PATHFINDER</div>
+			<div className="font-bold flex flex-row items-center gap-2">
+				<p>VISUAL PATHFINDER</p>
+				<div
+					onClick={() =>
+						window.open(
+							"https://github.com/joonarafael/visualpathfinder/tree/main",
+							"_blank"
+						)
+					}
+					className="flex flex-row gap-2 items-center cursor-pointer hover:underline"
+				>
+					<p className="font-light">in GitHub</p> <FaExternalLinkAlt />
+				</div>
+			</div>
 			<div className="font-light">by Joona Kettunen</div>
 			<div className="flex flex-row text-neutral-500 items-center align-center gap-2">
 				<DiMitlicence size={16} />
