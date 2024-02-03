@@ -17,6 +17,7 @@ import RunBar from "./running/runbar";
 import updateUserView from "./running/updateuserview";
 
 const PathFinder = () => {
+	const [showNote, setShowNote] = useState(true);
 	const [applicationState, setApplicationState] = useState("draw");
 	const [algorithm, setAlgorithm] = useState("dijkstra");
 	const [runsStats, setRunsStats] = useState({
@@ -193,6 +194,8 @@ const PathFinder = () => {
 							) : (
 								<RunBar
 									runsStats={runsStats}
+									showNote={showNote}
+									setShowNote={setShowNote}
 									algorithm={algorithm}
 									setApplicationState={setApplicationState}
 								/>
