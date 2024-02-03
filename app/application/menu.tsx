@@ -15,6 +15,8 @@ import {
 	MenubarTrigger,
 } from "@/app/components/ui/menubar";
 
+import benchmark01 from "../benchmarks/benchmark01";
+
 interface MenuProps {
 	zoom: number;
 	setZoom: (value: number) => void;
@@ -64,10 +66,15 @@ const Menu: React.FC<MenuProps> = ({
 	const generateRandom = (walls: number) => {
 		setFieldStatus(
 			Array.from({ length: 72 * 46 }, (_, index) => {
-				const randomValue = Math.random() * 100; // Generate a random number between 0 and 100
-				return randomValue <= walls ? 1 : 0; // Set to 1 if random value is less than or equal to walls input, otherwise set to 0
+				const randomValue = Math.random() * 100;
+				return randomValue <= walls ? 1 : 0;
 			})
 		);
+		setApplicationState("draw");
+	};
+
+	const setBenchmark01 = () => {
+		setFieldStatus(Array.from(benchmark01));
 		setApplicationState("draw");
 	};
 
@@ -143,11 +150,17 @@ const Menu: React.FC<MenuProps> = ({
 									</MenubarSubContent>
 								</MenubarSub>
 								<MenubarSub>
-									<MenubarSubTrigger>Cities</MenubarSubTrigger>
+									<MenubarSubTrigger>Benchmarks</MenubarSubTrigger>
 									<MenubarSubContent>
-										<MenubarItem disabled>City 1</MenubarItem>
-										<MenubarItem disabled>City 2</MenubarItem>
-										<MenubarItem disabled>City 3</MenubarItem>
+										<MenubarItem
+											onClick={() => {
+												setBenchmark01();
+											}}
+										>
+											Benchmark 1
+										</MenubarItem>
+										<MenubarItem disabled>Benchmark 2</MenubarItem>
+										<MenubarItem disabled>Benchmark 3</MenubarItem>
 									</MenubarSubContent>
 								</MenubarSub>
 							</MenubarSubContent>
