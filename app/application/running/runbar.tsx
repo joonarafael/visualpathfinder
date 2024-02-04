@@ -1,9 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { FaPlay } from "react-icons/fa";
-
-import { Button } from "@/app/components/ui/button";
+import { Button } from '@/app/components/ui/button';
 
 interface RunBarProps {
 	algorithm: string;

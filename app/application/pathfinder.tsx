@@ -1,9 +1,9 @@
 "use client";
 
 // Main UI logic is provided by this element.
-// Master data structures where grid state and other variables are stored are initialized here.
+// Master data structures where grid state and other variables are stored get initialized here.
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import Container from "../components/container";
@@ -15,6 +15,8 @@ import Menu from "./menu";
 import RunMatrix from "./running/matrix";
 import RunBar from "./running/runbar";
 import updateUserView from "./running/updateuserview";
+
+type Heuristic = number[][];
 
 const PathFinder = () => {
 	const [showNote, setShowNote] = useState(true);
@@ -99,7 +101,6 @@ const PathFinder = () => {
 	const runDijkstra = () => {
 		if (startAndFinishExist()) {
 			const tmp = [...fieldStatus];
-			console.log(tmp);
 			setRunFieldStatus(tmp);
 			setAlgorithm("dijkstra");
 			setApplicationState("run");
