@@ -13,14 +13,14 @@ interface Parents {
 }
 
 interface DijkstraResult {
-	distances: Distances;
+	distances?: Distances;
 	visited: { [node: number]: boolean };
 	shortestPath?: number[];
 }
 
 export default function dijkstra(
 	adjacencyList: AdjacencyList,
-	start: number,
+	startNode: number,
 	endNode: number
 ): DijkstraResult {
 	const distances: Distances = {};
@@ -37,8 +37,7 @@ export default function dijkstra(
 		parents[node] = null;
 	}
 
-	distances[start] = 0;
-	let direction = 0;
+	distances[startNode] = 0;
 
 	while (true) {
 		let shortestDistance = Number.MAX_VALUE;
@@ -53,7 +52,7 @@ export default function dijkstra(
 
 		// end node was never reached
 		if (currentNode === null) {
-			return { distances, visited };
+			return { visited };
 		}
 
 		// end node found, construct shortest path
@@ -71,31 +70,17 @@ export default function dijkstra(
 			return { distances, visited, shortestPath };
 		}
 
-		if (direction % 2 === 0) {
-			for (let neighbor of adjacencyList[currentNode]) {
-				const distanceToNeighbor = shortestDistance + 1;
+		for (let neighbor of adjacencyList[currentNode]) {
+			const distanceToNeighbor = shortestDistance + 1;
 
-				if (distanceToNeighbor <= distances[neighbor]) {
-					distances[neighbor] = distanceToNeighbor;
+			if (distanceToNeighbor <= distances[neighbor]) {
+				distances[neighbor] = distanceToNeighbor;
 
-					// to display the shortest path, we add the parent for later path finding
-					parents[neighbor] = currentNode;
-				}
-			}
-		} else {
-			for (let neighbor of adjacencyList[currentNode]) {
-				const distanceToNeighbor = shortestDistance + 1;
-
-				if (distanceToNeighbor < distances[neighbor]) {
-					distances[neighbor] = distanceToNeighbor;
-
-					// to display the shortest path, we add the parent for later path finding
-					parents[neighbor] = currentNode;
-				}
+				// to display the shortest path, we add the parent for later path finding
+				parents[neighbor] = currentNode;
 			}
 		}
 
-		direction = direction + 1;
 		visited[currentNode] = true;
 	}
 }

@@ -39,11 +39,10 @@ describe("logic in generateAdjacencyList", () => {
 
 		const adjacencyList = generateAdjacencyList(fieldStatus, 4);
 
-		expect(adjacencyList["0"]).toEqual([4, 1]);
-		expect(adjacencyList["1"]).toEqual([5, 0, 2]);
-		expect(adjacencyList["8"]).toEqual([4, 12, 9]);
-		expect(adjacencyList["11"]).toEqual([7, 15, 10]);
-		expect(adjacencyList["12"]).toEqual([8, 13]);
-		expect(adjacencyList["15"]).toEqual([11, 14]);
+		expect(adjacencyList["0"]).toEqual([4, 1, 5]);
+		expect(adjacencyList["1"]).toEqual([5, 0, 2, 6, 4]);
+		expect(adjacencyList["8"]).toEqual([4, 12, 9, 5, 13]);
+		expect(adjacencyList["11"]).toEqual([7, 15, 10, 14, 6]);
+		expect(adjacencyList["15"]).toEqual([11, 14, 10]);
 	});
 });

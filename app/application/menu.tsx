@@ -24,6 +24,7 @@ interface MenuProps {
 	setApplicationState: (value: string) => void;
 	dijkstra: () => void;
 	applicationState: string;
+	aStar: () => void;
 }
 
 const Menu: React.FC<MenuProps> = ({
@@ -33,6 +34,7 @@ const Menu: React.FC<MenuProps> = ({
 	applicationState,
 	setApplicationState,
 	dijkstra,
+	aStar,
 }) => {
 	const zoomIn = () => {
 		if (zoom < 6) {
@@ -96,7 +98,7 @@ const Menu: React.FC<MenuProps> = ({
 							<MenubarSubTrigger>Run Algorithm...</MenubarSubTrigger>
 							<MenubarSubContent>
 								<MenubarItem onClick={dijkstra}>Dijkstra</MenubarItem>
-								<MenubarItem disabled>A*</MenubarItem>
+								<MenubarItem onClick={aStar}>A*</MenubarItem>
 								<MenubarItem disabled>Jump Point Search</MenubarItem>
 							</MenubarSubContent>
 						</MenubarSub>
@@ -142,11 +144,11 @@ const Menu: React.FC<MenuProps> = ({
 									</MenubarSubContent>
 								</MenubarSub>
 								<MenubarSub>
-									<MenubarSubTrigger>Labyrinths</MenubarSubTrigger>
+									<MenubarSubTrigger>Cities</MenubarSubTrigger>
 									<MenubarSubContent>
-										<MenubarItem disabled>Labyrinth 1</MenubarItem>
-										<MenubarItem disabled>Labyrinth 2</MenubarItem>
-										<MenubarItem disabled>Labyrinth 3</MenubarItem>
+										<MenubarItem disabled>City 1</MenubarItem>
+										<MenubarItem disabled>City 2</MenubarItem>
+										<MenubarItem disabled>City 3</MenubarItem>
 									</MenubarSubContent>
 								</MenubarSub>
 								<MenubarSub>

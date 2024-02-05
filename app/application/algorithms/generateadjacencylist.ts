@@ -23,6 +23,7 @@ export default function generateAdjacencyList(
 
 			const neighbors: number[] = [];
 
+			// cardinal directions
 			if (row > 0 && fieldStatus[getIndex(row - 1, col)] !== 1) {
 				neighbors.push(getIndex(row - 1, col));
 			}
@@ -37,6 +38,35 @@ export default function generateAdjacencyList(
 
 			if (col < colCount - 1 && fieldStatus[getIndex(row, col + 1)] !== 1) {
 				neighbors.push(getIndex(row, col + 1));
+			}
+
+			// diagonals
+			if (
+				row > 0 &&
+				col < colCount - 1 &&
+				fieldStatus[getIndex(row - 1, col + 1)] !== 1
+			) {
+				neighbors.push(getIndex(row - 1, col + 1));
+			}
+
+			if (
+				row < rowCount - 1 &&
+				col < colCount - 1 &&
+				fieldStatus[getIndex(row + 1, col + 1)] !== 1
+			) {
+				neighbors.push(getIndex(row + 1, col + 1));
+			}
+
+			if (
+				row < rowCount - 1 &&
+				col > 0 &&
+				fieldStatus[getIndex(row + 1, col - 1)] !== 1
+			) {
+				neighbors.push(getIndex(row + 1, col - 1));
+			}
+
+			if (row > 0 && col > 0 && fieldStatus[getIndex(row - 1, col - 1)] !== 1) {
+				neighbors.push(getIndex(row - 1, col - 1));
 			}
 
 			adjacencyList[currentIndex] = neighbors;
