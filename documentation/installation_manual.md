@@ -24,6 +24,8 @@ and
 npm --version
 ```
 
+If encountering issues with the installation procedure of Node.js, please visit [their homepage](https://nodejs.org/en "Node.js Homepage").
+
 ## Yarn (optional)
 
 Install _Yarn_ as your package manager with
@@ -48,6 +50,8 @@ Clone the repository to your local machine by executing
 git clone git@github.com:joonarafael/visualpathfinder.git
 ```
 
+GitHub also provides other repository cloning possibilities, you may check them [here](https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories "GitHub Docs - About remote repositories").
+
 Enter the repository with
 
 ```
@@ -69,6 +73,8 @@ npm install
 ```
 
 if you decided to go with npm. Replace always `yarn` with `npm` if you're using npm.
+
+Both npm and yarn will give detailed error messages if the installation of associated dependencies fails. In this case, please follow closely the instructions given within the error notices.
 
 ## Running the application
 
