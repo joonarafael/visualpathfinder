@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from '@/app/components/ui/button';
+import { Button } from "@/app/components/ui/button";
 
 interface RunBarProps {
 	algorithm: string;
@@ -69,6 +69,16 @@ const RunBar: React.FC<RunBarProps> = ({
 					<p>{runsStats.dijkstra.time} ms</p>
 					<p className="text-neutral-500 text-xs">NODES VISITED</p>
 					<p>{runsStats.dijkstra.visited_nodes}</p>
+					{runsStats.dijkstra.path_length > 0 ? (
+						<>
+							<p className="text-neutral-500 text-xs">PATH LENGTH</p>
+							<p>{runsStats.dijkstra.path_length}</p>
+						</>
+					) : (
+						<>
+							<p className="text-rose-500 text-xs">FINISH NOT FOUND</p>
+						</>
+					)}
 				</div>
 			</div>
 			<div className={`${commonCSS} border-green-500`}>
@@ -79,6 +89,16 @@ const RunBar: React.FC<RunBarProps> = ({
 					<p>{runsStats.a_star.time} ms</p>
 					<p className="text-neutral-500 text-xs">NODES VISITED</p>
 					<p>{runsStats.a_star.visited_nodes}</p>
+					{runsStats.a_star.path_length > 0 ? (
+						<>
+							<p className="text-neutral-500 text-xs">PATH LENGTH</p>
+							<p>{runsStats.a_star.path_length}</p>
+						</>
+					) : (
+						<>
+							<p className="text-rose-500 text-xs">FINISH NOT FOUND</p>
+						</>
+					)}
 				</div>
 			</div>
 			<div className={`${commonCSS} border-orange-500`}>
@@ -89,6 +109,16 @@ const RunBar: React.FC<RunBarProps> = ({
 					<p>{runsStats.jps.time} ms</p>
 					<p className="text-neutral-500 text-xs">NODES VISITED</p>
 					<p>{runsStats.jps.visited_nodes}</p>
+					{runsStats.jps.path_length > 0 ? (
+						<>
+							<p className="text-neutral-500 text-xs">PATH LENGTH</p>
+							<p>{runsStats.jps.path_length}</p>
+						</>
+					) : (
+						<>
+							<p className="text-rose-500 text-xs">FINISH NOT FOUND</p>
+						</>
+					)}
 				</div>
 			</div>
 		</div>

@@ -22,9 +22,8 @@ interface MenuProps {
 	setZoom: (value: number) => void;
 	setFieldStatus: (array: number[]) => void;
 	setApplicationState: (value: string) => void;
-	dijkstra: () => void;
+	runAlgorithm: (value: string) => void;
 	applicationState: string;
-	aStar: () => void;
 }
 
 const Menu: React.FC<MenuProps> = ({
@@ -33,8 +32,7 @@ const Menu: React.FC<MenuProps> = ({
 	setFieldStatus,
 	applicationState,
 	setApplicationState,
-	dijkstra,
-	aStar,
+	runAlgorithm,
 }) => {
 	const zoomIn = () => {
 		if (zoom < 6) {
@@ -97,8 +95,20 @@ const Menu: React.FC<MenuProps> = ({
 						<MenubarSub>
 							<MenubarSubTrigger>Run Algorithm...</MenubarSubTrigger>
 							<MenubarSubContent>
-								<MenubarItem onClick={dijkstra}>Dijkstra</MenubarItem>
-								<MenubarItem onClick={aStar}>A*</MenubarItem>
+								<MenubarItem
+									onClick={() => {
+										runAlgorithm("dijkstra");
+									}}
+								>
+									Dijkstra
+								</MenubarItem>
+								<MenubarItem
+									onClick={() => {
+										runAlgorithm("a_star");
+									}}
+								>
+									A*
+								</MenubarItem>
 								<MenubarItem disabled>Jump Point Search</MenubarItem>
 							</MenubarSubContent>
 						</MenubarSub>

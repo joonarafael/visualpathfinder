@@ -11,6 +11,7 @@ export default function generateAdjacencyList(
 
 	const adjacencyList: AdjacencyList = {};
 
+	// function to get a single index for a (x, y) coordinate.
 	const getIndex = (row: number, col: number): number => row * colCount + col;
 
 	for (let row = 0; row < rowCount; row++) {
@@ -40,7 +41,7 @@ export default function generateAdjacencyList(
 				neighbors.push(getIndex(row, col + 1));
 			}
 
-			// diagonals
+			// diagonals (8-way traversal)
 			if (
 				row > 0 &&
 				col < colCount - 1 &&

@@ -18,10 +18,11 @@ import RunMatrix from "./running/matrix";
 import RunBar from "./running/runbar";
 import updateUserView from "./running/updateuserview";
 
+type AdjacencyList = Record<number, number[]>;
+
 const PathFinder = () => {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [isError, setIsError] = useState(false);
-	const breakpoint = 720;
 
 	useEffect(() => {
 		const handleResizeWindow = () => setWindowWidth(window.innerWidth);
@@ -32,6 +33,8 @@ const PathFinder = () => {
 		};
 	}, []);
 
+	const breakpoint = 720;
+
 	const [showNote, setShowNote] = useState(true);
 	const [applicationState, setApplicationState] = useState("draw");
 	const [algorithm, setAlgorithm] = useState("dijkstra");
@@ -39,14 +42,17 @@ const PathFinder = () => {
 		dijkstra: {
 			time: 0,
 			visited_nodes: 0,
+			path_length: 0,
 		},
 		a_star: {
 			time: 0,
 			visited_nodes: 0,
+			path_length: 0,
 		},
 		jps: {
 			time: 0,
 			visited_nodes: 0,
+			path_length: 0,
 		},
 	});
 
@@ -60,6 +66,16 @@ const PathFinder = () => {
 
 	const [zoom, setZoom] = useState(4);
 	const [tool, setTool] = useState("START");
+
+	if (isError) {
+		return (
+			<PageError
+				message={
+					"Encountered an unrecoverable fatal error during algorithm execution. Page reload required."
+				}
+			/>
+		);
+	}
 
 	const tileClick = (index: number) => {
 		if (tool === "START") {
@@ -111,130 +127,128 @@ const PathFinder = () => {
 		return start !== -1 && end !== -1;
 	};
 
-	const runDijkstra = () => {
+	const callDijkstra = (
+		adjacencyList: AdjacencyList,
+		start: number,
+		finish: number
+	) => {
+		setAlgorithm("dijkstra");
+
+		return dijkstra(adjacencyList, start, finish);
+	};
+
+	const callAStar = (
+		adjacencyList: AdjacencyList,
+		start: number,
+		finish: number
+	) => {
+		setAlgorithm("a*");
+
+		return aStar(adjacencyList, start, finish, 72);
+	};
+
+	const runAlgorithm = (algorithm: string) => {
 		if (startAndFinishExist()) {
 			const tmp = [...fieldStatus];
 			setRunFieldStatus(tmp);
-			setAlgorithm("dijkstra");
 			setApplicationState("run");
+
+			const start = tmp.indexOf(2);
+			const finish = tmp.indexOf(3);
 
 			try {
 				const startTime = performance.now();
 
 				const adjacencyList = generateAdjacencyList(tmp, 72);
-				const dijkstraReturn = dijkstra(
-					adjacencyList,
-					tmp.indexOf(2),
-					tmp.indexOf(3)
-				);
 
-				const endTime = performance.now();
+				let algorithmReturn;
 
-				const trueCount: number = Object.values(dijkstraReturn.visited).reduce(
-					(count, value) => count + (value ? 1 : 0),
-					0
-				);
-
-				setRunsStats({
-					dijkstra: {
-						time:
-							Math.round((endTime - startTime + Number.EPSILON) * 100) / 100,
-						visited_nodes: trueCount,
-					},
-					a_star: {
-						time: runsStats.a_star.time,
-						visited_nodes: runsStats.a_star.visited_nodes,
-					},
-					jps: {
-						time: runsStats.jps.time,
-						visited_nodes: runsStats.jps.visited_nodes,
-					},
-				});
-
-				updateUserView(
-					tmp,
-					setRunFieldStatus,
-					dijkstraReturn.visited,
-					tmp.indexOf(2),
-					tmp.indexOf(3),
-					dijkstraReturn.shortestPath
-				);
-			} catch (e) {
-				setIsError(true);
-				return;
-			}
-		} else {
-			toast("Start and/or Finish missing.");
-		}
-	};
-
-	const runAStar = () => {
-		if (startAndFinishExist()) {
-			const tmp = [...fieldStatus];
-			setRunFieldStatus(tmp);
-			setAlgorithm("a_star");
-			setApplicationState("run");
-
-			try {
-				const startTime = performance.now();
-
-				const adjacencyList = generateAdjacencyList(tmp, 72);
-				const aStarReturn = aStar(
-					adjacencyList,
-					tmp.indexOf(2),
-					tmp.indexOf(3),
-					72
-				);
-
-				const endTime = performance.now();
-
-				const trueCount: number = Object.values(aStarReturn.visited).reduce(
-					(count, value) => count + (value ? 1 : 0),
-					0
-				);
-
-				setRunsStats({
-					dijkstra: {
-						time: runsStats.dijkstra.time,
-						visited_nodes: runsStats.dijkstra.visited_nodes,
-					},
-					a_star: {
-						time:
-							Math.round((endTime - startTime + Number.EPSILON) * 100) / 100,
-						visited_nodes: trueCount,
-					},
-					jps: {
-						time: runsStats.jps.time,
-						visited_nodes: runsStats.jps.visited_nodes,
-					},
-				});
-
-				updateUserView(
-					tmp,
-					setRunFieldStatus,
-					aStarReturn.visited,
-					tmp.indexOf(2),
-					tmp.indexOf(3),
-					aStarReturn.shortestPath
-				);
-			} catch (e) {
-				setIsError(true);
-				return;
-			}
-		} else {
-			toast("Start and/or Finish missing.");
-		}
-	};
-
-	if (isError) {
-		return (
-			<PageError
-				message={
-					"Encountered an unrecoverable fatal error during algorithm execution. Page reload required."
+				if (algorithm === "dijkstra") {
+					algorithmReturn = callDijkstra(adjacencyList, start, finish);
+				} else {
+					algorithmReturn = callAStar(adjacencyList, start, finish);
 				}
-			/>
-		);
-	}
+
+				const endTime = performance.now();
+
+				const trueCount: number = Object.values(algorithmReturn.visited).reduce(
+					(count, value) => count + (value ? 1 : 0),
+					0
+				);
+
+				const dijkstraStats =
+					algorithm === "dijkstra"
+						? {
+								time:
+									Math.round((endTime - startTime + Number.EPSILON) * 100) /
+									100,
+								visited_nodes: trueCount,
+								path_length: algorithmReturn?.shortestPath
+									? algorithmReturn.shortestPath.length
+									: 0,
+						  }
+						: {
+								time: runsStats.dijkstra.time,
+								visited_nodes: runsStats.dijkstra.visited_nodes,
+								path_length: runsStats.dijkstra.path_length,
+						  };
+
+				const aStarStats =
+					algorithm === "a_star"
+						? {
+								time:
+									Math.round((endTime - startTime + Number.EPSILON) * 100) /
+									100,
+								visited_nodes: trueCount,
+								path_length: algorithmReturn?.shortestPath
+									? algorithmReturn.shortestPath.length
+									: 0,
+						  }
+						: {
+								time: runsStats.a_star.time,
+								visited_nodes: runsStats.a_star.visited_nodes,
+								path_length: runsStats.a_star.path_length,
+						  };
+
+				const jpsStats =
+					algorithm === "jps"
+						? {
+								time:
+									Math.round((endTime - startTime + Number.EPSILON) * 100) /
+									100,
+								visited_nodes: trueCount,
+								path_length: algorithmReturn?.shortestPath
+									? algorithmReturn.shortestPath.length
+									: 0,
+						  }
+						: {
+								time: runsStats.jps.time,
+								visited_nodes: runsStats.jps.visited_nodes,
+								path_length: runsStats.jps.path_length,
+						  };
+
+				setRunsStats({
+					dijkstra: dijkstraStats,
+					a_star: aStarStats,
+					jps: jpsStats,
+				});
+
+				updateUserView(
+					tmp,
+					setRunFieldStatus,
+					algorithmReturn.visited,
+					tmp.indexOf(2),
+					tmp.indexOf(3),
+					algorithmReturn.shortestPath
+				);
+			} catch (e) {
+				setIsError(true);
+				return;
+			}
+		} else {
+			toast("Start and/or Finish missing.");
+		}
+	};
 
 	if (windowWidth < breakpoint) {
 		return <PageError message={"Please increase window width to 720px."} />;
@@ -249,8 +263,7 @@ const PathFinder = () => {
 					setFieldStatus={setFieldStatus}
 					applicationState={applicationState}
 					setApplicationState={setApplicationState}
-					dijkstra={runDijkstra}
-					aStar={runAStar}
+					runAlgorithm={runAlgorithm}
 				/>
 				<div className="flex flex-row gap-4">
 					<div className="border rounded-lg w-5/6 h-[80svh] overflow-scroll">
@@ -276,7 +289,7 @@ const PathFinder = () => {
 							)}
 						</div>
 					</div>
-					<div className="border rounded-lg w-1/6">
+					<div className="border rounded-lg w-1/6 h-[80svh] overflow-scroll">
 						<div className="w-full">
 							{applicationState === "draw" ? (
 								<ToolBar

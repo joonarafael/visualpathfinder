@@ -13,7 +13,6 @@ interface Parents {
 }
 
 interface DijkstraResult {
-	distances?: Distances;
 	visited: { [node: number]: boolean };
 	shortestPath?: number[];
 }
@@ -43,6 +42,7 @@ export default function dijkstra(
 		let shortestDistance = Number.MAX_VALUE;
 		let currentNode: number | null = null;
 
+		// blindly iterate over every node in the distances list
 		for (let node in distances) {
 			if (distances[node] < shortestDistance && !visited[node]) {
 				shortestDistance = distances[node];
@@ -67,7 +67,7 @@ export default function dijkstra(
 			}
 
 			// terminate execution as the end was found.
-			return { distances, visited, shortestPath };
+			return { visited, shortestPath };
 		}
 
 		for (let neighbor of adjacencyList[currentNode]) {

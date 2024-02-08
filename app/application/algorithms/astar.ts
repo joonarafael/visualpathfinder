@@ -10,18 +10,22 @@ export default function aStar(
 	width: number
 ) {
 	// initialize all variables for the algorithm
-	const openSet = new PriorityQueue<number>();
-	const cameFrom: Record<number, number> = {};
-	const gScore: Record<number, number> = {};
-	const fScore: Record<number, number> = {};
+	const openSet = new PriorityQueue<number>(); // this is the priority queue (main data structure for the algorithm)
+	const cameFrom: Record<number, number> = {}; // record of navigated nodes
+	const gScore: Record<number, number> = {}; // cost from start along best known path
+	const fScore: Record<number, number> = {}; // estimated total cost from start to goal THROUGH y (neighbor evaluation)
 
-	// same visited track as in Dijkstra, simply just giving the user more information
+	// same visited nodes data structure as in Dijkstra
 	const visited: { [node: number]: boolean } = {};
 
+	// add starting node to PQ
 	openSet.enqueue(startNode, 0);
+
+	// process starting node
 	gScore[startNode] = 0;
 	fScore[startNode] = heuristicManhattan(startNode, endNode, width);
 
+	// execute algorithm as long as there are nodes in the priority queue
 	while (!openSet.isEmpty()) {
 		const current = openSet.dequeue();
 
@@ -31,6 +35,7 @@ export default function aStar(
 
 		visited[current] = true;
 
+		// we've reached the goal, reconstruct the shortest path and return information of the visited nodes
 		if (current === endNode) {
 			return {
 				shortestPath: reconstructPath(cameFrom, endNode),
@@ -38,18 +43,23 @@ export default function aStar(
 			};
 		}
 
+		// algorithm MAIN STUFF:
+		// evaluate every neighbor
 		for (const neighbor of adjacencyList[current]) {
-			const tentativeGScore = gScore[current] + 1;
+			const tentativeGScore = gScore[current] + 1; // tentativeGScore is the cost from start to the neighbor.
 
+			// If the tentative gScore is better than previous ones, we should use it.
 			if (
 				!gScore.hasOwnProperty(neighbor) ||
 				tentativeGScore < gScore[neighbor]
 			) {
-				cameFrom[neighbor] = current;
-				gScore[neighbor] = tentativeGScore;
+				cameFrom[neighbor] = current; // record path
+				gScore[neighbor] = tentativeGScore; // update the gScore for this node
 				fScore[neighbor] =
-					tentativeGScore + heuristicManhattan(neighbor, endNode, width);
+					tentativeGScore + heuristicManhattan(neighbor, endNode, width); // also calculate the fScore for the neighbor.
 
+				// we decided that the neighbor is a good choice for the path (with the previous if statement)
+				// let's add it to the open set if it's not already there
 				if (!openSet.queue.some((item) => item.element === neighbor)) {
 					openSet.enqueue(neighbor, fScore[neighbor]);
 				}
@@ -57,9 +67,11 @@ export default function aStar(
 		}
 	}
 
-	return { visited: visited }; // No path found
+	// pq empty but no path found
+	return { visited: visited };
 }
 
+// function to reconstruct the shortest found path
 function reconstructPath(
 	cameFrom: Record<number, number>,
 	current: number
