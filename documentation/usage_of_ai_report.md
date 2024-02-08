@@ -9,3 +9,5 @@ Additionally, here I've collected a summary of some more major parts of the appl
 - **Adjacency List Generation function**: AI assisted building approx. half of the function after I provided all the inputs and requirements for the function.
 
 - **Dijkstra's algorithm**: AI helped convert my own Dijkstra algorithm slightly so it would take an adjacency _list_ as an argument as opposed to an adjacency _matrix_. AI also helped by debugging the issues related to the creation of the `shortestPath` array.
+
+- **A\* algorithm**: AI helped troubleshoot issues with the `shortestPath` reconstruction function. AI also helped debug issues with infinite A\* execution loops.
