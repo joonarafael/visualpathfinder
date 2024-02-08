@@ -34,8 +34,8 @@ Downloaded from the [MovingAI Benchmarks](https://www.movingai.com/benchmarks/in
 
 ### City Maps
 
-- **CITY 1** (stored in the file named [city0](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps/cities/city0 "Open File 'city0.tsx'")) generated from [this map](https://nextcity.org/images/made/BoeingStreetNetworkVisualLead_920_642_920_642_80.jpg "Open Original Reference for City 1").
+- **CITY 1** (stored in the file named [city0](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps/cities/city0.tsx "Open File 'city0.tsx'")) generated from [this map](https://nextcity.org/images/made/BoeingStreetNetworkVisualLead_920_642_920_642_80.jpg "Open Original Reference for City 1").
 
-- **CITY 2** (stored in the file named [city1](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps/cities/city1 "Open File 'city1.tsx'")) generated from [this map](https://s.hdnux.com/photos/61/76/04/13099288/3/rawImage.jpg "Open Original Reference for City 2").
+- **CITY 2** (stored in the file named [city1](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps/cities/city1.tsx "Open File 'city1.tsx'")) generated from [this map](https://s.hdnux.com/photos/61/76/04/13099288/3/rawImage.jpg "Open Original Reference for City 2").
 
 Same kind of processing has been done for the city maps as was described in the [Baldur's Gate maps](https://github.com/joonarafael/visualpathfinder?tab=readme-ov-file#baldursgate).
