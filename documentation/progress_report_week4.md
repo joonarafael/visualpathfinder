@@ -2,8 +2,8 @@
 
 - Fixed the issue regarding diagonal traversing between grid tiles (8-way movement).
 
-- Wrote first version of the A\* algorithm.
+- Wrote first version of the A\* algorithm + unittests
 
 - Wrote installation manual & made a ton of updates to the documentation.
 
-Hours spent: 4 h (course total 19 h)
+Hours spent: 5 h (course total 20 h)
