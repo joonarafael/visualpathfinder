@@ -6,4 +6,6 @@
 
 - Wrote installation manual & made a ton of updates to the documentation.
 
-Hours spent: 5 h (course total 20 h)
+- Added a ton of ready-made maps to the application.
+
+Hours spent: 7 h (course total 22 h)
