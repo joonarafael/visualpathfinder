@@ -15,7 +15,12 @@ import {
 	MenubarTrigger,
 } from "@/app/components/ui/menubar";
 
-import benchmark01 from "../benchmarks/benchmark01";
+import benchmark0 from "../maps/benchmarks/benchmark0";
+import baldur0 from "../maps/baldursgate/baldur0";
+import baldur1 from "../maps/baldursgate/baldur1";
+import city0 from "../maps/cities/city0";
+import baldur2 from "../maps/baldursgate/baldur2";
+import city1 from "../maps/cities/city1";
 
 interface MenuProps {
 	zoom: number;
@@ -73,8 +78,8 @@ const Menu: React.FC<MenuProps> = ({
 		setApplicationState("draw");
 	};
 
-	const setBenchmark01 = () => {
-		setFieldStatus(Array.from(benchmark01));
+	const setMap = (map: number[]) => {
+		setFieldStatus(Array.from(map));
 		setApplicationState("draw");
 	};
 
@@ -128,6 +133,67 @@ const Menu: React.FC<MenuProps> = ({
 							<MenubarSubTrigger>Load Ready Map</MenubarSubTrigger>
 							<MenubarSubContent>
 								<MenubarSub>
+									<MenubarSubTrigger>{"Baldur's Gate"}</MenubarSubTrigger>
+									<MenubarSubContent>
+										<MenubarItem
+											onClick={() => {
+												setMap(baldur0);
+											}}
+										>
+											{"Baldur's Gate 1"}
+										</MenubarItem>
+										<MenubarItem
+											onClick={() => {
+												setMap(baldur1);
+											}}
+										>
+											{"Baldur's Gate 2"}
+										</MenubarItem>
+										<MenubarItem
+											onClick={() => {
+												setMap(baldur2);
+											}}
+										>
+											{"Baldur's Gate 3"}
+										</MenubarItem>
+									</MenubarSubContent>
+								</MenubarSub>
+								<MenubarSub>
+									<MenubarSubTrigger>{"Cities"}</MenubarSubTrigger>
+									<MenubarSubContent>
+										<MenubarItem
+											onClick={() => {
+												setMap(city0);
+											}}
+										>
+											{"City 1"}
+										</MenubarItem>
+										<MenubarItem
+											onClick={() => {
+												setMap(city1);
+											}}
+										>
+											{"City 2"}
+										</MenubarItem>
+										<MenubarItem disabled>{"City 3"}</MenubarItem>
+									</MenubarSubContent>
+								</MenubarSub>
+								<MenubarSub>
+									<MenubarSubTrigger>Benchmarks</MenubarSubTrigger>
+									<MenubarSubContent>
+										<MenubarItem
+											onClick={() => {
+												setMap(benchmark0);
+											}}
+										>
+											Benchmark 1
+										</MenubarItem>
+										<MenubarItem disabled>Benchmark 2</MenubarItem>
+										<MenubarItem disabled>Benchmark 3</MenubarItem>
+									</MenubarSubContent>
+								</MenubarSub>
+								<MenubarSeparator />
+								<MenubarSub>
 									<MenubarSubTrigger>Randomly Generated</MenubarSubTrigger>
 									<MenubarSubContent>
 										<MenubarItem
@@ -151,28 +217,6 @@ const Menu: React.FC<MenuProps> = ({
 										>
 											50% walls
 										</MenubarItem>
-									</MenubarSubContent>
-								</MenubarSub>
-								<MenubarSub>
-									<MenubarSubTrigger>Cities</MenubarSubTrigger>
-									<MenubarSubContent>
-										<MenubarItem disabled>City 1</MenubarItem>
-										<MenubarItem disabled>City 2</MenubarItem>
-										<MenubarItem disabled>City 3</MenubarItem>
-									</MenubarSubContent>
-								</MenubarSub>
-								<MenubarSub>
-									<MenubarSubTrigger>Benchmarks</MenubarSubTrigger>
-									<MenubarSubContent>
-										<MenubarItem
-											onClick={() => {
-												setBenchmark01();
-											}}
-										>
-											Benchmark 1
-										</MenubarItem>
-										<MenubarItem disabled>Benchmark 2</MenubarItem>
-										<MenubarItem disabled>Benchmark 3</MenubarItem>
 									</MenubarSubContent>
 								</MenubarSub>
 							</MenubarSubContent>

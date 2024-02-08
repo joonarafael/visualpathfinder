@@ -6,8 +6,8 @@ interface RunBarProps {
 	algorithm: string;
 	runsStats: any;
 	setApplicationState: (view: string) => void;
-	showNote: boolean;
-	setShowNote: (value: boolean) => void;
+	showNote: number;
+	setShowNote: (value: number) => void;
 }
 
 const RunBar: React.FC<RunBarProps> = ({
@@ -37,7 +37,7 @@ const RunBar: React.FC<RunBarProps> = ({
 			<div className="font-light text-neutral-500 text-xs">
 				COMPARE TO OTHERS
 			</div>
-			{showNote && (
+			{showNote === 0 ? (
 				<div
 					className={`${commonCSS} flex flex-col border-yellow-500 content-center text-rose-500`}
 				>
@@ -52,14 +52,38 @@ const RunBar: React.FC<RunBarProps> = ({
 					<hr className="mt-1 py-1" />
 					<Button
 						onClick={() => {
-							setShowNote(false);
+							setShowNote(1);
 						}}
 						className="font-bold"
 						variant={"destructive"}
 					>
-						OKAY
+						ALRIGHT
 					</Button>
 				</div>
+			) : (
+				showNote === 1 && (
+					<div
+						className={`${commonCSS} flex flex-col border-yellow-500 content-center text-rose-500`}
+					>
+						NOTE
+						<hr className="mt-1 py-1" />
+						<div className="flex flex-col gap-1 font-light">
+							<p className="text-neutral-500 text-xs">
+								EDITING THE GRID WILL RESET THE OLD RUN RECORDS.
+							</p>
+						</div>
+						<hr className="mt-1 py-1" />
+						<Button
+							onClick={() => {
+								setShowNote(2);
+							}}
+							className="font-bold"
+							variant={"destructive"}
+						>
+							I GET IT
+						</Button>
+					</div>
+				)
 			)}
 			<div className={`${commonCSS} border-indigo-500`}>
 				DIJKSTRA

@@ -24,6 +24,8 @@ const PathFinder = () => {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [isError, setIsError] = useState(false);
 
+	const [mapChanged, setMapChanged] = useState(false);
+
 	useEffect(() => {
 		const handleResizeWindow = () => setWindowWidth(window.innerWidth);
 		window.addEventListener("resize", handleResizeWindow);
@@ -35,7 +37,7 @@ const PathFinder = () => {
 
 	const breakpoint = 720;
 
-	const [showNote, setShowNote] = useState(true);
+	const [showNote, setShowNote] = useState(0);
 	const [applicationState, setApplicationState] = useState("draw");
 	const [algorithm, setAlgorithm] = useState("dijkstra");
 	const [runsStats, setRunsStats] = useState({
@@ -66,6 +68,10 @@ const PathFinder = () => {
 
 	const [zoom, setZoom] = useState(4);
 	const [tool, setTool] = useState("START");
+
+	useEffect(() => {
+		setMapChanged(true);
+	}, [fieldStatus]);
 
 	if (isError) {
 		return (
@@ -179,13 +185,19 @@ const PathFinder = () => {
 				const dijkstraStats =
 					algorithm === "dijkstra"
 						? {
-								time:
-									Math.round((endTime - startTime + Number.EPSILON) * 100) /
-									100,
+								time: parseFloat(
+									(endTime - startTime + Number.EPSILON).toFixed(1)
+								),
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
 									? algorithmReturn.shortestPath.length
 									: 0,
+						  }
+						: mapChanged
+						? {
+								time: 0,
+								visited_nodes: 0,
+								path_length: 0,
 						  }
 						: {
 								time: runsStats.dijkstra.time,
@@ -196,13 +208,19 @@ const PathFinder = () => {
 				const aStarStats =
 					algorithm === "a_star"
 						? {
-								time:
-									Math.round((endTime - startTime + Number.EPSILON) * 100) /
-									100,
+								time: parseFloat(
+									(endTime - startTime + Number.EPSILON).toFixed(1)
+								),
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
 									? algorithmReturn.shortestPath.length
 									: 0,
+						  }
+						: mapChanged
+						? {
+								time: 0,
+								visited_nodes: 0,
+								path_length: 0,
 						  }
 						: {
 								time: runsStats.a_star.time,
@@ -213,13 +231,19 @@ const PathFinder = () => {
 				const jpsStats =
 					algorithm === "jps"
 						? {
-								time:
-									Math.round((endTime - startTime + Number.EPSILON) * 100) /
-									100,
+								time: parseFloat(
+									(endTime - startTime + Number.EPSILON).toFixed(1)
+								),
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
 									? algorithmReturn.shortestPath.length
 									: 0,
+						  }
+						: mapChanged
+						? {
+								time: 0,
+								visited_nodes: 0,
+								path_length: 0,
 						  }
 						: {
 								time: runsStats.jps.time,
@@ -241,6 +265,10 @@ const PathFinder = () => {
 					tmp.indexOf(3),
 					algorithmReturn.shortestPath
 				);
+
+				if (mapChanged) {
+					setMapChanged(false);
+				}
 			} catch (e) {
 				setIsError(true);
 				return;
