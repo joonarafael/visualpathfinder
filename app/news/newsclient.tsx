@@ -10,9 +10,11 @@ const NewsClient = () => {
 				<div className="max-w-screen-md items-center">
 					<div className="w-full flex flex-col gap-4 text-center mt-16">
 						<div className="font-bold text-4xl">ONE MORE THING</div>
-						<div className="text-xl font-light text-neutral-500">{`ABOUT THE JUMP POINT SEARCH ALGORITHM`}</div>
 						<div className="text-xl font-bold text-yellow-500">
 							JPS IS STILL UNDER CONSTRUCTION
+						</div>
+						<div className="text-xl font-bold text-rose-500">
+							JPS EXECUTION MIGHT CRASH THE APPLICATION
 						</div>
 						<div className="font-light">
 							IT CURRENTLY ONLY JUMPS ONE TILE AT A TIME.
