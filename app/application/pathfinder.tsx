@@ -10,6 +10,7 @@ import Container from "../components/container";
 import PageError from "../components/pageerror";
 import aStar from "./algorithms/astar";
 import dijkstra from "./algorithms/dijkstra";
+import jumpPointSearch from "./algorithms/jps";
 import generateAdjacencyList from "./algorithms/generateadjacencylist";
 import Matrix from "./drawing/matrix";
 import ToolBar from "./drawing/toolbar";
@@ -154,6 +155,16 @@ const PathFinder = () => {
 		return aStar(adjacencyList, start, finish, 72);
 	};
 
+	const callJPS = (
+		adjacencyList: AdjacencyList,
+		start: number,
+		finish: number
+	) => {
+		setAlgorithm("jps");
+
+		return jumpPointSearch(adjacencyList, start, finish, 72, fieldStatus);
+	};
+
 	const runAlgorithm = (algorithm: string) => {
 		if (startAndFinishExist()) {
 			const tmp = [...fieldStatus];
@@ -172,8 +183,10 @@ const PathFinder = () => {
 
 				if (algorithm === "dijkstra") {
 					algorithmReturn = callDijkstra(adjacencyList, start, finish);
-				} else {
+				} else if (algorithm === "a_star") {
 					algorithmReturn = callAStar(adjacencyList, start, finish);
+				} else {
+					algorithmReturn = callJPS(adjacencyList, start, finish);
 				}
 
 				const endTime = performance.now();

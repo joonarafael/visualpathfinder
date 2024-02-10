@@ -122,7 +122,13 @@ const Menu: React.FC<MenuProps> = ({
 								>
 									A*
 								</MenubarItem>
-								<MenubarItem disabled>Jump Point Search</MenubarItem>
+								<MenubarItem
+									onClick={() => {
+										runAlgorithm("jps");
+									}}
+								>
+									Jump Point Search
+								</MenubarItem>
 							</MenubarSubContent>
 						</MenubarSub>
 						{applicationState === "run" ? (

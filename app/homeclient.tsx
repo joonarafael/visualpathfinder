@@ -21,9 +21,9 @@ const HomeClient = () => {
 						</div>
 						<Button
 							variant={"secondary"}
-							onClick={() => window.open("/application", "_self")}
+							onClick={() => window.open("/application/news", "_self")}
 						>
-							LAUNCH APPLICATION
+							{`LAUNCH APPLICATION`}
 						</Button>
 					</div>
 				</div>

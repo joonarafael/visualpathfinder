@@ -21,11 +21,18 @@ const RunBar: React.FC<RunBarProps> = ({
 
 	const resultElement = (
 		name: string,
-		color: string,
 		data: { time: number; visited_nodes: number; path_length: number }
 	) => {
 		return (
-			<div className={`${commonCSS} border-${color}-500`}>
+			<div
+				className={`${commonCSS} ${
+					name === "dijkstra"
+						? "border-indigo-500"
+						: name === "a*"
+						? "border-green-500"
+						: "border-orange-500"
+				}`}
+			>
 				{name.toUpperCase()}
 				<hr className="mt-1 py-1" />
 				<div className="flex flex-col gap-1 font-light">
@@ -128,21 +135,21 @@ const RunBar: React.FC<RunBarProps> = ({
 				)
 			)}
 			{runsStats.dijkstra.visited_nodes > 0
-				? resultElement("dijkstra", "indigo", {
+				? resultElement("dijkstra", {
 						time: runsStats.dijkstra.time,
 						visited_nodes: runsStats.dijkstra.visited_nodes,
 						path_length: runsStats.dijkstra.path_length,
 				  })
 				: notRunElement("dijkstra")}
 			{runsStats.a_star.visited_nodes > 0
-				? resultElement("a*", "green", {
+				? resultElement("a*", {
 						time: runsStats.a_star.time,
 						visited_nodes: runsStats.a_star.visited_nodes,
 						path_length: runsStats.a_star.path_length,
 				  })
 				: notRunElement("a*")}
 			{runsStats.jps.visited_nodes > 0
-				? resultElement("jps", "orange", {
+				? resultElement("jps", {
 						time: runsStats.jps.time,
 						visited_nodes: runsStats.jps.visited_nodes,
 						path_length: runsStats.jps.path_length,
