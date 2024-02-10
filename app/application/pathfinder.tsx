@@ -24,7 +24,7 @@ const PathFinder = () => {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [isError, setIsError] = useState(false);
 	const [smoothing, setSmoothing] = useState(true);
-	const [contrast, setContrast] = useState(true);
+	const [contrast, setContrast] = useState(false);
 	const [mapChanged, setMapChanged] = useState(false);
 
 	useEffect(() => {
