@@ -8,6 +8,8 @@ interface TileProps {
 	status: number;
 	mouseState: boolean;
 	tileClick: (index: number) => void;
+	smoothing: boolean;
+	contrast: boolean;
 }
 
 const Tile: React.FC<TileProps> = ({
@@ -16,15 +18,21 @@ const Tile: React.FC<TileProps> = ({
 	zoom,
 	mouseState,
 	tileClick,
+	smoothing,
+	contrast,
 }) => {
 	let bgColor = "transparent";
 
 	if (status === 1) {
-		bgColor = "bg-stone-500";
+		if (contrast) {
+			bgColor = `bg-stone-300`;
+		} else {
+			bgColor = `bg-stone-500`;
+		}
 	} else if (status === 2) {
-		bgColor = "bg-indigo-500";
+		bgColor = `bg-indigo-500`;
 	} else if (status === 3) {
-		bgColor = "bg-green-500";
+		bgColor = `bg-green-500`;
 	}
 
 	let size = "min-w-4 min-h-4";
@@ -55,7 +63,9 @@ const Tile: React.FC<TileProps> = ({
 		<div
 			onMouseEnter={handlePaint}
 			onClick={realClick}
-			className={`border rounded flex items-center justify-center p-2 cursor-pointer ${bgColor} ${size}`}
+			className={`${
+				smoothing && "border rounded"
+			} flex items-center justify-center p-2 cursor-pointer ${bgColor} ${size}`}
 		></div>
 	);
 };

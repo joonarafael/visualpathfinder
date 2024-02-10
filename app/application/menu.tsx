@@ -29,6 +29,10 @@ interface MenuProps {
 	setApplicationState: (value: string) => void;
 	runAlgorithm: (value: string) => void;
 	applicationState: string;
+	smoothing: boolean;
+	setSmoothing: (value: boolean) => void;
+	contrast: boolean;
+	setContrast: (value: boolean) => void;
 }
 
 const Menu: React.FC<MenuProps> = ({
@@ -38,6 +42,10 @@ const Menu: React.FC<MenuProps> = ({
 	applicationState,
 	setApplicationState,
 	runAlgorithm,
+	smoothing,
+	setSmoothing,
+	contrast,
+	setContrast,
 }) => {
 	const zoomIn = () => {
 		if (zoom < 6) {
@@ -236,6 +244,25 @@ const Menu: React.FC<MenuProps> = ({
 								</MenubarItem>
 							</MenubarSubContent>
 						</MenubarSub>
+					</MenubarContent>
+				</MenubarMenu>
+				<MenubarMenu>
+					<MenubarTrigger>Grid</MenubarTrigger>
+					<MenubarContent>
+						<MenubarItem
+							onClick={() => {
+								setSmoothing(!smoothing);
+							}}
+						>
+							Toggle Borderless Mode
+						</MenubarItem>
+						<MenubarItem
+							onClick={() => {
+								setContrast(!contrast);
+							}}
+						>
+							Toggle High Contrast Mode
+						</MenubarItem>
 					</MenubarContent>
 				</MenubarMenu>
 				<MenubarMenu>

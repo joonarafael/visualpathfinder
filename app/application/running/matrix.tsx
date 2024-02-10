@@ -8,6 +8,8 @@ interface RunMatrixProps {
 	field: number[];
 	fieldStatus: number[];
 	zoom: number;
+	smoothing: boolean;
+	contrast: boolean;
 }
 
 const RunMatrix: React.FC<RunMatrixProps> = ({
@@ -16,6 +18,8 @@ const RunMatrix: React.FC<RunMatrixProps> = ({
 	field,
 	fieldStatus,
 	zoom,
+	smoothing,
+	contrast,
 }) => {
 	return (
 		<div className="flex flex-col p-2">
@@ -27,7 +31,13 @@ const RunMatrix: React.FC<RunMatrixProps> = ({
 
 						return (
 							<div key={colIndex}>
-								<RunTile status={fieldStatus[index]} index={item} zoom={zoom} />
+								<RunTile
+									smoothing={smoothing}
+									status={fieldStatus[index]}
+									index={item}
+									zoom={zoom}
+									contrast={contrast}
+								/>
 							</div>
 						);
 					})}

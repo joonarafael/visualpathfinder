@@ -11,6 +11,8 @@ interface MatrixProps {
 	fieldStatus: number[];
 	zoom: number;
 	tileClick: (index: number) => void;
+	smoothing: boolean;
+	contrast: boolean;
 }
 
 const Matrix: React.FC<MatrixProps> = ({
@@ -20,6 +22,8 @@ const Matrix: React.FC<MatrixProps> = ({
 	fieldStatus,
 	zoom,
 	tileClick,
+	smoothing,
+	contrast,
 }) => {
 	const [requestRender, setRequestRender] = useState(0);
 	const [mouseState, setMouseState] = useState(false);
@@ -67,6 +71,8 @@ const Matrix: React.FC<MatrixProps> = ({
 						return (
 							<div key={colIndex}>
 								<Tile
+									contrast={contrast}
+									smoothing={smoothing}
 									status={fieldStatus[index]}
 									index={item}
 									zoom={zoom}

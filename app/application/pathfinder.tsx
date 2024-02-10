@@ -23,7 +23,8 @@ type AdjacencyList = Record<number, number[]>;
 const PathFinder = () => {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [isError, setIsError] = useState(false);
-
+	const [smoothing, setSmoothing] = useState(true);
+	const [contrast, setContrast] = useState(true);
 	const [mapChanged, setMapChanged] = useState(false);
 
 	useEffect(() => {
@@ -292,6 +293,10 @@ const PathFinder = () => {
 					applicationState={applicationState}
 					setApplicationState={setApplicationState}
 					runAlgorithm={runAlgorithm}
+					smoothing={smoothing}
+					setSmoothing={setSmoothing}
+					contrast={contrast}
+					setContrast={setContrast}
 				/>
 				<div className="flex flex-row gap-4">
 					<div className="border rounded-lg w-5/6 h-[80svh] overflow-scroll">
@@ -304,6 +309,8 @@ const PathFinder = () => {
 									fieldStatus={fieldStatus}
 									zoom={zoom}
 									tileClick={tileClick}
+									smoothing={smoothing}
+									contrast={contrast}
 								/>
 							)}
 							{applicationState === "run" && (
@@ -313,6 +320,8 @@ const PathFinder = () => {
 									field={field}
 									fieldStatus={runFieldStatus}
 									zoom={zoom}
+									smoothing={smoothing}
+									contrast={contrast}
 								/>
 							)}
 						</div>
