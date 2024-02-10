@@ -6,6 +6,10 @@ This manual provides instructions for the [Live Application](https://visualpathf
 
 The 72 \* 48 matrix is quite large (3456 individual nodes). Almost all of the application logic is run on the client machine by the client browser. Make sure you're running the latest version of your browser to ensure the best performance. The less wall tiles, the more possible paths for the selected algorithm to consider. If you're experiencing performance issues, try placing the start and end nodes closer together and increase the number of wall tiles.
 
+## Important Notice
+
+**Remember that** all recorded statistics will be lost once the map is changed **and** a new algorithm is run. Previous records will be stored as long as no new algorithm is run on the changed map.
+
 ## Application Layout
 
 Application is divided into three main sections:
@@ -27,11 +31,20 @@ Depending on the application state, drawing / running, the section of the right 
 Tool Bar includes selection for the current tool.
 
 - Start: Select the start tile. Only one start tile may exist at a time, so the old one will be removed.
+
 - Finish: Select the goal tile. Only one goal tile may exist at a time, so the old one will be removed.
 
 - Eraser: Erase wall tiles and turn them into regular path tiles.
 
 - Wall: Create walls that cannot be traversed through.
+
+**Run Bar**
+
+Run Bar includes the statistics of recent pathfinding runs.
+
+Here you may compare the different algorithms against eachother **on the same map**.
+
+**PLEASE NOTE:** All recorded statistics will be lost once the map is changed **and** a new algorithm is run. Previous records will be stored as long as no new algorithm is run on the changed map.
 
 ### Menu
 
@@ -41,12 +54,19 @@ Nearly every feature of the application can be accessed through the menu.
 
 - Run Algorithm: Select the algorithm to run on current map.
 
-- Edit Grid: Switch back to grid drawing mode.
+- Edit Grid: Switch back to drawing mode.
+
 - Load Ready Map: Load ready-made maps. Current map state will be lost.
 
 - Empty Grid: Completely erase the current grid.
 
 - Exit: Exit to Main Menu.
+
+**Visuals**
+
+- Toggle Borderless Mode: Switch between the original bordered layout and the borderless pixelmap mode. It's recommended not to change to the borderless mode until you've established a large enough map as no scale can be seen in the borderless mode.
+
+- Toggle High Contrast Mode: Switch between the smoother toned-down colors and the contrasted colors enhanced with more saturation and brightness.
 
 **View**
 

@@ -110,7 +110,8 @@ const RunBar: React.FC<RunBarProps> = ({
 						<hr className="mt-1 py-1" />
 						<div className="flex flex-col gap-1 font-light">
 							<p className="text-neutral-500 text-xs">
-								EDITING THE GRID WILL RESET THE OLD RUN RECORDS.
+								PREVIOUS RUN RECORDS WILL BE STORED HERE. HOWEVER, EDITING THE
+								GRID AND RERUNNING AN ALGORITHM WILL RESET ALL STATISTICS.
 							</p>
 						</div>
 						<hr className="mt-1 py-1" />

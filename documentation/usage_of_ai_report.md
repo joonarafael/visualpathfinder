@@ -4,10 +4,12 @@ I've got _[Tabnine](https://www.tabnine.com/ "Tabnine Homepage")_ installed as a
 
 Additionally, here I've collected a summary of some more major parts of the application that required the consulting of a large language model.
 
+Some other use cases of AI that merely focused on the UI and some other visual features has not been documented.
+
 - **Jest Unittests**: AI helped initialize the first basic layout for a Jest test file.
 
 - **Adjacency List Generation function**: AI assisted building approx. half of the function after I provided all the inputs and requirements for the function.
 
 - **Dijkstra's algorithm**: AI helped convert my own Dijkstra algorithm slightly so it would take an adjacency _list_ as an argument as opposed to an adjacency _matrix_. AI also helped by debugging the issues related to the creation of the `shortestPath` array.
 
-- **A\* algorithm**: AI helped troubleshoot issues with the `shortestPath` reconstruction function. AI also helped debug issues with infinite A\* execution loops.
+- **A\* algorithm**: AI helped troubleshoot issues with the `shortestPath` reconstruction function. AI also helped debug issues with an infinite A\* execution loop.

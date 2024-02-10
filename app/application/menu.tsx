@@ -247,7 +247,7 @@ const Menu: React.FC<MenuProps> = ({
 					</MenubarContent>
 				</MenubarMenu>
 				<MenubarMenu>
-					<MenubarTrigger>Grid</MenubarTrigger>
+					<MenubarTrigger>Visuals</MenubarTrigger>
 					<MenubarContent>
 						<MenubarItem
 							onClick={() => {

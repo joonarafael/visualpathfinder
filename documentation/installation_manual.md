@@ -6,13 +6,7 @@ This manual provides instructions for the cloning of the repository and the inst
 
 ## Node.js
 
-Install _Node.js_ for your machine by executing the following command
-
-```
-sudo snap install node --classic
-```
-
-in the terminal. Ensure successful installation by checking the versions:
+Check if you've got **Node.js** and **NPM** installed on your machine by checking the version with
 
 ```
 node --version
@@ -24,33 +18,49 @@ and
 npm --version
 ```
 
+**If not**,install Node.js along with NPM for your machine by executing the following command
+
+```
+sudo snap install node --classic
+```
+
+in the terminal. Ensure successful installation by checking the versions with the commands provided above.
+
 If encountering issues with the installation procedure of Node.js, please visit [their homepage](https://nodejs.org/en "Node.js Homepage").
 
 ## Yarn (optional)
 
-Install _Yarn_ as your package manager with
+I recommend using _Yarn_ instead of NPM as your package manager. Yarn is faster (provides parallel installation) and has a better track record of handling security issues.
+
+Install Yarn as your package manager with
 
 ```
 sudo npm install --global yarn
 ```
 
-Ensure successful installation by checking the versions:
+Ensure successful installation by checking the version:
 
 ```
 yarn --version
 ```
 
-You may also use _npm_ as your package manager (installed with Node.js).
+You may also continue to use NPM as your package manager (automatically installed with Node.js as a default).
 
 ## Cloning the repository
 
-Clone the repository to your local machine by executing
+Clone the repository to your local machine either with SSH
 
 ```
 git clone git@github.com:joonarafael/visualpathfinder.git
 ```
 
-GitHub also provides other repository cloning possibilities, you may check them [here](https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories "GitHub Docs - About remote repositories").
+or HTTPS
+
+```
+git clone https://github.com/joonarafael/visualpathfinder.git
+```
+
+You may also download the repository as a [ZIP folder](https://github.com/joonarafael/visualpathfinder/archive/refs/heads/main.zip "Download ZIP").
 
 Enter the repository with
 
@@ -72,9 +82,9 @@ or with
 npm install
 ```
 
-if you decided to go with npm. Replace always `yarn` with `npm` if you're using npm.
+if you decided to go with NPM. Replace always `yarn` with `npm` if you're using NPM.
 
-Both npm and yarn will give detailed error messages if the installation of associated dependencies fails. In this case, please follow closely the instructions given within the error notices.
+Both NPM and Yarn will give you detailed error messages if the installation of associated dependencies fails. In this case, please follow closely the instructions given within the error notices.
 
 ## Running the application
 
@@ -84,7 +94,7 @@ After all dependencies have been successfully installed, the application can be 
 yarn run dev
 ```
 
-Now the application can be accessed with a web browser of your choice. Default port for the application is **3000** ([localhost:3000](localhost:3000 "Port 3000 on your localhost")), but you can check it also from the terminal logs after launching the application.
+Now the application can be accessed with a web browser of your choice. Default port for the application is **3000** ([localhost:3000](localhost:3000 "Port 3000 on your localhost")), but you can retrieve the port information also from the console logs after launching the application.
 
 ## Software tests
 
