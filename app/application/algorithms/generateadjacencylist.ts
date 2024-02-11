@@ -47,7 +47,12 @@ export default function generateAdjacencyList(
 				col < colCount - 1 &&
 				fieldStatus[getIndex(row - 1, col + 1)] !== 1
 			) {
-				neighbors.push(getIndex(row - 1, col + 1));
+				if (
+					neighbors.includes(getIndex(row - 1, col)) ||
+					neighbors.includes(getIndex(row, col + 1))
+				) {
+					neighbors.push(getIndex(row - 1, col + 1));
+				}
 			}
 
 			if (
@@ -55,7 +60,12 @@ export default function generateAdjacencyList(
 				col < colCount - 1 &&
 				fieldStatus[getIndex(row + 1, col + 1)] !== 1
 			) {
-				neighbors.push(getIndex(row + 1, col + 1));
+				if (
+					neighbors.includes(getIndex(row, col + 1)) ||
+					neighbors.includes(getIndex(row + 1, col))
+				) {
+					neighbors.push(getIndex(row + 1, col + 1));
+				}
 			}
 
 			if (
@@ -63,11 +73,21 @@ export default function generateAdjacencyList(
 				col > 0 &&
 				fieldStatus[getIndex(row + 1, col - 1)] !== 1
 			) {
-				neighbors.push(getIndex(row + 1, col - 1));
+				if (
+					neighbors.includes(getIndex(row, col - 1)) ||
+					neighbors.includes(getIndex(row + 1, col))
+				) {
+					neighbors.push(getIndex(row + 1, col - 1));
+				}
 			}
 
 			if (row > 0 && col > 0 && fieldStatus[getIndex(row - 1, col - 1)] !== 1) {
-				neighbors.push(getIndex(row - 1, col - 1));
+				if (
+					neighbors.includes(getIndex(row, col - 1)) ||
+					neighbors.includes(getIndex(row - 1, col))
+				) {
+					neighbors.push(getIndex(row - 1, col - 1));
+				}
 			}
 
 			adjacencyList[currentIndex] = neighbors;

@@ -19,15 +19,17 @@ const NewsClient = () => {
 						<div className="font-light">
 							IT CURRENTLY ONLY JUMPS ONE TILE AT A TIME.
 							<br />
-							THIS RESULTS IN A SIMILAR RESULT AS THE A*.
+							THIS RESULTS IT IN A SIMILAR PATH AND PERFORMANCE AS THE A*.
 							<br />
-							THE JPS ALSO FALSELY RECOGNIZES VISITED AND NON-VISITED NODES
+							<br />
+							JPS ALSO FALSELY RECOGNIZES VISITED AND NON-VISITED NODES
 							<br />
 							RENDERING AN INCORRECT RESULT VIEW.
 							<br />
-							<p className="text-neutral-500">
-								(INCOMPLETE NEIGHBOR PROCESSING LOGIC)
-							</p>
+							<br />
+							IN ADDITION, JPS ALSO SUFFERS FROM INCOMPLETE NEIGHBOR LOGIC,
+							<br />
+							IT WILL SOMETIMES CUT THROUGH WALLS DIAGONALLY.
 						</div>
 						<Button
 							variant={"secondary"}
