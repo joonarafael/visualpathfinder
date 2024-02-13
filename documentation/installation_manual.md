@@ -18,7 +18,7 @@ and
 npm --version
 ```
 
-**If not**,install Node.js along with NPM for your machine by executing the following command
+**If not**, install Node.js along with NPM for your machine by executing the following command
 
 ```
 sudo snap install node --classic
