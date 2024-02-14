@@ -58,7 +58,7 @@ export default function jumpPointSearch(
 		)) {
 			const tentativeGScore = gScore[current] + 1; // tentativeGScore is the cost from start to the neighbor.
 
-			if (neighbor) {
+			if (neighbor !== null) {
 				if (
 					!gScore.hasOwnProperty(neighbor) ||
 					tentativeGScore < gScore[neighbor]
