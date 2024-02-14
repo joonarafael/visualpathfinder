@@ -13,23 +13,16 @@ const NewsClient = () => {
 						<div className="text-xl font-bold text-yellow-500">
 							JPS IS STILL UNDER CONSTRUCTION
 						</div>
-						<div className="text-xl font-bold text-rose-500">
-							JPS EXECUTION MIGHT CRASH THE APPLICATION
-						</div>
 						<div className="font-light">
-							IT CURRENTLY ONLY JUMPS ONE TILE AT A TIME.
+							{`THERE'S NO SOPHISTICATED JUMPING LOGIC YET.`}
 							<br />
-							THIS RESULTS IT IN A SIMILAR PATH AND PERFORMANCE AS THE A*.
-							<br />
-							<br />
-							JPS ALSO FALSELY RECOGNIZES VISITED AND NON-VISITED NODES
-							<br />
-							RENDERING AN INCORRECT RESULT VIEW.
+							THIS YIELDS SIMILAR RESULTS AND PERFORMANCE AS THE A*.
 							<br />
 							<br />
-							IN ADDITION, JPS ALSO SUFFERS FROM INCOMPLETE NEIGHBOR LOGIC,
+							IN ADDITION, THERE STILL EXISTS SOME CRITICAL UNRECOGNIZED
 							<br />
-							IT WILL SOMETIMES CUT THROUGH WALLS DIAGONALLY.
+							ISSUES WITH THE ALGORITHM. JPS EXECUTION MIGHT CRASH THE APP.
+							<br />
 						</div>
 						<Button
 							variant={"secondary"}
