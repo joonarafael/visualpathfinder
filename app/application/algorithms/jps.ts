@@ -34,6 +34,10 @@ export default function jumpPointSearch(
 			break;
 		}
 
+		if (fieldStatus[current] === 1) {
+			continue;
+		}
+
 		visited[current] = true;
 
 		// we've reached the goal, reconstruct the shortest path and return information of the visited nodes
@@ -105,8 +109,15 @@ function jump(
 	const y = Math.floor(node / width) + dy;
 
 	// check if it's within bounds
-	if (x < 0 || x >= width || y < 0) {
+	if (x < 0 || x >= width || y < 0 || y * width >= fieldStatus.length) {
 		return null;
+	}
+
+	// handle diagonals
+	if (dx !== 0 && dy !== 0) {
+		if (fieldStatus[node + dx] === 1 && fieldStatus[node + width * dy] === 1) {
+			return null;
+		}
 	}
 
 	// check if the potential neighbor is an obstacle
@@ -124,21 +135,25 @@ function isForcedNeighbor(
 	width: number,
 	fieldStatus: number[]
 ) {
-	// coordinates calculation
 	const x = (node % width) + dx;
 	const y = Math.floor(node / width) + dy;
 
-	// out of bounds?
-	if (x < 0 || x >= width || y < 0) {
+	if (x < 0 || x >= width || y < 0 || y * width >= fieldStatus.length) {
 		return false;
 	}
 
-	// is it an obstacle?
-	if (fieldStatus[node] === 1) {
-		return true;
+	// handle diagonals
+	if (dx !== 0 && dy !== 0) {
+		if (fieldStatus[node + dx] === 1 && fieldStatus[node + width * dy] === 1) {
+			return false;
+		}
 	}
 
-	return false;
+	if (fieldStatus[x + y * width] === 1) {
+		return false; // Return false if there is a wall in the specified direction
+	}
+
+	return true;
 }
 
 function getNeighborsWithJumpPoints(
@@ -164,13 +179,12 @@ function getNeighborsWithJumpPoints(
 		const x = direction[0];
 		const y = direction[1];
 
-		// check for forced neighbors (jump points)
+		// Check if the neighbor is forced
 		if (isForcedNeighbor(node, x, y, width, fieldStatus)) {
 			const forcedNeighbor = jump(node, x, y, width, fieldStatus);
 
 			neighbors.push(forcedNeighbor);
 		} else {
-			// if no jump points, add the regular neighbor
 			const neighbor = jump(node, x, y, width, fieldStatus);
 			if (neighbor) {
 				neighbors.push(neighbor);

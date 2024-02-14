@@ -1,5 +1,5 @@
 # Progress Report Week 5
 
--
+- spent a lot of time troubleshooting JPS
 
-Hours spent: 10 h (course total 25 h)
+Hours spent: 12 h (course total 27 h)
