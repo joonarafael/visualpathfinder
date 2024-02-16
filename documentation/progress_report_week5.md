@@ -2,6 +2,8 @@
 
 - spent time troubleshooting and bug-fixing the last-week's JPS
 
+- added more ready-made maps
+
 - started work on a real sophisticated jumping logic for the JPS
 
 Hours spent: 4 h (course total 31 h)

@@ -30,7 +30,7 @@ If encountering issues with the installation procedure of Node.js, please visit 
 
 ## Yarn (optional)
 
-I recommend using _Yarn_ instead of NPM as your package manager. Yarn is faster (provides parallel installation) and has a better track record of handling security issues.
+I recommend using _Yarn_ instead of NPM as your package manager. Yarn is much faster (provides parallel installation) and has a better track record of handling security issues.
 
 Install Yarn as your package manager with
 

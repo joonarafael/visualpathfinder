@@ -313,6 +313,7 @@ const PathFinder = () => {
 					smoothing={smoothing}
 					setSmoothing={setSmoothing}
 					contrast={contrast}
+					fieldStatus={fieldStatus}
 					setContrast={setContrast}
 				/>
 				<div className="flex flex-row gap-4">

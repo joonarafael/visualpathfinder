@@ -104,7 +104,6 @@ function jump(
 	width: number,
 	fieldStatus: number[]
 ) {
-	// calculate the coordinates of the POTENTIAL neighbor
 	const x = (node % width) + dx;
 	const y = Math.floor(node / width) + dy;
 
@@ -138,6 +137,7 @@ function isForcedNeighbor(
 	const x = (node % width) + dx;
 	const y = Math.floor(node / width) + dy;
 
+	// out of bounds?
 	if (x < 0 || x >= width || y < 0 || y * width >= fieldStatus.length) {
 		return false;
 	}
@@ -149,8 +149,9 @@ function isForcedNeighbor(
 		}
 	}
 
+	// return false if node is a wall tile
 	if (fieldStatus[x + y * width] === 1) {
-		return false; // Return false if there is a wall in the specified direction
+		return false;
 	}
 
 	return true;
@@ -179,19 +180,10 @@ function getNeighborsWithJumpPoints(
 		const x = direction[0];
 		const y = direction[1];
 
-		// Check if the neighbor is forced
-		if (isForcedNeighbor(node, x, y, width, fieldStatus)) {
-			const forcedNeighbor = jump(node, x, y, width, fieldStatus);
+		const neighbor = jump(node, x, y, width, fieldStatus);
 
-			if (forcedNeighbor !== null) {
-				neighbors.push(forcedNeighbor);
-			}
-		} else {
-			const neighbor = jump(node, x, y, width, fieldStatus);
-
-			if (neighbor !== null) {
-				neighbors.push(neighbor);
-			}
+		if (neighbor !== null) {
+			neighbors.push(neighbor);
 		}
 	}
 

@@ -16,11 +16,14 @@ import {
 } from "@/app/components/ui/menubar";
 
 import benchmark0 from "../maps/benchmarks/benchmark0";
+import benchmark1 from "../maps/benchmarks/benchmark1";
+import benchmark2 from "../maps/benchmarks/benchmark2";
 import baldur0 from "../maps/baldursgate/baldur0";
 import baldur1 from "../maps/baldursgate/baldur1";
 import city0 from "../maps/cities/city0";
 import baldur2 from "../maps/baldursgate/baldur2";
 import city1 from "../maps/cities/city1";
+import city2 from "../maps/cities/city2";
 
 interface MenuProps {
 	zoom: number;
@@ -33,6 +36,7 @@ interface MenuProps {
 	setSmoothing: (value: boolean) => void;
 	contrast: boolean;
 	setContrast: (value: boolean) => void;
+	fieldStatus: number[];
 }
 
 const Menu: React.FC<MenuProps> = ({
@@ -45,6 +49,7 @@ const Menu: React.FC<MenuProps> = ({
 	smoothing,
 	setSmoothing,
 	contrast,
+	fieldStatus,
 	setContrast,
 }) => {
 	const zoomIn = () => {
@@ -77,12 +82,23 @@ const Menu: React.FC<MenuProps> = ({
 	};
 
 	const generateRandom = (walls: number) => {
-		setFieldStatus(
-			Array.from({ length: 72 * 46 }, (_, index) => {
-				const randomValue = Math.random() * 100;
-				return randomValue <= walls ? 1 : 0;
-			})
-		);
+		const tmp: number[] = Array.from({ length: 72 * 46 }, (_, index) => {
+			const randomValue = Math.random() * 100;
+			return randomValue <= walls ? 1 : 0;
+		});
+
+		const startPoint = Math.floor(Math.random() * 3455);
+		let endPoint = Math.floor(Math.random() * 3455);
+
+		while (startPoint === endPoint) {
+			endPoint = Math.floor(Math.random() * 3455);
+		}
+
+		tmp[startPoint] = 2;
+		tmp[endPoint] = 3;
+
+		setFieldStatus(tmp);
+
 		setApplicationState("draw");
 	};
 
@@ -144,7 +160,7 @@ const Menu: React.FC<MenuProps> = ({
 						)}
 						<MenubarSeparator />
 						<MenubarSub>
-							<MenubarSubTrigger>Load Ready Map</MenubarSubTrigger>
+							<MenubarSubTrigger>Load Map</MenubarSubTrigger>
 							<MenubarSubContent>
 								<MenubarSub>
 									<MenubarSubTrigger>{"Baldur's Gate"}</MenubarSubTrigger>
@@ -189,7 +205,13 @@ const Menu: React.FC<MenuProps> = ({
 										>
 											{"City 2"}
 										</MenubarItem>
-										<MenubarItem disabled>{"City 3"}</MenubarItem>
+										<MenubarItem
+											onClick={() => {
+												setMap(city2);
+											}}
+										>
+											{"City 3"}
+										</MenubarItem>
 									</MenubarSubContent>
 								</MenubarSub>
 								<MenubarSub>
@@ -202,8 +224,20 @@ const Menu: React.FC<MenuProps> = ({
 										>
 											Benchmark 1
 										</MenubarItem>
-										<MenubarItem disabled>Benchmark 2</MenubarItem>
-										<MenubarItem disabled>Benchmark 3</MenubarItem>
+										<MenubarItem
+											onClick={() => {
+												setMap(benchmark1);
+											}}
+										>
+											Benchmark 2
+										</MenubarItem>
+										<MenubarItem
+											onClick={() => {
+												setMap(benchmark2);
+											}}
+										>
+											Benchmark 3
+										</MenubarItem>
 									</MenubarSubContent>
 								</MenubarSub>
 								<MenubarSeparator />
@@ -241,6 +275,14 @@ const Menu: React.FC<MenuProps> = ({
 								<MenubarItem onClick={emptyGrid}>Click to Confirm</MenubarItem>
 							</MenubarSubContent>
 						</MenubarSub>
+						<MenubarSeparator />
+						<MenubarItem
+							onClick={() => {
+								console.log(fieldStatus);
+							}}
+						>
+							Log Field to Console
+						</MenubarItem>
 						<MenubarSeparator />
 						<MenubarSub>
 							<MenubarSubTrigger>Exit</MenubarSubTrigger>

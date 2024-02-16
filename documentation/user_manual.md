@@ -56,9 +56,11 @@ Nearly every feature of the application can be accessed through the menu.
 
 - Edit Grid: Switch back to drawing mode.
 
-- Load Ready Map: Load ready-made maps. Current map state will be lost.
+- Load Map: Load ready-made maps. Current map state will be lost.
 
 - Empty Grid: Completely erase the current grid.
+
+- Log Field to Console: Log the 72x48 grid as a one-dimensional array to the browser console (open with F12). This feature is helpful if you decide to run this software on your own machine and manipulate the source code. Own maps could be exported with this method (see how maps are stored [within the software](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps "Maps Folder")).
 
 - Exit: Exit to Main Menu.
 

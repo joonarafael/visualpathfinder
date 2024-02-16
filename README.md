@@ -10,11 +10,11 @@ It's recommended to **check all the documentation** provided within [this folder
 
 ## General
 
-This is a visual pathfinder web application, allowing custom user pixel maps and detailed comparing of different types of pathfinding algorithms. Included algorithms are Dijkstra, A\*, and JPS.
+This is a visual pathfinder web application, allowing custom user pixel maps and detailed comparing of different types of pathfinding algorithms. Included algorithms are _Dijkstra_, _A\*_, and _JPS_ (under construction). All 3 algorithms support 8-way movement (cardinal directions and diagonals).
 
 ## Technical overview
 
-Application built with TypeScript utilizing the React _framework :)_, running on a Node.js server. All application logic is calculated on the client machine to safeguard the server.
+Application built with TypeScript utilizing the React _framework :)_, running on a Node.js server. All pathfinding algorithms are run on the client machine to safeguard the server.
 
 Application uses Tailwind CSS for styling and additionally features ready-made UI components provided by the [shadcn/ui library](https://ui.shadcn.com/ "shadcn/ui Homepage").
 
@@ -39,5 +39,7 @@ Downloaded from the [MovingAI Benchmarks](https://www.movingai.com/benchmarks/in
 - **CITY 1** (stored in the file named [city0](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps/cities/city0.tsx "Open File 'city0.tsx'")) generated from [this map](https://nextcity.org/images/made/BoeingStreetNetworkVisualLead_920_642_920_642_80.jpg "Open Original Reference for City 1").
 
 - **CITY 2** (stored in the file named [city1](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps/cities/city1.tsx "Open File 'city1.tsx'")) generated from [this map](https://s.hdnux.com/photos/61/76/04/13099288/3/rawImage.jpg "Open Original Reference for City 2").
+
+- **CITY 3** (stored in the file named [city2](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps/cities/city2.tsx "Open File 'city2.tsx'")) generated from [this map](https://s.hdnux.com/photos/61/76/04/13099293/3/rawImage.jpg "Open Original Reference for City 3").
 
 Same kind of processing has been done for the city maps as was described in the [Baldur's Gate maps](https://github.com/joonarafael/visualpathfinder?tab=readme-ov-file#baldursgate).
