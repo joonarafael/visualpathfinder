@@ -183,10 +183,13 @@ function getNeighborsWithJumpPoints(
 		if (isForcedNeighbor(node, x, y, width, fieldStatus)) {
 			const forcedNeighbor = jump(node, x, y, width, fieldStatus);
 
-			neighbors.push(forcedNeighbor);
+			if (forcedNeighbor !== null) {
+				neighbors.push(forcedNeighbor);
+			}
 		} else {
 			const neighbor = jump(node, x, y, width, fieldStatus);
-			if (neighbor) {
+
+			if (neighbor !== null) {
 				neighbors.push(neighbor);
 			}
 		}

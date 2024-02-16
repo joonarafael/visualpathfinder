@@ -14,9 +14,9 @@ const NewsClient = () => {
 							JPS IS STILL UNDER CONSTRUCTION
 						</div>
 						<div className="font-light">
-							{`THERE'S NO SOPHISTICATED JUMPING LOGIC YET.`}
+							{`JPS IS NOT READY YET, IT'S NOT A "REAL JPS"...`}
 							<br />
-							THIS YIELDS SIMILAR RESULTS AND PERFORMANCE AS THE A*.
+							IT YIELDS SIMILAR RESULTS AS A REGULAR A*.
 							<br />
 							<br />
 							IN ADDITION, THERE STILL EXISTS SOME CRITICAL UNRECOGNIZED
