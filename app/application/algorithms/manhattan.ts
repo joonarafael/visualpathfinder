@@ -1,5 +1,8 @@
 "use client";
 
+// This is a heuristic distance calculation function called the "Manhattan distance".
+// The returning distance is the sum of the absolute differences in x and y values.
+
 export default function heuristicManhattan(
 	node: number,
 	endNode: number,

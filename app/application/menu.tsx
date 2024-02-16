@@ -219,17 +219,17 @@ const Menu: React.FC<MenuProps> = ({
 										</MenubarItem>
 										<MenubarItem
 											onClick={() => {
-												generateRandom(30);
+												generateRandom(20);
 											}}
 										>
-											30% walls
+											20% walls
 										</MenubarItem>
 										<MenubarItem
 											onClick={() => {
-												generateRandom(50);
+												generateRandom(40);
 											}}
 										>
-											50% walls
+											40% walls
 										</MenubarItem>
 									</MenubarSubContent>
 								</MenubarSub>

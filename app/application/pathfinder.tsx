@@ -22,12 +22,19 @@ import updateUserView from "./running/updateuserview";
 type AdjacencyList = Record<number, number[]>;
 
 const PathFinder = () => {
+	// initialize all state variables
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [isError, setIsError] = useState(false);
 	const [smoothing, setSmoothing] = useState(true);
 	const [contrast, setContrast] = useState(false);
 	const [mapChanged, setMapChanged] = useState(false);
+	const [zoom, setZoom] = useState(4);
+	const [tool, setTool] = useState("START");
+	const [showNote, setShowNote] = useState(0);
+	const [applicationState, setApplicationState] = useState("draw");
+	const [algorithm, setAlgorithm] = useState("dijkstra");
 
+	// eventlistener for the window resizing
 	useEffect(() => {
 		const handleResizeWindow = () => setWindowWidth(window.innerWidth);
 		window.addEventListener("resize", handleResizeWindow);
@@ -39,9 +46,6 @@ const PathFinder = () => {
 
 	const breakpoint = 720;
 
-	const [showNote, setShowNote] = useState(0);
-	const [applicationState, setApplicationState] = useState("draw");
-	const [algorithm, setAlgorithm] = useState("dijkstra");
 	const [runsStats, setRunsStats] = useState({
 		dijkstra: {
 			time: 0,
@@ -68,9 +72,7 @@ const PathFinder = () => {
 		Array.from({ length: 72 * 46 }, (_, index) => 0)
 	);
 
-	const [zoom, setZoom] = useState(4);
-	const [tool, setTool] = useState("START");
-
+	// if map is changed, the old stats will be reset after an algorithm run
 	useEffect(() => {
 		setMapChanged(true);
 	}, [fieldStatus]);
@@ -85,6 +87,7 @@ const PathFinder = () => {
 		);
 	}
 
+	// handle tile clicking
 	const tileClick = (index: number) => {
 		if (tool === "START") {
 			let tmp = [...fieldStatus];
@@ -165,6 +168,7 @@ const PathFinder = () => {
 		return jumpPointSearch(adjacencyList, start, finish, 72, fieldStatus);
 	};
 
+	// function to handle the pathfinding calls
 	const runAlgorithm = (algorithm: string) => {
 		if (startAndFinishExist()) {
 			const tmp = [...fieldStatus];

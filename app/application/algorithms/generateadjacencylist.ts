@@ -1,5 +1,8 @@
 "use client";
 
+// This functions is responsible for analyzing the grid and creating a one-dimensional adjacency list.
+// The returning list is a type of object where each node is a key with a list of neighbors is as its value.
+
 type AdjacencyList = Record<number, number[]>;
 
 export default function generateAdjacencyList(

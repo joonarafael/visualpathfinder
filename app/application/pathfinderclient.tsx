@@ -1,6 +1,6 @@
 "use client";
 
-// Client view for Home Page
+// Client view for Application Page
 
 import PathFinder from "@/app/application/pathfinder";
 import Container from "@/app/components/container";

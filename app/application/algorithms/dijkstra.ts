@@ -25,7 +25,7 @@ export default function dijkstra(
 	const distances: Distances = {};
 	const visited: { [node: number]: boolean } = {};
 
-	// parents keeps track of the final correct path
+	// variable "parents" keeps track of the final correct path
 	// it is not necessary to execute Dijkstra in general
 	const parents: Parents = {};
 
