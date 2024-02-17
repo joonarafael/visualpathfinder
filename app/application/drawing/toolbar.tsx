@@ -1,5 +1,7 @@
 "use client";
 
+// Tool selection menu.
+
 import { Button } from "@/app/components/ui/button";
 
 interface ToolBarProps {

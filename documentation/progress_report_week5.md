@@ -1,9 +1,11 @@
 # Progress Report Week 5
 
-- spent time troubleshooting and bug-fixing the last-week's JPS
+- fixed many bugs from the last-week's JPS implementation (mainly incorrect neighbor processing and diagonal obstacle detection)
 
 - added more ready-made maps
 
+- rewrote the Priority Queue class into a binary heap
+
 - started work on a real sophisticated jumping logic for the JPS
 
-Hours spent: 4 h (course total 31 h)
+Hours spent: 7 h (course total 32 h)

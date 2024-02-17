@@ -1,4 +1,4 @@
-// Application page.
+// News page.
 
 import ClientOnly from "@/app/components/clientonly";
 

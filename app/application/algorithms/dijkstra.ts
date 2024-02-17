@@ -24,9 +24,6 @@ export default function dijkstra(
 ): DijkstraResult {
 	const distances: Distances = {};
 	const visited: { [node: number]: boolean } = {};
-
-	// variable "parents" keeps track of the final correct path
-	// it is not necessary to execute Dijkstra in general
 	const parents: Parents = {};
 
 	// initialize all distances to infinity
@@ -42,7 +39,6 @@ export default function dijkstra(
 		let shortestDistance = Number.MAX_VALUE;
 		let currentNode: number | null = null;
 
-		// blindly iterate over every node in the distances list
 		for (let node in distances) {
 			if (distances[node] < shortestDistance && !visited[node]) {
 				shortestDistance = distances[node];
@@ -57,7 +53,6 @@ export default function dijkstra(
 
 		// end node found, construct shortest path
 		if (currentNode === endNode) {
-			// this is the logic to actually return the shortest found path with the help of the parents array
 			const shortestPath: number[] = [];
 			let node: number | null = endNode;
 
@@ -66,7 +61,6 @@ export default function dijkstra(
 				node = parents[node] ?? null;
 			}
 
-			// terminate execution as the end was found.
 			return { visited, shortestPath };
 		}
 
@@ -75,8 +69,6 @@ export default function dijkstra(
 
 			if (distanceToNeighbor <= distances[neighbor]) {
 				distances[neighbor] = distanceToNeighbor;
-
-				// to display the shortest path, we add the parent for later path finding
 				parents[neighbor] = currentNode;
 			}
 		}

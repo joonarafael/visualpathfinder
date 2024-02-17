@@ -1,5 +1,7 @@
 "use client";
 
+// Sidebar for the run statistics.
+
 import { Button } from "@/app/components/ui/button";
 
 interface RunBarProps {

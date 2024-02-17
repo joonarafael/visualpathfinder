@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+// Individual tile elements for the "run" grid.
 
 interface RunTileProps {
 	index: number;

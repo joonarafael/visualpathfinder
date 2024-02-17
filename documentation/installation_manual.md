@@ -1,6 +1,6 @@
 # INSTALLATION MANUAL
 
-This manual provides instructions for the cloning of the repository and the installation procedure to get this application running on your own local _Linux_ machine. If you're looking for the general user manual on how to use the [Live Application](https://visualpathfinder.vercel.app/ "https://visualpathfinder.vercel.app/") running on the dedicated web server, consult [this document](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/user_manual.md "User Manual").
+This manual provides instructions for the cloning of the repository and the installation procedure to get this application running on your own local machine. If you're looking for the general user manual on how to use the [Live Application](https://visualpathfinder.vercel.app/ "https://visualpathfinder.vercel.app/") running on the dedicated web server, consult [this document](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/user_manual.md "User Manual").
 
 **This installation manual describes the process for LINUX systems.** Users of other operating systems might need to consult other documentation to get the application running on their own local machine. However, the installation procedure should be largely similar to the one described here.
 

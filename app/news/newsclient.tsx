@@ -1,5 +1,7 @@
 "use client";
 
+// Client view for the News Page
+
 import Container from "@/app/components/container";
 import { Button } from "@/app/components/ui/button";
 
@@ -14,9 +16,9 @@ const NewsClient = () => {
 							JPS IS STILL UNDER CONSTRUCTION
 						</div>
 						<div className="font-light">
-							{`JPS IS NOT READY YET, IT'S NOT A "REAL JPS"...`}
+							{`JPS IS NOT A "REAL JPS" YET, JUMP POINTS DO NOT WORK`}
 							<br />
-							IT YIELDS SIMILAR RESULTS AS A REGULAR A*.
+							AS THEY ARE SUPPOSED TO. THEREFORE IT RESEMBLES A REGULAR A*.
 							<br />
 							<br />
 							IN ADDITION, THERE STILL EXISTS SOME CRITICAL UNRECOGNIZED

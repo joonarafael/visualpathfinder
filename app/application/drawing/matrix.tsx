@@ -1,6 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+// This module renders the interactive grid map during drawing.
+
+import { useEffect, useState } from "react";
 
 import Tile from "./tile";
 

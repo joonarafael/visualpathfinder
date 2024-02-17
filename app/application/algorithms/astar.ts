@@ -9,19 +9,15 @@ export default function aStar(
 	endNode: number,
 	width: number
 ) {
-	// initialize all variables for the algorithm
-	const openSet = new PriorityQueue<number>(); // this is the priority queue (main data structure for the algorithm)
+	const openSet = new PriorityQueue<number>(); // this is the priority queue
 	const cameFrom: Record<number, number> = {}; // record of navigated nodes
 	const gScore: Record<number, number> = {}; // cost from start along best known path
 	const fScore: Record<number, number> = {}; // estimated total cost from start to goal THROUGH y (neighbor evaluation)
 
-	// same visited nodes data structure as in Dijkstra
 	const visited: { [node: number]: boolean } = {};
 
-	// add starting node to PQ
 	openSet.enqueue(startNode, 0);
 
-	// process starting node
 	gScore[startNode] = 0;
 	fScore[startNode] = heuristicManhattan(startNode, endNode, width);
 

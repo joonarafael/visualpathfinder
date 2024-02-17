@@ -1,5 +1,7 @@
 "use client";
 
+// This module renders the grid map during the algorithm run.
+
 import RunTile from "./tile";
 
 interface RunMatrixProps {

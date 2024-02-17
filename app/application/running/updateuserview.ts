@@ -1,5 +1,8 @@
 "use client";
 
+// Method to update the algorithm result to the grid.
+// Color all visited nodes and restore the start and end points.
+
 export default function updateUserView(
 	fieldStatus: number[],
 	setRunFieldStatus: (value: number[]) => void,

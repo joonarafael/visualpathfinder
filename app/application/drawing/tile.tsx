@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+// Individual INTERACTIVE tile elements (for drawing grid)
 
 interface TileProps {
 	index: number;
