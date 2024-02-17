@@ -44,8 +44,6 @@ describe("PriorityQueue", () => {
 		pq.enqueue(1, 3);
 		pq.enqueue(2, 2);
 
-		pq.sort();
-
 		expect(pq.queue).toEqual([
 			{ element: 3, priority: 1 },
 			{ element: 2, priority: 2 },

@@ -12,8 +12,6 @@ Some other use cases of AI that merely focused on the UI and some other visual f
 
 - **Dijkstra's algorithm**: AI helped convert my own Dijkstra algorithm slightly so it would take an adjacency _list_ as an argument as opposed to an adjacency _matrix_. AI also helped by debugging the issues related to the creation of the `shortestPath` array.
 
-- **Priority Queue**: AI helped rewrite (and later fix) the priority queue data structure into a binary heap implementation.
-
 - **A\* algorithm**: AI helped troubleshoot issues with the `shortestPath` reconstruction function. AI also helped debug issues with an infinite A\* execution loop.
 
 - **JPS algorithm**: AI helped write some pseudocode for the JPS helper functions. This gave me a good starting point, but AI generated code was **widely inaccurate** and **only covered partial functionality**. Issues were mainly related to the way the map, base A\* function, and other data structures are handled by my application. Also no real working jump point logic was provided by the AI.

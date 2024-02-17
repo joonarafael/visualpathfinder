@@ -4,8 +4,6 @@
 
 - added more ready-made maps
 
-- rewrote the Priority Queue class into a binary heap
-
 - started work on a real sophisticated jumping logic for the JPS
 
 Hours spent: 7 h (course total 32 h)
