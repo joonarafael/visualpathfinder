@@ -10,19 +10,15 @@ export default function jumpPointSearch(
 	width: number,
 	fieldStatus: number[]
 ) {
-	// initialize all variables for the algorithm
-	const openSet = new PriorityQueue<number>(); // this is the priority queue (main data structure for the algorithm)
-	const cameFrom: Record<number, number> = {}; // record of navigated nodes
-	const gScore: Record<number, number> = {}; // cost from start along best known path
-	const fScore: Record<number, number> = {}; // estimated total cost from start to goal THROUGH y (neighbor evaluation)
+	const openSet = new PriorityQueue<number>();
+	const cameFrom: Record<number, number> = {};
+	const gScore: Record<number, number> = {};
+	const fScore: Record<number, number> = {};
 
-	// same visited nodes data structure as in Dijkstra
 	const visited: { [node: number]: boolean } = {};
 
-	// add starting node to PQ
 	openSet.enqueue(startNode, 0);
 
-	// process starting node
 	gScore[startNode] = 0;
 	fScore[startNode] = heuristicManhattan(startNode, endNode, width);
 
@@ -40,7 +36,7 @@ export default function jumpPointSearch(
 
 		visited[current] = true;
 
-		// we've reached the goal, reconstruct the shortest path and return information of the visited nodes
+		// we've reached the goal
 		if (current === endNode) {
 			return {
 				shortestPath: reconstructPath(cameFrom, endNode),
@@ -48,15 +44,8 @@ export default function jumpPointSearch(
 			};
 		}
 
-		// algorithm MAIN STUFF:
-		// evaluate every jps neighbor
-		for (const neighbor of getNeighborsWithJumpPoints(
-			current,
-			endNode,
-			width,
-			fieldStatus
-		)) {
-			const tentativeGScore = gScore[current] + 1; // tentativeGScore is the cost from start to the neighbor.
+		for (const neighbor of getNeighbors(current, width, fieldStatus)) {
+			const tentativeGScore = gScore[current] + 1;
 
 			if (neighbor !== null) {
 				if (
@@ -64,12 +53,11 @@ export default function jumpPointSearch(
 					tentativeGScore < gScore[neighbor]
 				) {
 					cameFrom[neighbor] = current; // record path
-					gScore[neighbor] = tentativeGScore; // update the gScore for this node
-					fScore[neighbor] =
-						tentativeGScore + heuristicManhattan(neighbor, endNode, width); // also calculate the fScore for the neighbor.
 
-					// we decided that the neighbor is a good choice for the path (with the previous if statement)
-					// let's add it to the open set if it's not already there
+					gScore[neighbor] = tentativeGScore;
+					fScore[neighbor] =
+						tentativeGScore + heuristicManhattan(neighbor, endNode, width);
+
 					if (!openSet.queue.some((item) => item.element === neighbor)) {
 						openSet.enqueue(neighbor, fScore[neighbor]);
 					}
@@ -127,42 +115,7 @@ function jump(
 	return x + y * width;
 }
 
-function isForcedNeighbor(
-	node: number,
-	dx: number,
-	dy: number,
-	width: number,
-	fieldStatus: number[]
-) {
-	const x = (node % width) + dx;
-	const y = Math.floor(node / width) + dy;
-
-	// out of bounds?
-	if (x < 0 || x >= width || y < 0 || y * width >= fieldStatus.length) {
-		return false;
-	}
-
-	// handle diagonals
-	if (dx !== 0 && dy !== 0) {
-		if (fieldStatus[node + dx] === 1 && fieldStatus[node + width * dy] === 1) {
-			return false;
-		}
-	}
-
-	// return false if node is a wall tile
-	if (fieldStatus[x + y * width] === 1) {
-		return false;
-	}
-
-	return true;
-}
-
-function getNeighborsWithJumpPoints(
-	node: number,
-	endNode: number,
-	width: number,
-	fieldStatus: number[]
-) {
+function getNeighbors(node: number, width: number, fieldStatus: number[]) {
 	let neighbors = [];
 
 	const directions = [
