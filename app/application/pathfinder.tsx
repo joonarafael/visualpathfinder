@@ -50,17 +50,17 @@ const PathFinder = () => {
 		dijkstra: {
 			time: 0,
 			visited_nodes: 0,
-			path_length: 0,
+			path_length: "0",
 		},
 		a_star: {
 			time: 0,
 			visited_nodes: 0,
-			path_length: 0,
+			path_length: "0",
 		},
 		jps: {
 			time: 0,
 			visited_nodes: 0,
-			path_length: 0,
+			path_length: "0",
 		},
 	});
 
@@ -145,7 +145,7 @@ const PathFinder = () => {
 	) => {
 		setAlgorithm("dijkstra");
 
-		return dijkstra(adjacencyList, start, finish);
+		return dijkstra(adjacencyList, start, finish, 72);
 	};
 
 	const callAStar = (
@@ -208,14 +208,14 @@ const PathFinder = () => {
 								),
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
-									? algorithmReturn.shortestPath.length
-									: 0,
+									? `${algorithmReturn.shortestPath.length} (${algorithmReturn?.absoluteDistance})`
+									: "0",
 						  }
 						: mapChanged
 						? {
 								time: 0,
 								visited_nodes: 0,
-								path_length: 0,
+								path_length: "0",
 						  }
 						: {
 								time: runsStats.dijkstra.time,
@@ -231,14 +231,14 @@ const PathFinder = () => {
 								),
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
-									? algorithmReturn.shortestPath.length
-									: 0,
+									? `${algorithmReturn.shortestPath.length} (${algorithmReturn?.absoluteDistance})`
+									: "0",
 						  }
 						: mapChanged
 						? {
 								time: 0,
 								visited_nodes: 0,
-								path_length: 0,
+								path_length: "0",
 						  }
 						: {
 								time: runsStats.a_star.time,
@@ -254,14 +254,14 @@ const PathFinder = () => {
 								),
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
-									? algorithmReturn.shortestPath.length
-									: 0,
+									? `${algorithmReturn.shortestPath.length} (${algorithmReturn?.absoluteDistance})`
+									: "0",
 						  }
 						: mapChanged
 						? {
 								time: 0,
 								visited_nodes: 0,
-								path_length: 0,
+								path_length: "0",
 						  }
 						: {
 								time: runsStats.jps.time,

@@ -23,7 +23,7 @@ const RunBar: React.FC<RunBarProps> = ({
 
 	const resultElement = (
 		name: string,
-		data: { time: number; visited_nodes: number; path_length: number }
+		data: { time: number; visited_nodes: number; path_length: string }
 	) => {
 		return (
 			<div
@@ -42,7 +42,7 @@ const RunBar: React.FC<RunBarProps> = ({
 					<p>{data.time} ms</p>
 					<p className="text-neutral-500 text-xs">NODES VISITED</p>
 					<p>{data.visited_nodes}</p>
-					{data.path_length > 0 ? (
+					{data.path_length !== "0" ? (
 						<>
 							<p className="text-neutral-500 text-xs">PATH LENGTH</p>
 							<p>{data.path_length}</p>
@@ -107,7 +107,7 @@ const RunBar: React.FC<RunBarProps> = ({
 						className="font-bold"
 						variant={"destructive"}
 					>
-						ALRIGHT
+						YES I KNOW
 					</Button>
 				</div>
 			) : (
@@ -131,7 +131,7 @@ const RunBar: React.FC<RunBarProps> = ({
 							className="font-bold"
 							variant={"destructive"}
 						>
-							I GET IT
+							FINE BY ME
 						</Button>
 					</div>
 				)
@@ -157,6 +157,30 @@ const RunBar: React.FC<RunBarProps> = ({
 						path_length: runsStats.jps.path_length,
 				  })
 				: notRunElement("jps")}
+			{showNote === 2 && (
+				<div
+					className={`${commonCSS} flex flex-col border-emerald-500 content-center text-green-500`}
+				>
+					TIP
+					<hr className="mt-1 py-1" />
+					<div className="flex flex-col gap-1 font-light">
+						<p className="text-neutral-500 text-xs">
+							HEURISTIC PATH LENGTH (DIAGONALS SQRT(2)) IS GIVEN WITHIN
+							PARENTHESES. THE FIRST NUMBER IS THE AMOUNT OF TRAVERSED NODES.
+						</p>
+					</div>
+					<hr className="mt-1 py-1" />
+					<Button
+						onClick={() => {
+							setShowNote(3);
+						}}
+						className="font-bold"
+						variant={"secondary"}
+					>
+						I GET IT
+					</Button>
+				</div>
+			)}
 		</div>
 	);
 };

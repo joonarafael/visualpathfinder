@@ -32,7 +32,7 @@ Tool Bar includes selection for the current tool.
 
 - Start: Select the start tile. Only one start tile may exist at a time, so the old one will be removed.
 
-- Finish: Select the goal tile. Only one goal tile may exist at a time, so the old one will be removed.
+- Finish: Select the end tile. Only one goal tile may exist at a time, so the old one will be removed.
 
 - Eraser: Erase wall tiles and turn them into regular path tiles.
 
@@ -42,9 +42,17 @@ Tool Bar includes selection for the current tool.
 
 Run Bar includes the statistics of recent pathfinding runs.
 
-Here you may compare the different algorithms against eachother **on the same map**.
+Here you may compare the different algorithms against each other **on the same map**.
 
 **PLEASE NOTE:** All recorded statistics will be lost once the map is changed **and** a new algorithm is run. Previous records will be stored as long as no new algorithm is run on the changed map.
+
+The statistics will always show
+
+- Runtime: The total amount of time spent executing the algorithm. This time **includes** the generation of the adjacency list.
+
+- Nodes Visited: The total amount of nodes that were visited during the algorithm execution. These nodes will appear grey on the map.
+
+- Path Length: If the finish is found, the path length will be displayed. The number in the parentheses represents the heuristic length of the path (where diagonal moves are equal to $\sqrt{2}$). The other number is the total amount of traversed nodes. If the finish was never found, it will be indicated in a red text instead of these numbers.
 
 ### Menu
 

@@ -31,31 +31,33 @@ export default function aStar(
 
 		visited[current] = true;
 
-		// we've reached the goal, reconstruct the shortest path and return information of the visited nodes
+		// we've reached the goal
 		if (current === endNode) {
 			return {
 				shortestPath: reconstructPath(cameFrom, endNode),
 				visited: visited,
+				absoluteDistance: parseFloat(
+					(fScore[endNode] + Number.EPSILON).toFixed(1)
+				),
 			};
 		}
 
-		// algorithm MAIN STUFF:
-		// evaluate every neighbor
 		for (const neighbor of adjacencyList[current]) {
-			const tentativeGScore = gScore[current] + 1; // tentativeGScore is the cost from start to the neighbor.
+			let tentativeGScore = gScore[current] + 1;
 
-			// If the tentative gScore is better than previous ones, we should use it.
+			if (isDiagonal(current, neighbor, width)) {
+				tentativeGScore = gScore[current] + Math.sqrt(2);
+			}
+
 			if (
 				!gScore.hasOwnProperty(neighbor) ||
 				tentativeGScore < gScore[neighbor]
 			) {
-				cameFrom[neighbor] = current; // record path
-				gScore[neighbor] = tentativeGScore; // update the gScore for this node
+				cameFrom[neighbor] = current;
+				gScore[neighbor] = tentativeGScore;
 				fScore[neighbor] =
-					tentativeGScore + heuristicManhattan(neighbor, endNode, width); // also calculate the fScore for the neighbor.
+					tentativeGScore + heuristicManhattan(neighbor, endNode, width);
 
-				// we decided that the neighbor is a good choice for the path (with the previous if statement)
-				// let's add it to the open set if it's not already there
 				if (!openSet.queue.some((item) => item.element === neighbor)) {
 					openSet.enqueue(neighbor, fScore[neighbor]);
 				}
@@ -65,6 +67,18 @@ export default function aStar(
 
 	// pq empty but no path found
 	return { visited: visited };
+}
+
+function isDiagonal(node: number, neighbor: number, width: number): boolean {
+	if (Math.abs(node - neighbor) === width) {
+		return false;
+	}
+
+	if (Math.abs(node - neighbor) === 1) {
+		return false;
+	}
+
+	return true;
 }
 
 // function to reconstruct the shortest found path

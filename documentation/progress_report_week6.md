@@ -1,5 +1,5 @@
 # Progress Report Week 6
 
-- Real work on JPS started, need to add a sophisticated way of defining the jump points further away.
+- Fixed path length calculation; diagonal movement costs $\sqrt{2}$ for all algorithms.
 
-Hours spent: 1 h (course total 33 h)
+Hours spent: 2 h (course total 34 h)

@@ -15,12 +15,14 @@ interface Parents {
 interface DijkstraResult {
 	visited: { [node: number]: boolean };
 	shortestPath?: number[];
+	absoluteDistance?: number;
 }
 
 export default function dijkstra(
 	adjacencyList: AdjacencyList,
 	startNode: number,
-	endNode: number
+	endNode: number,
+	width: number
 ): DijkstraResult {
 	const distances: Distances = {};
 	const visited: { [node: number]: boolean } = {};
@@ -61,11 +63,21 @@ export default function dijkstra(
 				node = parents[node] ?? null;
 			}
 
-			return { visited, shortestPath };
+			return {
+				visited,
+				shortestPath,
+				absoluteDistance: parseFloat(
+					(distances[endNode] + Number.EPSILON).toFixed(1)
+				),
+			};
 		}
 
 		for (let neighbor of adjacencyList[currentNode]) {
-			const distanceToNeighbor = shortestDistance + 1;
+			let distanceToNeighbor = shortestDistance + 1;
+
+			if (isDiagonal(currentNode, neighbor, width)) {
+				distanceToNeighbor = shortestDistance + Math.sqrt(2);
+			}
 
 			if (distanceToNeighbor <= distances[neighbor]) {
 				distances[neighbor] = distanceToNeighbor;
@@ -75,4 +87,16 @@ export default function dijkstra(
 
 		visited[currentNode] = true;
 	}
+}
+
+function isDiagonal(node: number, neighbor: number, width: number): boolean {
+	if (Math.abs(node - neighbor) === width) {
+		return false;
+	}
+
+	if (Math.abs(node - neighbor) === 1) {
+		return false;
+	}
+
+	return true;
 }

@@ -41,11 +41,16 @@ export default function jumpPointSearch(
 			return {
 				shortestPath: reconstructPath(cameFrom, endNode),
 				visited: visited,
+				absoluteDistance: "null",
 			};
 		}
 
 		for (const neighbor of getNeighbors(current, width, fieldStatus)) {
-			const tentativeGScore = gScore[current] + 1;
+			let tentativeGScore = gScore[current] + 1;
+
+			if (isDiagonal(current, neighbor, width)) {
+				tentativeGScore = gScore[current] + Math.sqrt(2);
+			}
 
 			if (neighbor !== null) {
 				if (
@@ -68,6 +73,18 @@ export default function jumpPointSearch(
 
 	// pq empty but no path found
 	return { visited: visited };
+}
+
+function isDiagonal(node: number, neighbor: number, width: number): boolean {
+	if (Math.abs(node - neighbor) === width) {
+		return false;
+	}
+
+	if (Math.abs(node - neighbor) === 1) {
+		return false;
+	}
+
+	return true;
 }
 
 // function to reconstruct the shortest found path
