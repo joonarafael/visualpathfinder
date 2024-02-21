@@ -275,6 +275,9 @@ const PathFinder = () => {
 					jps: jpsStats,
 				});
 
+				console.log(fieldStatus.indexOf(2), fieldStatus.indexOf(3));
+				console.log(algorithmReturn.visited);
+
 				updateUserView(
 					tmp,
 					setRunFieldStatus,

@@ -12,10 +12,10 @@ describe("PriorityQueue", () => {
 		pq.enqueue(1, 3);
 		pq.enqueue(2, 2);
 
-		expect(pq.queue).toEqual([
+		expect(pq.heap).toEqual([
 			{ element: 3, priority: 1 },
-			{ element: 2, priority: 2 },
 			{ element: 1, priority: 3 },
+			{ element: 2, priority: 2 },
 		]);
 	});
 
@@ -27,7 +27,7 @@ describe("PriorityQueue", () => {
 		const result = pq.dequeue();
 
 		expect(result).toBe(3);
-		expect(pq.queue).toEqual([
+		expect(pq.heap).toEqual([
 			{ element: 2, priority: 2 },
 			{ element: 1, priority: 3 },
 		]);
@@ -44,10 +44,10 @@ describe("PriorityQueue", () => {
 		pq.enqueue(1, 3);
 		pq.enqueue(2, 2);
 
-		expect(pq.queue).toEqual([
+		expect(pq.heap).toEqual([
 			{ element: 3, priority: 1 },
-			{ element: 2, priority: 2 },
 			{ element: 1, priority: 3 },
+			{ element: 2, priority: 2 },
 		]);
 	});
 

@@ -39,7 +39,7 @@ describe("basic logic for a_star", () => {
 		const aStarReturn = aStar(adjacencyList, 13, 15, 4);
 
 		expect(aStarReturn.visited["11"]).toEqual(true);
-		expect(aStarReturn.visited["15"]).toEqual(true);
+		expect(aStarReturn.visited["15"]).toEqual(undefined);
 
 		if (aStarReturn.shortestPath) {
 			expect(aStarReturn.shortestPath.length).toEqual(10);

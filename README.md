@@ -22,7 +22,7 @@ Automatic software testing powered by the Jest library. Tests cover the core app
 
 ## Algorithms
 
-The source code for all the core features, such as the pathfinding algorithms, logic to generate adjacency lists and e.g. Manhattan distance function can be found in [this folder](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms "Application Algorithm Folder").
+The source code for all the core features, such as the pathfinding algorithms, logic to generate adjacency lists and e.g. Euclidean distance function can be found in [this folder](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms "Application Algorithm Folder").
 
 All other files merely support the web application and e.g. provide the rendering of the user interface.
 

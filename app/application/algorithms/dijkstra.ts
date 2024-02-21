@@ -1,5 +1,7 @@
 "use client";
 
+import isDiagonal from "./isdiagonal";
+
 interface AdjacencyList {
 	[node: number]: number[];
 }
@@ -17,6 +19,8 @@ interface DijkstraResult {
 	shortestPath?: number[];
 	absoluteDistance?: number;
 }
+
+// This is the Dijkstra algorithm.
 
 export default function dijkstra(
 	adjacencyList: AdjacencyList,
@@ -41,6 +45,7 @@ export default function dijkstra(
 		let shortestDistance = Number.MAX_VALUE;
 		let currentNode: number | null = null;
 
+		// retrieve the current node
 		for (let node in distances) {
 			if (distances[node] < shortestDistance && !visited[node]) {
 				shortestDistance = distances[node];
@@ -72,6 +77,7 @@ export default function dijkstra(
 			};
 		}
 
+		// actual neighbor processing for the current node
 		for (let neighbor of adjacencyList[currentNode]) {
 			let distanceToNeighbor = shortestDistance + 1;
 
@@ -87,16 +93,4 @@ export default function dijkstra(
 
 		visited[currentNode] = true;
 	}
-}
-
-function isDiagonal(node: number, neighbor: number, width: number): boolean {
-	if (Math.abs(node - neighbor) === width) {
-		return false;
-	}
-
-	if (Math.abs(node - neighbor) === 1) {
-		return false;
-	}
-
-	return true;
 }

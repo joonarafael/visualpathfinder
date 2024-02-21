@@ -16,7 +16,7 @@ describe("basic logic for dijkstra", () => {
 			15: [11],
 		};
 
-		const dijkstraReturn = dijkstra(adjacencyList, 13, 15);
+		const dijkstraReturn = dijkstra(adjacencyList, 13, 15, 4);
 
 		expect(Object.keys(dijkstraReturn.visited).length).toEqual(11);
 	});
@@ -36,7 +36,7 @@ describe("basic logic for dijkstra", () => {
 			15: [11],
 		};
 
-		const dijkstraReturn = dijkstra(adjacencyList, 13, 15);
+		const dijkstraReturn = dijkstra(adjacencyList, 13, 15, 4);
 
 		expect(dijkstraReturn.visited["11"]).toEqual(true);
 		expect(dijkstraReturn.visited["15"]).toEqual(false);
@@ -61,7 +61,7 @@ describe("basic logic for dijkstra", () => {
 			13: [12],
 		};
 
-		const dijkstraReturn = dijkstra(adjacencyList, 13, 15);
+		const dijkstraReturn = dijkstra(adjacencyList, 13, 15, 4);
 
 		expect(dijkstraReturn.visited["7"]).toEqual(true);
 
