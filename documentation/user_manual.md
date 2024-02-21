@@ -52,7 +52,7 @@ The statistics will always show
 
 - Nodes Visited: The total amount of nodes that were visited during the algorithm execution. These nodes will appear grey on the map.
 
-- Path Length: If the finish is found, the path length will be displayed. The number in the parentheses represents the heuristic length of the path (where diagonal moves are equal to $\sqrt{2}$). The other number is the total amount of traversed nodes. If the finish was never found, it will be indicated in a red text instead of these numbers.
+- Path Length: If the finish is found, the path length will be displayed. The number in the parentheses represents the "Euclidean length" of the path (where diagonal moves are equal to $\sqrt{2}$). The other number is the total amount of traversed nodes. If the finish was never found, it will be indicated in a red text instead of these numbers.
 
 ### Menu
 

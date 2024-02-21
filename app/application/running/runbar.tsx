@@ -165,8 +165,8 @@ const RunBar: React.FC<RunBarProps> = ({
 					<hr className="mt-1 py-1" />
 					<div className="flex flex-col gap-1 font-light">
 						<p className="text-neutral-500 text-xs">
-							HEURISTIC PATH LENGTH (DIAGONALS SQRT(2)) IS GIVEN WITHIN
-							PARENTHESES. THE FIRST NUMBER IS THE AMOUNT OF TRAVERSED NODES.
+							{`"EUCLIDEAN PATH LENGTH" (WHERE DIAGONALS SQRT(2)) IS GIVEN WITHIN
+							PARENTHESES. THE FIRST NUMBER IS THE AMOUNT OF TRAVERSED NODES.`}
 						</p>
 					</div>
 					<hr className="mt-1 py-1" />
