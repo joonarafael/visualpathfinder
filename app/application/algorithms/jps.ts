@@ -7,7 +7,6 @@ import PriorityQueue from "./pq";
 // jps is a special A* algorithm.
 
 export default function jumpPointSearch(
-	adjacencyList: Record<number, number[]>,
 	startNode: number,
 	endNode: number,
 	width: number,
@@ -54,20 +53,18 @@ export default function jumpPointSearch(
 				tentativeGScore = gScore[current] + Math.sqrt(2);
 			}
 
-			if (neighbor !== null) {
-				if (
-					!gScore.hasOwnProperty(neighbor) ||
-					tentativeGScore < gScore[neighbor]
-				) {
-					cameFrom[neighbor] = current;
+			if (
+				!gScore.hasOwnProperty(neighbor) ||
+				tentativeGScore < gScore[neighbor]
+			) {
+				cameFrom[neighbor] = current;
 
-					gScore[neighbor] = tentativeGScore;
-					fScore[neighbor] =
-						tentativeGScore + heuristicEuclidean(neighbor, endNode, width);
+				gScore[neighbor] = tentativeGScore;
+				fScore[neighbor] =
+					tentativeGScore + heuristicEuclidean(neighbor, endNode, width);
 
-					if (!openSet.heap.some((item) => item.element === neighbor)) {
-						openSet.enqueue(neighbor, fScore[neighbor]);
-					}
+				if (!openSet.heap.some((item) => item.element === neighbor)) {
+					openSet.enqueue(neighbor, fScore[neighbor]);
 				}
 			}
 		}
@@ -92,36 +89,129 @@ function reconstructPath(
 	return path;
 }
 
-// JUMP POINT SEARCH LOGIC:
+function inBoundsAndNotTile(
+	x: number,
+	y: number,
+	width: number,
+	fieldStatus: number[]
+) {
+	// check if it's within bounds
+	if (x < 0 || x >= width || y < 0 || y * width >= fieldStatus.length) {
+		return false;
+	}
 
-function jump(
-	node: number,
+	if (fieldStatus[y * width + x] === 1) {
+		return false;
+	}
+
+	return true;
+}
+
+function isCorrectMove(
+	parent: number,
+	x: number,
+	y: number,
 	dx: number,
 	dy: number,
 	width: number,
 	fieldStatus: number[]
 ) {
-	const x = (node % width) + dx;
-	const y = Math.floor(node / width) + dy;
-
 	// check if it's within bounds
-	if (x < 0 || x >= width || y < 0 || y * width >= fieldStatus.length) {
-		return null;
+	if (!inBoundsAndNotTile(x, y, width, fieldStatus)) {
+		return false;
 	}
 
 	// handle diagonals
 	if (dx !== 0 && dy !== 0) {
-		if (fieldStatus[node + dx] === 1 && fieldStatus[node + width * dy] === 1) {
-			return null;
+		if (
+			fieldStatus[parent + dx] === 1 &&
+			fieldStatus[parent + width * dy] === 1
+		) {
+			return false;
 		}
 	}
 
-	// check if the potential neighbor is an obstacle
-	if (fieldStatus[node] === 1) {
+	return true;
+}
+
+function pruneNeighbors(
+	target: number,
+	targetX: number,
+	targetY: number,
+	dx: number,
+	dy: number,
+	width: number,
+	fieldStatus: number[]
+) {
+	if (dx !== 0 && dy === 0) {
+		if (0 <= targetX + dx && targetX + dx < width) {
+			if (targetY > 0 && fieldStatus[target - width] === 1) {
+				return target;
+			}
+
+			if (
+				targetY < fieldStatus.length / width &&
+				fieldStatus[target + width] === 1
+			) {
+				return target;
+			}
+		} else {
+			return target;
+		}
+
+		return pruneNeighbors(
+			target + dx,
+			targetX + dx,
+			targetY,
+			dx,
+			dy,
+			width,
+			fieldStatus
+		);
+	} else if (dx === 0 && dy !== 0) {
+		if (0 <= targetY + dy && targetY + dy < fieldStatus.length / width) {
+			if (targetX > 0 && fieldStatus[target - 1] === 1) {
+				return target;
+			}
+
+			if (targetX < width - 1 && fieldStatus[target + 1] === 1) {
+				return target;
+			}
+		} else {
+			return target;
+		}
+
+		return pruneNeighbors(
+			target + dy * width,
+			targetX,
+			targetY + dy,
+			dx,
+			dy,
+			width,
+			fieldStatus
+		);
+	}
+}
+
+// JUMP POINT SEARCH LOGIC:
+
+function jump(
+	parent: number,
+	dx: number,
+	dy: number,
+	width: number,
+	fieldStatus: number[]
+) {
+	const x = (parent % width) + dx;
+	const y = Math.floor(parent / width) + dy;
+
+	if (!isCorrectMove(parent, x, y, dx, dy, width, fieldStatus)) {
 		return null;
 	}
 
-	return x + y * width;
+	const target = x + y * width;
+
+	return pruneNeighbors(target, x, y, dx, dy, width, fieldStatus);
 }
 
 function getNeighbors(node: number, width: number, fieldStatus: number[]) {
@@ -144,7 +234,7 @@ function getNeighbors(node: number, width: number, fieldStatus: number[]) {
 
 		const neighbor = jump(node, x, y, width, fieldStatus);
 
-		if (neighbor !== null) {
+		if (neighbor !== null && neighbor !== undefined) {
 			neighbors.push(neighbor);
 		}
 	}

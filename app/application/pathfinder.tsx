@@ -158,14 +158,10 @@ const PathFinder = () => {
 		return aStar(adjacencyList, start, finish, 72);
 	};
 
-	const callJPS = (
-		adjacencyList: AdjacencyList,
-		start: number,
-		finish: number
-	) => {
+	const callJPS = (start: number, finish: number) => {
 		setAlgorithm("jps");
 
-		return jumpPointSearch(adjacencyList, start, finish, 72, fieldStatus);
+		return jumpPointSearch(start, finish, 72, fieldStatus);
 	};
 
 	// function to handle the pathfinding calls
@@ -190,7 +186,7 @@ const PathFinder = () => {
 				} else if (algorithm === "a_star") {
 					algorithmReturn = callAStar(adjacencyList, start, finish);
 				} else {
-					algorithmReturn = callJPS(adjacencyList, start, finish);
+					algorithmReturn = callJPS(start, finish);
 				}
 
 				const endTime = performance.now();
