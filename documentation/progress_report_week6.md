@@ -4,4 +4,6 @@
 
 - Converted the `PriorityQueue` class into a binary heap.
 
-Hours spent: 4 h (course total 36 h)
+- Started work on real jump point logic for the JPS.
+
+Hours spent: 7 h (course total 39 h)
