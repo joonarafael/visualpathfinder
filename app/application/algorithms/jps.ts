@@ -1,12 +1,12 @@
 "use client";
 
 import heuristicEuclidean from "./euclidean";
-import isDiagonal from "./isdiagonal";
 import PriorityQueue from "./pq";
 
 // jps is a special A* algorithm.
 
 export default function jumpPointSearch(
+	adjacencyList: Record<number, number[]>,
 	startNode: number,
 	endNode: number,
 	width: number,
@@ -46,7 +46,12 @@ export default function jumpPointSearch(
 
 		// UNDER CONSTRUCTION
 
-		for (const neighbor of getNeighbors(current, width, fieldStatus)) {
+		for (const neighbor of getNeighborsWithJumpPoints(
+			current,
+			adjacencyList,
+			width,
+			fieldStatus
+		)) {
 			const tentativeGScore =
 				gScore[current] + heuristicEuclidean(current, neighbor, width);
 
@@ -86,159 +91,89 @@ function reconstructPath(
 	return path;
 }
 
-// helper function to check whether point (x, y) is within bounds and not a wall tile.
-function inBoundsAndNotTile(
-	x: number,
-	y: number,
+function pruneStraightDirectionNeighbors(
+	target: number, // target master index
+	dx: number, // direction x to target
+	dy: number, // direction y to target
+	adjacencyList: Record<number, number[]>,
 	width: number,
 	fieldStatus: number[]
-) {
-	// check if it's within bounds
-	if (x < 0 || x >= width || y < 0 || y * width >= fieldStatus.length) {
-		return false;
-	}
+): any {
+	// x movement
+	if (dy === 0) {
+		const upper = target - width;
+		const lower = target + width;
 
-	if (fieldStatus[y * width + x] === 1) {
-		return false;
-	}
+		let forcedNeighbors: number[] = [];
 
-	return true;
-}
-
-// helper function to check if the next requested tile is a valid move
-// also handles the diagonal traversal
-function isCorrectMove(
-	parent: number,
-	x: number,
-	y: number,
-	dx: number,
-	dy: number,
-	width: number,
-	fieldStatus: number[]
-) {
-	if (!inBoundsAndNotTile(x, y, width, fieldStatus)) {
-		return false;
-	}
-
-	if (dx !== 0 && dy !== 0) {
-		if (
-			fieldStatus[parent + dx] === 1 &&
-			fieldStatus[parent + width * dy] === 1
-		) {
-			return false;
+		if (upper > 0 && !adjacencyList[target].includes(upper)) {
+			if (adjacencyList[target].includes(upper + dx)) {
+				forcedNeighbors.push(upper + dx);
+			}
 		}
-	}
 
-	return true;
-}
-
-function pruneNeighbors(
-	target: number,
-	targetX: number,
-	targetY: number,
-	dx: number,
-	dy: number,
-	width: number,
-	fieldStatus: number[]
-) {
-	if (
-		!isCorrectMove(
-			target,
-			targetX + dx,
-			targetY + dy,
-			dx,
-			dy,
-			width,
-			fieldStatus
-		)
-	) {
-		return target;
-	}
-
-	let potentialNeighbors: number[] = [];
-
-	if (dx !== 0 && dy === 0) {
-		if (0 <= targetX + dx && targetX + dx < width) {
-			if (targetY > 0 && fieldStatus[target - width] === 1) {
-				potentialNeighbors.push(target - width + dx);
+		if (lower < fieldStatus.length && !adjacencyList[target].includes(lower)) {
+			if (adjacencyList[target].includes(lower + dx)) {
+				forcedNeighbors.push(lower + dx);
 			}
+		}
 
-			if (
-				targetY < fieldStatus.length / width &&
-				fieldStatus[target + width] === 1
-			) {
-				potentialNeighbors.push(target + width + dx);
-			}
+		const next = target + dx;
 
-			if (potentialNeighbors.length > 0) {
-				potentialNeighbors.push(target + dx);
-				return potentialNeighbors;
-			}
-		} else {
+		if (!adjacencyList[target].includes(next)) {
 			return target;
-		}
+		} else if (forcedNeighbors.length > 0) {
+			forcedNeighbors.push(next);
 
-		return pruneNeighbors(
-			target + dx,
-			targetX + dx,
-			targetY,
-			dx,
-			dy,
-			width,
-			fieldStatus
-		);
-	} else if (dx === 0 && dy !== 0) {
-		if (0 <= targetY + dy && targetY + dy < fieldStatus.length / width) {
-			if (targetX > 0 && fieldStatus[target - 1] === 1) {
-				potentialNeighbors.push(target + dy * width - 1);
-			}
-
-			if (targetX < width - 1 && fieldStatus[target + 1] === 1) {
-				potentialNeighbors.push(target + dy * width + 1);
-			}
-
-			if (potentialNeighbors.length > 0) {
-				potentialNeighbors.push(target + dx);
-				return potentialNeighbors;
-			}
+			return forcedNeighbors;
 		} else {
-			return target;
+			// continue jump
+			return jump(target, dx, dy, adjacencyList, width, fieldStatus);
 		}
-
-		return pruneNeighbors(
-			target + dy * width,
-			targetX,
-			targetY + dy,
-			dx,
-			dy,
-			width,
-			fieldStatus
-		);
 	}
-}
 
-// JUMP POINT SEARCH LOGIC:
+	// y movement todo
+}
 
 function jump(
-	parent: number,
-	dx: number,
-	dy: number,
+	parent: number, // parent master index
+	dx: number, // direction x to target
+	dy: number, // direction y to target
+	adjacencyList: Record<number, number[]>,
 	width: number,
 	fieldStatus: number[]
 ) {
-	const x = (parent % width) + dx;
-	const y = Math.floor(parent / width) + dy;
+	const target = parent + dx + width * dy;
 
-	if (!isCorrectMove(parent, x, y, dx, dy, width, fieldStatus)) {
+	if (!adjacencyList[parent].includes(target)) {
 		return null;
 	}
 
-	const target = x + y * width;
+	if (fieldStatus[target] === 3) {
+		return target;
+	}
 
-	return pruneNeighbors(target, x, y, dx, dy, width, fieldStatus);
+	// straight moves
+	if (dx === 0 || dy === 0) {
+		return pruneStraightDirectionNeighbors(
+			target,
+			dx,
+			dy,
+			adjacencyList,
+			width,
+			fieldStatus
+		);
+	}
+
+	// diagonal moves todo
 }
 
-function getNeighbors(node: number, width: number, fieldStatus: number[]) {
+function getNeighborsWithJumpPoints(
+	parent: number,
+	adjacencyList: Record<number, number[]>,
+	width: number,
+	fieldStatus: number[]
+) {
 	let neighbors: number[] = [];
 
 	const directions = [
@@ -253,10 +188,10 @@ function getNeighbors(node: number, width: number, fieldStatus: number[]) {
 	];
 
 	for (const direction of directions) {
-		const x = direction[0];
-		const y = direction[1];
+		const dx = direction[0];
+		const dy = direction[1];
 
-		const neighbor = jump(node, x, y, width, fieldStatus);
+		const neighbor = jump(parent, dx, dy, adjacencyList, width, fieldStatus);
 
 		if (neighbor !== null && neighbor !== undefined) {
 			if (typeof neighbor === "number") {
@@ -267,7 +202,7 @@ function getNeighbors(node: number, width: number, fieldStatus: number[]) {
 		}
 	}
 
-	console.log(node, neighbors);
+	console.log(parent, neighbors);
 
 	return neighbors;
 }

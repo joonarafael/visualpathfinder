@@ -158,10 +158,14 @@ const PathFinder = () => {
 		return aStar(adjacencyList, start, finish, 72);
 	};
 
-	const callJPS = (start: number, finish: number) => {
+	const callJPS = (
+		adjacencyList: AdjacencyList,
+		start: number,
+		finish: number
+	) => {
 		setAlgorithm("jps");
 
-		return jumpPointSearch(start, finish, 72, fieldStatus);
+		return jumpPointSearch(adjacencyList, start, finish, 72, fieldStatus);
 	};
 
 	// function to handle the pathfinding calls
@@ -186,7 +190,7 @@ const PathFinder = () => {
 				} else if (algorithm === "a_star") {
 					algorithmReturn = callAStar(adjacencyList, start, finish);
 				} else {
-					algorithmReturn = callJPS(start, finish);
+					algorithmReturn = callJPS(adjacencyList, start, finish);
 				}
 
 				const endTime = performance.now();
@@ -196,12 +200,14 @@ const PathFinder = () => {
 					0
 				);
 
+				const elapsedTime = parseFloat(
+					(endTime - startTime + Number.EPSILON).toFixed(1)
+				);
+
 				const dijkstraStats =
 					algorithm === "dijkstra"
 						? {
-								time: parseFloat(
-									(endTime - startTime + Number.EPSILON).toFixed(1)
-								),
+								time: elapsedTime,
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
 									? `${algorithmReturn.shortestPath.length} (${algorithmReturn?.absoluteDistance})`
@@ -222,9 +228,7 @@ const PathFinder = () => {
 				const aStarStats =
 					algorithm === "a_star"
 						? {
-								time: parseFloat(
-									(endTime - startTime + Number.EPSILON).toFixed(1)
-								),
+								time: elapsedTime,
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
 									? `${algorithmReturn.shortestPath.length} (${algorithmReturn?.absoluteDistance})`
@@ -245,9 +249,7 @@ const PathFinder = () => {
 				const jpsStats =
 					algorithm === "jps"
 						? {
-								time: parseFloat(
-									(endTime - startTime + Number.EPSILON).toFixed(1)
-								),
+								time: elapsedTime,
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
 									? `${algorithmReturn.shortestPath.length} (${algorithmReturn?.absoluteDistance})`
