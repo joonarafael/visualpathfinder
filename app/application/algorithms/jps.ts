@@ -47,11 +47,8 @@ export default function jumpPointSearch(
 		// UNDER CONSTRUCTION
 
 		for (const neighbor of getNeighbors(current, width, fieldStatus)) {
-			let tentativeGScore = gScore[current] + 1;
-
-			if (isDiagonal(current, neighbor, width)) {
-				tentativeGScore = gScore[current] + Math.sqrt(2);
-			}
+			const tentativeGScore =
+				gScore[current] + heuristicEuclidean(current, neighbor, width);
 
 			if (
 				!gScore.hasOwnProperty(neighbor) ||
@@ -89,6 +86,7 @@ function reconstructPath(
 	return path;
 }
 
+// helper function to check whether point (x, y) is within bounds and not a wall tile.
 function inBoundsAndNotTile(
 	x: number,
 	y: number,
@@ -107,6 +105,8 @@ function inBoundsAndNotTile(
 	return true;
 }
 
+// helper function to check if the next requested tile is a valid move
+// also handles the diagonal traversal
 function isCorrectMove(
 	parent: number,
 	x: number,
@@ -116,12 +116,10 @@ function isCorrectMove(
 	width: number,
 	fieldStatus: number[]
 ) {
-	// check if it's within bounds
 	if (!inBoundsAndNotTile(x, y, width, fieldStatus)) {
 		return false;
 	}
 
-	// handle diagonals
 	if (dx !== 0 && dy !== 0) {
 		if (
 			fieldStatus[parent + dx] === 1 &&
@@ -143,17 +141,38 @@ function pruneNeighbors(
 	width: number,
 	fieldStatus: number[]
 ) {
+	if (
+		!isCorrectMove(
+			target,
+			targetX + dx,
+			targetY + dy,
+			dx,
+			dy,
+			width,
+			fieldStatus
+		)
+	) {
+		return target;
+	}
+
+	let potentialNeighbors: number[] = [];
+
 	if (dx !== 0 && dy === 0) {
 		if (0 <= targetX + dx && targetX + dx < width) {
 			if (targetY > 0 && fieldStatus[target - width] === 1) {
-				return target;
+				potentialNeighbors.push(target - width + dx);
 			}
 
 			if (
 				targetY < fieldStatus.length / width &&
 				fieldStatus[target + width] === 1
 			) {
-				return target;
+				potentialNeighbors.push(target + width + dx);
+			}
+
+			if (potentialNeighbors.length > 0) {
+				potentialNeighbors.push(target + dx);
+				return potentialNeighbors;
 			}
 		} else {
 			return target;
@@ -171,11 +190,16 @@ function pruneNeighbors(
 	} else if (dx === 0 && dy !== 0) {
 		if (0 <= targetY + dy && targetY + dy < fieldStatus.length / width) {
 			if (targetX > 0 && fieldStatus[target - 1] === 1) {
-				return target;
+				potentialNeighbors.push(target + dy * width - 1);
 			}
 
 			if (targetX < width - 1 && fieldStatus[target + 1] === 1) {
-				return target;
+				potentialNeighbors.push(target + dy * width + 1);
+			}
+
+			if (potentialNeighbors.length > 0) {
+				potentialNeighbors.push(target + dx);
+				return potentialNeighbors;
 			}
 		} else {
 			return target;
@@ -215,7 +239,7 @@ function jump(
 }
 
 function getNeighbors(node: number, width: number, fieldStatus: number[]) {
-	let neighbors = [];
+	let neighbors: number[] = [];
 
 	const directions = [
 		[0, 1],
@@ -235,9 +259,15 @@ function getNeighbors(node: number, width: number, fieldStatus: number[]) {
 		const neighbor = jump(node, x, y, width, fieldStatus);
 
 		if (neighbor !== null && neighbor !== undefined) {
-			neighbors.push(neighbor);
+			if (typeof neighbor === "number") {
+				neighbors.push(neighbor);
+			} else {
+				neighbors = neighbors.concat(neighbor);
+			}
 		}
 	}
+
+	console.log(node, neighbors);
 
 	return neighbors;
 }
