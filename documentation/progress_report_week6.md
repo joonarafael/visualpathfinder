@@ -4,6 +4,6 @@
 
 - Converted the `PriorityQueue` class into a binary heap.
 
-- Started work on real jump point logic for the JPS. Current work can be seen on the "realJPS" feature branch, "main" does not include these changes.
+- Started work on real jump point logic for the JPS. Current work can be seen on the "realJPS" feature branch, "main" does not include these changes!
 
-Hours spent: 7 h (course total 39 h)
+Hours spent: 10 h (course total 42 h)
