@@ -4,7 +4,9 @@ This manual provides instructions for the [Live Application](https://visualpathf
 
 ## General Performance Notice
 
-The 72 \* 48 matrix is quite large (3456 individual nodes), not for algorithmic reasons, in particular, but for the React rendering pipeline. More elements on screen will start to slow down rendering. Almost all of the application logic is run on the client machine by the client browser. Make sure you're running the latest version of your browser to ensure the best performance. The less wall tiles, the more possible paths for the selected algorithm to consider. If you're experiencing performance issues, try placing the start and end nodes closer together and increase the number of wall tiles.
+The 72 \* 48 matrix is quite large (3456 individual nodes), not for algorithmic reasons, in particular, but for the React rendering pipeline. More elements on screen will start to slow down rendering.
+
+Practically all of the application logic is run on the client machine by the client browser. Make sure you're running the latest version of your browser to ensure the best performance. The less wall tiles, the more possible paths for the selected algorithm to consider. If you're experiencing performance issues, try placing the start and end nodes closer together and increase the number of wall tiles.
 
 ## Important Notice
 

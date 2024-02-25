@@ -1,6 +1,14 @@
 # USAGE OF AI & LARGE LANGUAGE MODELS
 
+This document details different sections of the software where AI assisted with the code.
+
+Other interesting documents include [Implementation Document](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/implementation_document.md "Implementation Document") and [Software Testing Report](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/software_testing_report "Software Testing Report").
+
+## Tabnine
+
 I've got _[Tabnine](https://www.tabnine.com/ "Tabnine Homepage")_ installed as a third-party plugin in my Visual Studio Code. It's a context-aware AI assistant for IDEs that autocompletes, suggests functions and generates blocks of code based on other code found in the file/project. This plugin, however, provides little to no help with any actual logic.
+
+## Other Features
 
 Additionally, here I've collected a summary of some more major parts of the application that required the consulting of a large language model.
 
@@ -10,8 +18,10 @@ Some other use cases of AI that merely focused on the UI and some other visual f
 
 - **Adjacency List Generation function**: AI assisted building approx. half of the function after I provided all the inputs and requirements for the function.
 
-- **Dijkstra's algorithm**: AI helped convert my own Dijkstra algorithm slightly so it would take an adjacency _list_ as an argument as opposed to an adjacency _matrix_. AI also helped by debugging the issues related to the creation of the `shortestPath` array.
+- **Priority Queue**: AI helped build the core functionality for the binary heap data structure. Some inconsistencies and errors had to be manually fixed.
+
+- **Dijkstra's algorithm**: AI assisted in converting my own Dijkstra algorithm slightly so it would take an adjacency _list_ as an argument as opposed to an adjacency _matrix_. AI also helped by debugging the issues related to the creation of the `shortestPath` array.
 
 - **A\* algorithm**: AI helped troubleshoot issues with the `shortestPath` reconstruction function. AI also helped debug issues with an infinite A\* execution loop.
 
-- **JPS algorithm**: AI helped write some pseudocode for the JPS helper functions. This gave me a good starting point, but AI generated code was **widely inaccurate** and **only covered partial functionality**. Issues were mainly related to the way the map, base A\* function, and other data structures are handled by my application. Also no real working jump point logic was provided by the AI.
+- **JPS algorithm**: AI wrote some pseudocode for the JPS and its helper functions. This gave me a good starting point, but AI generated code was **widely inaccurate** and **only covered partial functionality**. Over 90% of the final source code in the application is manually written by me.
