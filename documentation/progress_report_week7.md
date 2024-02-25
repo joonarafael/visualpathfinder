@@ -2,4 +2,4 @@
 
 - More work on JPS.
 
-Hours spent: 2 h (course total 44 h)
+Hours spent: 4 h (course total 46 h)
