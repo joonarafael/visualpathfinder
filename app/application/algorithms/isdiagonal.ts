@@ -13,5 +13,5 @@ export default function isDiagonal(
 	const rowDiff = Math.abs(row0 - row1);
 	const colDiff = Math.abs(col0 - col1);
 
-	return rowDiff === 1 && colDiff === 1;
+	return rowDiff > 0 && colDiff > 0 && rowDiff === colDiff;
 }

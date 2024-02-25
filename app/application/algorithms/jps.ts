@@ -1,6 +1,7 @@
 "use client";
 
 import heuristicEuclidean from "./euclidean";
+import isDiagonal from "./isdiagonal";
 import PriorityQueue from "./pq";
 
 // jps is a special A* algorithm.
@@ -48,15 +49,38 @@ export default function jumpPointSearch(
 
 		// UNDER CONSTRUCTION
 
-		for (const neighbor of getNeighborsWithJumpPoints(
+		const neighbors = getNeighborsWithJumpPoints(
 			current,
 			adjacencyList,
 			width,
 			fieldStatus,
 			endNode
-		)) {
-			const tentativeGScore =
-				gScore[current] + heuristicEuclidean(current, neighbor, width);
+		);
+
+		for (const neighbor of neighbors) {
+			let absoluteDistance: number;
+
+			if (
+				Math.floor(neighbor / width) === Math.floor(current / width) ||
+				Math.abs(neighbor - current) % width === 0 ||
+				isDiagonal(current, neighbor, width)
+			) {
+				absoluteDistance = heuristicEuclidean(current, neighbor, width);
+			} else {
+				const intersection = neighbors.filter((element) =>
+					adjacencyList[neighbor].includes(element)
+				);
+
+				if (intersection.length === 1) {
+					console.log("forced", current, neighbor, intersection);
+				}
+
+				absoluteDistance =
+					heuristicEuclidean(current, intersection[0], width) +
+					heuristicEuclidean(neighbor, intersection[0], width);
+			}
+
+			const tentativeGScore = gScore[current] + absoluteDistance;
 
 			if (
 				!gScore.hasOwnProperty(neighbor) ||
@@ -127,6 +151,7 @@ function pruneStraightDirectionNeighbors(
 		if (!adjacencyList[target].includes(next)) {
 			return target;
 		} else if (forcedNeighbors.length > 0) {
+			forcedNeighbors.push(target);
 			forcedNeighbors.push(next);
 
 			return forcedNeighbors;
@@ -186,14 +211,14 @@ function pruneDiagonalNeighbors(
 	const xBlocker = target - dx;
 	const yBlocker = target - dy * width;
 
-	let forcedNeighbors: number[] = [];
+	let forcedNeighbor = -1;
 
 	if (
 		Math.floor(xBlocker / width) === Math.floor(target / width) &&
 		!adjacencyList[target].includes(xBlocker)
 	) {
 		if (adjacencyList[target].includes(xBlocker + dy * width)) {
-			forcedNeighbors.push(xBlocker + dy * width);
+			forcedNeighbor = xBlocker + dy * width;
 		}
 	}
 
@@ -203,22 +228,33 @@ function pruneDiagonalNeighbors(
 		!adjacencyList[target].includes(yBlocker)
 	) {
 		if (adjacencyList[target].includes(yBlocker + dx)) {
-			forcedNeighbors.push(yBlocker + dx);
+			forcedNeighbor = yBlocker + dx;
 		}
 	}
 
-	const next = target + dx + dy * width;
+	const nextDiagonal = target + dx + dy * width;
+	const nextHorizontal = target + dx;
+	const nextVertical = target + dy * width;
 
-	if (!adjacencyList[target].includes(next)) {
-		return target;
-	} else if (forcedNeighbors.length > 0) {
-		forcedNeighbors.push(next);
+	let neighbors = [target];
 
-		return forcedNeighbors;
-	} else {
-		// continue jump
-		return jump(target, dx, dy, adjacencyList, width, fieldStatus, endNode);
+	if (adjacencyList[target].includes(nextDiagonal)) {
+		neighbors.push(nextDiagonal);
 	}
+
+	if (adjacencyList[target].includes(nextHorizontal)) {
+		neighbors.push(nextHorizontal);
+	}
+
+	if (adjacencyList[target].includes(nextVertical)) {
+		neighbors.push(nextVertical);
+	}
+
+	if (forcedNeighbor !== -1) {
+		neighbors.push(forcedNeighbor);
+	}
+
+	return neighbors;
 }
 
 function jump(
@@ -308,7 +344,7 @@ function getNeighborsWithJumpPoints(
 		}
 	}
 
-	console.log(parent, neighbors);
+	// console.log(parent, neighbors);
 
 	return neighbors;
 }
