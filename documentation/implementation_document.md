@@ -2,7 +2,7 @@
 
 This document details the implementation of all used algorithms and data structures. I'll also try to explain my though process and reasons why the software is structured the way it is. Design choices for the user interface and other application logic is not provided.
 
-Other interesting documents include [Usage of AI Report](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/usage_of_ai_report.md "Usage of AI Report") and [Software Testing Report](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/software_testing_report "Software Testing Report").
+Other interesting documents include [Usage of AI Report](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/usage_of_ai_report.md "Usage of AI Report") and [Software Testing Report](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/software_testing_report.md "Software Testing Report").
 
 ## About Benchmarking and Other Performance Stuff
 
