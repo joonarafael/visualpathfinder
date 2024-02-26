@@ -145,6 +145,7 @@ function pruneStraightDirectionNeighbors(
 			return target;
 		} else if (Object.keys(forcedNeighbors).length > 0) {
 			forcedNeighbors[next] = false;
+			forcedNeighbors[target] = false;
 
 			return forcedNeighbors;
 		} else {
@@ -183,6 +184,7 @@ function pruneStraightDirectionNeighbors(
 		return target;
 	} else if (Object.keys(forcedNeighbors).length > 0) {
 		forcedNeighbors[next] = false;
+		forcedNeighbors[target] = false;
 
 		return forcedNeighbors;
 	} else {
