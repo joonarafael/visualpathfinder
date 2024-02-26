@@ -71,9 +71,24 @@ export default function jumpPointSearch(
 					adjacencyList[key].includes(element)
 				);
 
+				const closestElement = intersection.reduce(
+					(closest, element) => {
+						const distanceToCurrent =
+							heuristicEuclidean(current, element, width) +
+							heuristicEuclidean(key, element, width);
+
+						if (distanceToCurrent < closest.distance) {
+							return { element, distance: distanceToCurrent };
+						} else {
+							return closest;
+						}
+					},
+					{ element: intersection[0], distance: Infinity }
+				).element;
+
 				absoluteDistance =
-					heuristicEuclidean(current, intersection[0], width) +
-					heuristicEuclidean(key, intersection[0], width);
+					heuristicEuclidean(current, closestElement, width) +
+					heuristicEuclidean(key, closestElement, width);
 			} else {
 				absoluteDistance = heuristicEuclidean(current, key, width);
 			}
@@ -142,7 +157,7 @@ function pruneStraightDirectionNeighbors(
 		const next = target + dx;
 
 		if (!adjacencyList[target].includes(next)) {
-			return target;
+			return null;
 		} else if (Object.keys(forcedNeighbors).length > 0) {
 			forcedNeighbors[next] = false;
 			forcedNeighbors[target] = false;
@@ -181,7 +196,7 @@ function pruneStraightDirectionNeighbors(
 	const next = target + dy * width;
 
 	if (!adjacencyList[target].includes(next)) {
-		return target;
+		return null;
 	} else if (Object.keys(forcedNeighbors).length > 0) {
 		forcedNeighbors[next] = false;
 		forcedNeighbors[target] = false;
@@ -301,7 +316,7 @@ function getNeighborsWithJumpPoints(
 	fieldStatus: number[]
 ) {
 	// forced neighbors are marked with true, natural neighbors as false
-	let neighbors: Record<number, boolean> = {};
+	const neighbors: Record<number, boolean> = {};
 
 	const directions = [
 		[0, 1],

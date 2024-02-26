@@ -3,16 +3,16 @@ import dijkstra from "@/app/application/algorithms/dijkstra";
 describe("basic logic for dijkstra", () => {
 	it("create distances and visited objects", () => {
 		const adjacencyList = {
-			0: [1, 2, 4],
-			1: [0, 2],
-			2: [1, 6],
-			4: [0, 8],
-			6: [2, 7],
-			7: [6, 11],
-			8: [4, 12],
-			11: [7, 15],
+			0: [1, 4],
+			1: [0, 2, 4, 6],
+			2: [1, 6, 7],
+			4: [0, 1, 8],
+			6: [1, 2, 7, 11],
+			7: [2, 6, 11],
+			8: [4, 12, 13],
+			11: [6, 7, 15],
 			12: [8, 13],
-			13: [12],
+			13: [8, 12],
 			15: [11],
 		};
 
@@ -23,16 +23,16 @@ describe("basic logic for dijkstra", () => {
 
 	it("solve a solvable matrix", () => {
 		const adjacencyList = {
-			0: [1, 2, 4],
-			1: [0, 2],
-			2: [1, 6],
-			4: [0, 8],
-			6: [2, 7],
-			7: [6, 11],
-			8: [4, 12],
-			11: [7, 15],
+			0: [1, 4],
+			1: [0, 2, 4, 6],
+			2: [1, 6, 7],
+			4: [0, 1, 8],
+			6: [1, 2, 7, 11],
+			7: [2, 6, 11],
+			8: [4, 12, 13],
+			11: [6, 7, 15],
 			12: [8, 13],
-			13: [12],
+			13: [8, 12],
 			15: [11],
 		};
 
@@ -42,7 +42,7 @@ describe("basic logic for dijkstra", () => {
 		expect(dijkstraReturn.visited["15"]).toEqual(false);
 
 		if (dijkstraReturn.shortestPath) {
-			expect(dijkstraReturn.shortestPath.length).toEqual(10);
+			expect(dijkstraReturn.shortestPath.length).toEqual(7);
 		} else {
 			fail("Dijkstra algorithm did not return the 'shortestPath' value.");
 		}
@@ -50,15 +50,16 @@ describe("basic logic for dijkstra", () => {
 
 	it("give correct return values for an unsolvable matrix", () => {
 		const adjacencyList = {
-			0: [1, 2, 4],
-			1: [0, 2],
-			2: [1, 6],
-			4: [0, 8],
-			6: [2, 7],
-			7: [6],
-			8: [4, 12],
+			0: [1, 4],
+			1: [0, 2, 4, 6],
+			2: [1, 6, 7],
+			4: [0, 1, 8],
+			6: [1, 2, 7],
+			7: [2, 6],
+			8: [4, 12, 13],
 			12: [8, 13],
-			13: [12],
+			13: [8, 12],
+			15: [],
 		};
 
 		const dijkstraReturn = dijkstra(adjacencyList, 13, 15, 4);

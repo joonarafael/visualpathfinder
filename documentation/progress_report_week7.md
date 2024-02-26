@@ -2,4 +2,6 @@
 
 - More work on JPS.
 
-Hours spent: 6 h (course total 48 h)
+- Fixed old tests to suit the new diagonal euclidean distance calculation.
+
+Hours spent: 8 h (course total 50 h)
