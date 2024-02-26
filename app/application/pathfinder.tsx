@@ -200,12 +200,14 @@ const PathFinder = () => {
 					0
 				);
 
+				const elapsedTime = parseFloat(
+					(endTime - startTime + Number.EPSILON).toFixed(1)
+				);
+
 				const dijkstraStats =
 					algorithm === "dijkstra"
 						? {
-								time: parseFloat(
-									(endTime - startTime + Number.EPSILON).toFixed(1)
-								),
+								time: elapsedTime,
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
 									? `${algorithmReturn.shortestPath.length} (${algorithmReturn?.absoluteDistance})`
@@ -226,9 +228,7 @@ const PathFinder = () => {
 				const aStarStats =
 					algorithm === "a_star"
 						? {
-								time: parseFloat(
-									(endTime - startTime + Number.EPSILON).toFixed(1)
-								),
+								time: elapsedTime,
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
 									? `${algorithmReturn.shortestPath.length} (${algorithmReturn?.absoluteDistance})`
@@ -249,9 +249,7 @@ const PathFinder = () => {
 				const jpsStats =
 					algorithm === "jps"
 						? {
-								time: parseFloat(
-									(endTime - startTime + Number.EPSILON).toFixed(1)
-								),
+								time: elapsedTime,
 								visited_nodes: trueCount,
 								path_length: algorithmReturn?.shortestPath
 									? `${algorithmReturn.shortestPath.length} (${algorithmReturn?.absoluteDistance})`

@@ -41,33 +41,53 @@ export default function jumpPointSearch(
 			return {
 				shortestPath: reconstructPath(cameFrom, endNode),
 				visited: visited,
-				absoluteDistance: "null",
+				absoluteDistance: parseFloat(
+					(fScore[endNode] + Number.EPSILON).toFixed(1)
+				),
 			};
 		}
 
 		// UNDER CONSTRUCTION
 
-		for (const neighbor of getNeighbors(current, width, fieldStatus)) {
-			let tentativeGScore = gScore[current] + 1;
+		const neighbors = getNeighborsWithJumpPoints(
+			current,
+			adjacencyList,
+			width,
+			fieldStatus
+		);
 
-			if (isDiagonal(current, neighbor, width)) {
-				tentativeGScore = gScore[current] + Math.sqrt(2);
+		const keys: number[] = Object.keys(neighbors).map(Number);
+
+		for (const key of keys) {
+			let absoluteDistance: number;
+
+			if (
+				neighbors[key] === true ||
+				(Math.floor(key / width) !== Math.floor(current / width) &&
+					Math.abs(key - current) % width !== 0 &&
+					!isDiagonal(current, key, width))
+			) {
+				const intersection = keys.filter((element) =>
+					adjacencyList[key].includes(element)
+				);
+
+				absoluteDistance =
+					heuristicEuclidean(current, intersection[0], width) +
+					heuristicEuclidean(key, intersection[0], width);
+			} else {
+				absoluteDistance = heuristicEuclidean(current, key, width);
 			}
 
-			if (neighbor !== null) {
-				if (
-					!gScore.hasOwnProperty(neighbor) ||
-					tentativeGScore < gScore[neighbor]
-				) {
-					cameFrom[neighbor] = current;
+			const tentativeGScore = gScore[current] + absoluteDistance;
 
-					gScore[neighbor] = tentativeGScore;
-					fScore[neighbor] =
-						tentativeGScore + heuristicEuclidean(neighbor, endNode, width);
+			if (!gScore.hasOwnProperty(key) || tentativeGScore < gScore[key]) {
+				cameFrom[key] = current;
 
-					if (!openSet.heap.some((item) => item.element === neighbor)) {
-						openSet.enqueue(neighbor, fScore[neighbor]);
-					}
+				gScore[key] = tentativeGScore;
+				fScore[key] = tentativeGScore + heuristicEuclidean(key, endNode, width);
+
+				if (!openSet.heap.some((item) => item.element === key)) {
+					openSet.enqueue(key, fScore[key]);
 				}
 			}
 		}
@@ -92,40 +112,196 @@ function reconstructPath(
 	return path;
 }
 
-// JUMP POINT SEARCH LOGIC:
-
-function jump(
-	node: number,
-	dx: number,
-	dy: number,
+function pruneStraightDirectionNeighbors(
+	target: number, // target master index
+	dx: number, // direction x to target
+	dy: number, // direction y to target
+	adjacencyList: Record<number, number[]>,
 	width: number,
 	fieldStatus: number[]
-) {
-	const x = (node % width) + dx;
-	const y = Math.floor(node / width) + dy;
+): any {
+	// x movement
+	if (dy === 0) {
+		const north = target - width;
+		const south = target + width;
 
-	// check if it's within bounds
-	if (x < 0 || x >= width || y < 0 || y * width >= fieldStatus.length) {
-		return null;
-	}
+		let forcedNeighbors: Record<number, boolean> = {};
 
-	// handle diagonals
-	if (dx !== 0 && dy !== 0) {
-		if (fieldStatus[node + dx] === 1 && fieldStatus[node + width * dy] === 1) {
-			return null;
+		if (north > 0 && !adjacencyList[target].includes(north)) {
+			if (adjacencyList[target].includes(north + dx)) {
+				forcedNeighbors[north + dx] = true;
+			}
+		}
+
+		if (south < fieldStatus.length && !adjacencyList[target].includes(south)) {
+			if (adjacencyList[target].includes(south + dx)) {
+				forcedNeighbors[south + dx] = true;
+			}
+		}
+
+		const next = target + dx;
+
+		if (!adjacencyList[target].includes(next)) {
+			return target;
+		} else if (Object.keys(forcedNeighbors).length > 0) {
+			forcedNeighbors[next] = false;
+			forcedNeighbors[target] = false;
+
+			return forcedNeighbors;
+		} else {
+			// continue jump
+			return jump(target, dx, dy, adjacencyList, width, fieldStatus);
 		}
 	}
 
-	// check if the potential neighbor is an obstacle
-	if (fieldStatus[node] === 1) {
+	// y movement
+	const west = target - 1;
+	const east = target + 1;
+
+	let forcedNeighbors: Record<number, boolean> = {};
+
+	if (
+		Math.floor(west / width) === Math.floor(target / width) &&
+		!adjacencyList[target].includes(west)
+	) {
+		if (adjacencyList[target].includes(west + dy * width)) {
+			forcedNeighbors[west + dy * width] = true;
+		}
+	}
+
+	if (
+		Math.floor(east / width) === Math.floor(target / width) &&
+		!adjacencyList[target].includes(east)
+	) {
+		if (adjacencyList[target].includes(east + dy * width)) {
+			forcedNeighbors[east + dy * width] = true;
+		}
+	}
+
+	const next = target + dy * width;
+
+	if (!adjacencyList[target].includes(next)) {
+		return target;
+	} else if (Object.keys(forcedNeighbors).length > 0) {
+		forcedNeighbors[next] = false;
+		forcedNeighbors[target] = false;
+
+		return forcedNeighbors;
+	} else {
+		// continue jump
+		return jump(target, dx, dy, adjacencyList, width, fieldStatus);
+	}
+}
+
+function pruneDiagonalNeighbors(
+	target: number, // target master index
+	dx: number, // direction x to target
+	dy: number, // direction y to target
+	adjacencyList: Record<number, number[]>,
+	width: number,
+	fieldStatus: number[]
+): any {
+	const xBlocker = target - dx;
+	const yBlocker = target - dy * width;
+
+	let forcedNeighbor = -1;
+
+	if (
+		Math.floor(xBlocker / width) === Math.floor(target / width) &&
+		!adjacencyList[target].includes(xBlocker)
+	) {
+		if (adjacencyList[target].includes(xBlocker + dy * width)) {
+			forcedNeighbor = xBlocker + dy * width;
+		}
+	}
+
+	if (
+		yBlocker > 0 &&
+		yBlocker < fieldStatus.length &&
+		!adjacencyList[target].includes(yBlocker)
+	) {
+		if (adjacencyList[target].includes(yBlocker + dx)) {
+			forcedNeighbor = yBlocker + dx;
+		}
+	}
+
+	const nextDiagonal = target + dx + dy * width;
+	const nextHorizontal = target + dx;
+	const nextVertical = target + dy * width;
+
+	let neighbors: Record<number, boolean> = {};
+	neighbors[target] = false;
+
+	if (adjacencyList[target].includes(nextDiagonal)) {
+		neighbors[nextDiagonal] = false;
+	}
+
+	if (adjacencyList[target].includes(nextHorizontal)) {
+		neighbors[nextHorizontal] = false;
+	}
+
+	if (adjacencyList[target].includes(nextVertical)) {
+		neighbors[nextVertical] = false;
+	}
+
+	if (forcedNeighbor !== -1) {
+		neighbors[forcedNeighbor] = true;
+	}
+
+	return neighbors;
+}
+
+function jump(
+	parent: number, // parent master index
+	dx: number, // direction x to target
+	dy: number, // direction y to target
+	adjacencyList: Record<number, number[]>,
+	width: number,
+	fieldStatus: number[]
+) {
+	const target = parent + dx + width * dy;
+
+	if (!adjacencyList[parent].includes(target)) {
 		return null;
 	}
 
-	return x + y * width;
+	if (fieldStatus[target] === 3) {
+		let neighbors: Record<number, boolean> = {};
+		neighbors[target] = false;
+		return neighbors;
+	}
+
+	// diagonal moves
+	if (dx !== 0 && dy !== 0) {
+		return pruneDiagonalNeighbors(
+			target,
+			dx,
+			dy,
+			adjacencyList,
+			width,
+			fieldStatus
+		);
+	}
+
+	// straight moves
+	return pruneStraightDirectionNeighbors(
+		target,
+		dx,
+		dy,
+		adjacencyList,
+		width,
+		fieldStatus
+	);
 }
 
-function getNeighbors(node: number, width: number, fieldStatus: number[]) {
-	let neighbors = [];
+function getNeighborsWithJumpPoints(
+	parent: number,
+	adjacencyList: Record<number, number[]>,
+	width: number,
+	fieldStatus: number[]
+) {
+	// forced neighbors are marked with true, natural neighbors as false
+	let neighbors: Record<number, boolean> = {};
 
 	const directions = [
 		[0, 1],
@@ -139,13 +315,17 @@ function getNeighbors(node: number, width: number, fieldStatus: number[]) {
 	];
 
 	for (const direction of directions) {
-		const x = direction[0];
-		const y = direction[1];
+		const dx = direction[0];
+		const dy = direction[1];
 
-		const neighbor = jump(node, x, y, width, fieldStatus);
+		const neighbor = jump(parent, dx, dy, adjacencyList, width, fieldStatus);
 
-		if (neighbor !== null) {
-			neighbors.push(neighbor);
+		if (neighbor !== null && neighbor !== undefined) {
+			const keys: number[] = Object.keys(neighbor).map(Number);
+
+			for (const key of keys) {
+				neighbors[key] = neighbor[key];
+			}
 		}
 	}
 
