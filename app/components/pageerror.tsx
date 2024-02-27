@@ -2,8 +2,7 @@
 
 import Container from "./container";
 
-// layout to use for all possible site errors
-// e.g. false URL
+// site layout to use for all possible errors
 
 interface PageErrorProps {
 	message: string;

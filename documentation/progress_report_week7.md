@@ -4,4 +4,8 @@
 
 - Fixed old tests to suit the new diagonal euclidean distance calculation.
 
-Hours spent: 10 h (course total 52 h)
+- Added more documentation and commented the code.
+
+- Added more quality-of-life updates to the interface.
+
+Hours spent: 12 h (course total 54 h)

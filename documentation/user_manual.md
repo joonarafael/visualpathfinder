@@ -64,6 +64,8 @@ Nearly every feature of the application can be accessed through the menu.
 
 - Run Algorithm: Select the algorithm to run on current map.
 
+- Run Virtual Maps: Select a virtual map for pathfinding. These maps are not interactive (as they are so large) but are more suitable for rigorous algorithm benchmarking.
+
 - Edit Grid: Switch back to drawing mode.
 
 - Load Map: Load ready-made maps. Current map state will be lost.

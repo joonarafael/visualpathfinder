@@ -1,6 +1,6 @@
 "use client";
 
-// Client view for Home Page
+// Client View for Home Page
 
 import Container from "./components/container";
 import { Button } from "./components/ui/button";
@@ -21,7 +21,7 @@ const HomeClient = () => {
 						</div>
 						<Button
 							variant={"secondary"}
-							onClick={() => window.open("/news", "_self")}
+							onClick={() => window.open("/application", "_self")}
 						>
 							{`LAUNCH APPLICATION`}
 						</Button>

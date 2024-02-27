@@ -1,4 +1,5 @@
 // APPLICATION ROOT LAYOUT
+// Web app entry point, main HTML structure
 
 import type { Metadata } from "next";
 import "./globals.css";

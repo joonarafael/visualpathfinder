@@ -20,8 +20,19 @@ interface DijkstraResult {
 	absoluteDistance?: number;
 }
 
-// This is the Dijkstra algorithm.
-
+/**
+ * My Dijkstra implementation:
+ * Computes the shortest path between two nodes in a non-weighted undirected graph.
+ *
+ * @param adjacencyList - an adjacency list representation of the graph, where each node is a key and its adjacent nodes are listed as values
+ * @param startNode - the node from which to start the search
+ * @param endNode - the node to which to search
+ * @param width - the width of the grid, used to determine whether a diagonal move is allowed
+ * @returns an object containing the following properties:
+ * - visited - a record detailing whether a node (as a key) was visited during the search (boolean)
+ * - shortestPath - an array of node indexes representing the shortest path from the start node to the end node, or undefined if no path was found
+ * - absoluteDistance - the absolute distance (euclidean) between the start node and the end node, or undefined if no path was found
+ */
 export default function dijkstra(
 	adjacencyList: AdjacencyList,
 	startNode: number,

@@ -30,6 +30,7 @@ const Matrix: React.FC<MatrixProps> = ({
 	const [requestRender, setRequestRender] = useState(0);
 	const [mouseState, setMouseState] = useState(false);
 
+	// painting mode (mouse hold)
 	useEffect(() => {
 		const handleMouseDown = () => {
 			setMouseState(true);
@@ -50,14 +51,15 @@ const Matrix: React.FC<MatrixProps> = ({
 		};
 	}, []);
 
+	// re-request a render only every 100ms
 	const handleTileClick = (index: number) => {
 		tileClick(index);
 
 		if (!requestRender) {
-			setRequestRender(1); // Set to any value to indicate that a render has been requested
+			setRequestRender(1); // indicate that a render has been requested
 
 			setTimeout(() => {
-				setRequestRender(0); // Reset to 0 after the debounce time
+				setRequestRender(0); // reset to 0 after the debounce time
 			}, 100);
 		}
 	};

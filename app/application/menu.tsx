@@ -150,7 +150,9 @@ const Menu: React.FC<MenuProps> = ({
 						<MenubarSub>
 							<MenubarSubTrigger>Run Virtual Maps</MenubarSubTrigger>
 							<MenubarSubContent>
-								<MenubarItem onClick={() => {}}>Cauldron</MenubarItem>
+								<MenubarItem disabled onClick={() => {}}>
+									None
+								</MenubarItem>
 								<MenubarItem disabled onClick={() => {}}>
 									None
 								</MenubarItem>

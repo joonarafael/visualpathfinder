@@ -1,7 +1,9 @@
 "use client";
 
-// Main UI logic is provided by this element.
-// Master data structures where grid state and other variables are stored get initialized here.
+// Core Web Application Logic.
+// All core features are provided by this element.
+// Data structures for grid state and other variables are initialized and stored here.
+// It's quite a mess.
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -33,19 +35,6 @@ const PathFinder = () => {
 	const [showNote, setShowNote] = useState(0);
 	const [applicationState, setApplicationState] = useState("draw");
 	const [algorithm, setAlgorithm] = useState("dijkstra");
-
-	// eventlistener for the window resizing
-	useEffect(() => {
-		const handleResizeWindow = () => setWindowWidth(window.innerWidth);
-		window.addEventListener("resize", handleResizeWindow);
-
-		return () => {
-			window.removeEventListener("resize", handleResizeWindow);
-		};
-	}, []);
-
-	const breakpoint = 720;
-
 	const [runsStats, setRunsStats] = useState({
 		dijkstra: {
 			time: 0,
@@ -64,6 +53,7 @@ const PathFinder = () => {
 		},
 	});
 
+	// initialize field
 	const field = Array.from({ length: 72 * 46 }, (_, index) => index);
 	const [fieldStatus, setFieldStatus] = useState(
 		Array.from({ length: 72 * 46 }, (_, index) => 0)
@@ -72,11 +62,24 @@ const PathFinder = () => {
 		Array.from({ length: 72 * 46 }, (_, index) => 0)
 	);
 
+	// eventlistener for the window resizing
+	useEffect(() => {
+		const handleResizeWindow = () => setWindowWidth(window.innerWidth);
+		window.addEventListener("resize", handleResizeWindow);
+
+		return () => {
+			window.removeEventListener("resize", handleResizeWindow);
+		};
+	}, []);
+
+	const breakpoint = 720;
+
 	// if map is changed, the old stats will be reset after an algorithm run
 	useEffect(() => {
 		setMapChanged(true);
 	}, [fieldStatus]);
 
+	// if any unexpected runtime errors are encountered, render the error page
 	if (isError) {
 		return (
 			<PageError
@@ -87,7 +90,7 @@ const PathFinder = () => {
 		);
 	}
 
-	// handle tile clicking
+	// handle grid tile clicking
 	const tileClick = (index: number) => {
 		if (tool === "START") {
 			let tmp = [...fieldStatus];
@@ -168,7 +171,7 @@ const PathFinder = () => {
 		return jumpPointSearch(adjacencyList, start, finish, 72, fieldStatus);
 	};
 
-	// function to handle the pathfinding calls
+	// function to handle the pathfinding calls (for all algorithms)
 	const runAlgorithm = (algorithm: string) => {
 		if (startAndFinishExist()) {
 			const tmp = [...fieldStatus];
@@ -204,6 +207,7 @@ const PathFinder = () => {
 					(endTime - startTime + Number.EPSILON).toFixed(1)
 				);
 
+				// update and/or reset statistics depending on the algorithm and map change
 				const dijkstraStats =
 					algorithm === "dijkstra"
 						? {
@@ -295,6 +299,7 @@ const PathFinder = () => {
 		}
 	};
 
+	// viewport too narrow
 	if (windowWidth < breakpoint) {
 		return <PageError message={"Please increase window width to 720px."} />;
 	}

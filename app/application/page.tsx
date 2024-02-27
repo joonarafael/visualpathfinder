@@ -1,4 +1,4 @@
-// Application page.
+// APPLICATION PAGE (PATHFINDER)
 
 import ClientOnly from "@/app/components/clientonly";
 

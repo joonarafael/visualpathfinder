@@ -1,6 +1,6 @@
 "use client";
 
-// master container to contain the width
+// custom component to contain the width
 
 interface ContainerProps {
 	children: React.ReactNode;

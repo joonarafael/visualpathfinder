@@ -57,18 +57,6 @@ const RunTile: React.FC<RunTileProps> = ({
 		size = "min-w-24 min-h-24";
 	}
 
-	if (zoom > 3) {
-		return (
-			<div
-				className={`${
-					smoothing && "border rounded"
-				} flex items-center justify-center p-2 ${bgColor} ${size} text-xs`}
-			>
-				{index}
-			</div>
-		);
-	}
-
 	return (
 		<div
 			className={`${

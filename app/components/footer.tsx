@@ -1,6 +1,6 @@
 "use client";
 
-// site footer
+// web app footer
 
 import { DiMitlicence } from "react-icons/di";
 import { FaExternalLinkAlt } from "react-icons/fa";

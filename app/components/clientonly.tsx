@@ -1,6 +1,6 @@
 "use client";
 
-// custom module to render the client components as children
+// custom module to render child components client-side
 
 import { useEffect, useState } from "react";
 
