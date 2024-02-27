@@ -182,9 +182,9 @@ const PathFinder = () => {
 			const finish = tmp.indexOf(3);
 
 			try {
-				const startTime = performance.now();
-
 				const adjacencyList = generateAdjacencyList(tmp, 72);
+
+				const startTime = performance.now();
 
 				let algorithmReturn;
 
