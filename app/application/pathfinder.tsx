@@ -286,6 +286,7 @@ const PathFinder = () => {
 					setMapChanged(false);
 				}
 			} catch (e) {
+				console.error(e);
 				setIsError(true);
 				return;
 			}

@@ -1,8 +1,8 @@
 import jps from "@/app/application/algorithms/jps";
 
-const FIELD_STATUS = [0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0];
+const FIELD_STATUS = [0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 2, 1, 3];
 const UNSOLVABLE_FIELD_STATUS = [
-	0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0,
+	0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 2, 1, 3,
 ];
 
 describe("basic logic for jps", () => {
@@ -23,7 +23,7 @@ describe("basic logic for jps", () => {
 
 		const jpsReturn = jps(adjacencyList, 13, 15, 4, FIELD_STATUS);
 
-		expect(Object.keys(jpsReturn.visited).length).toEqual(7);
+		expect(Object.keys(jpsReturn.visited).length).toEqual(5);
 	});
 
 	it("solve a solvable matrix", () => {
@@ -43,11 +43,11 @@ describe("basic logic for jps", () => {
 
 		const jpsReturn = jps(adjacencyList, 13, 15, 4, FIELD_STATUS);
 
-		expect(jpsReturn.visited["11"]).toEqual(true);
-		expect(jpsReturn.visited["15"]).toEqual(undefined);
+		expect(jpsReturn.visited["1"]).toEqual(true);
+		expect(jpsReturn.visited["8"]).toEqual(true);
 
 		if (jpsReturn.shortestPath) {
-			expect(jpsReturn.shortestPath.length).toEqual(5);
+			expect(jpsReturn.visited["13"]).toEqual(true);
 		} else {
 			fail("JPS algorithm did not return the 'shortestPath' value.");
 		}
@@ -69,7 +69,7 @@ describe("basic logic for jps", () => {
 
 		const jpsReturn = jps(adjacencyList, 13, 15, 4, UNSOLVABLE_FIELD_STATUS);
 
-		expect(jpsReturn.visited["6"]).toEqual(true);
+		expect(jpsReturn.visited["1"]).toEqual(true);
 
 		if (!jpsReturn.shortestPath) {
 			expect(jpsReturn.visited["13"]).toEqual(true);

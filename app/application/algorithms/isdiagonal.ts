@@ -1,5 +1,13 @@
 "use client";
 
+/**
+ * Returns true if the two nodes are diagonal, false otherwise.
+ * Nodes do not need to be immediately diagonally adjacent (absolute distance can be >sqrt(2)).
+ * @param node - The parent ode index.
+ * @param neighbor - The neighbor node index.
+ * @param width - The width of the grid.
+ * @returns true if the two nodes are diagonal, false otherwise.
+ */
 export default function isDiagonal(
 	node: number,
 	neighbor: number,

@@ -1,7 +1,7 @@
 # Progress Report Week 7
 
-- More work on JPS.
+- Wrote the JPS algorithm.
 
 - Fixed old tests to suit the new diagonal euclidean distance calculation.
 
-Hours spent: 8 h (course total 50 h)
+Hours spent: 10 h (course total 52 h)
