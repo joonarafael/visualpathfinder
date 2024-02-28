@@ -8,17 +8,7 @@ interface NoteProps {
 	description: string;
 	onClick: MouseEventHandler<HTMLButtonElement>;
 	btnText: string;
-	btnStyle:
-		| "link"
-		| "default"
-		| "destructive"
-		| "outline"
-		| "secondary"
-		| "ghost"
-		| null
-		| undefined;
-	txtColor: string;
-	borderColor: string;
+	warning?: boolean;
 }
 
 const Note: React.FC<NoteProps> = ({
@@ -26,13 +16,17 @@ const Note: React.FC<NoteProps> = ({
 	description,
 	onClick,
 	btnText,
-	btnStyle,
-	txtColor,
-	borderColor,
+	warning,
 }) => {
+	let warningCSS = "border-emerald-500 text-green-500";
+
+	if (warning) {
+		warningCSS = "border-yellow-500 text-rose-500";
+	}
+
 	return (
 		<div
-			className={`text-lg rounded border p-2 font-semibold flex flex-col border-${borderColor} content-center text-${txtColor}`}
+			className={`text-lg rounded border p-2 font-semibold flex flex-col ${warningCSS} content-center`}
 		>
 			{title}
 			<hr className="mt-1 py-1" />
@@ -40,7 +34,11 @@ const Note: React.FC<NoteProps> = ({
 				<p className="text-neutral-500 text-xs">{description}</p>
 			</div>
 			<hr className="mt-1 py-1" />
-			<Button onClick={onClick} className="font-bold" variant={btnStyle}>
+			<Button
+				onClick={onClick}
+				className="font-bold"
+				variant={warning ? "destructive" : "secondary"}
+			>
 				{btnText}
 			</Button>
 		</div>

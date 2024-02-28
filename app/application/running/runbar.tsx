@@ -47,9 +47,7 @@ const RunBar: React.FC<RunBarProps> = ({
 						setShowNote(1);
 					}}
 					btnText="YES I KNOW"
-					btnStyle="destructive"
-					txtColor="rose-500"
-					borderColor="yellow-500"
+					warning
 				/>
 			) : (
 				showNote === 1 && (
@@ -61,9 +59,7 @@ const RunBar: React.FC<RunBarProps> = ({
 							setShowNote(2);
 						}}
 						btnText="FINE BY ME"
-						btnStyle="destructive"
-						txtColor="rose-500"
-						borderColor="yellow-500"
+						warning
 					/>
 				)
 			)}
@@ -111,9 +107,6 @@ const RunBar: React.FC<RunBarProps> = ({
 						setShowNote(3);
 					}}
 					btnText="I GET IT"
-					btnStyle="secondary"
-					txtColor="green-500"
-					borderColor="emerald-500"
 				/>
 			)}
 		</div>
