@@ -37,7 +37,7 @@ export default function aStar(
 				shortestPath: reconstructPath(cameFrom, endNode),
 				visited: visited,
 				absoluteDistance: parseFloat(
-					(fScore[endNode] + Number.EPSILON).toFixed(1)
+					(gScore[endNode] + Number.EPSILON).toFixed(1)
 				),
 			};
 		}

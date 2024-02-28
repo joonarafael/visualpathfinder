@@ -1,18 +1,7 @@
 "use client";
 
 import isDiagonal from "./isdiagonal";
-
-interface AdjacencyList {
-	[node: number]: number[];
-}
-
-interface Distances {
-	[node: number]: number;
-}
-
-interface Parents {
-	[node: number]: number | null;
-}
+import PriorityQueue from "./pq";
 
 interface DijkstraResult {
 	visited: { [node: number]: boolean };
@@ -20,88 +9,82 @@ interface DijkstraResult {
 	absoluteDistance?: number;
 }
 
-/**
- * My Dijkstra implementation:
- * Computes the shortest path between two nodes in a non-weighted undirected graph.
- *
- * @param adjacencyList - an adjacency list representation of the graph, where each node is a key and its adjacent nodes are listed as values
- * @param startNode - the node from which to start the search
- * @param endNode - the node to which to search
- * @param width - the width of the grid, used to determine whether a diagonal move is allowed
- * @returns an object containing the following properties:
- * - visited - a record detailing whether a node (as a key) was visited during the search (boolean)
- * - shortestPath - an array of node indexes representing the shortest path from the start node to the end node, or undefined if no path was found
- * - absoluteDistance - the absolute distance (euclidean) between the start node and the end node, or undefined if no path was found
- */
 export default function dijkstra(
-	adjacencyList: AdjacencyList,
+	adjacencyList: Record<number, number[]>,
 	startNode: number,
 	endNode: number,
 	width: number
 ): DijkstraResult {
-	const distances: Distances = {};
+	const openSet = new PriorityQueue<number>();
+	const cameFrom: Record<number, number> = {};
+	const gScore: Record<number, number> = {};
+
 	const visited: { [node: number]: boolean } = {};
-	const parents: Parents = {};
 
-	// initialize all distances to infinity
-	for (let node in adjacencyList) {
-		distances[node] = Number.MAX_VALUE;
-		visited[node] = false;
-		parents[node] = null;
-	}
+	openSet.enqueue(startNode, 0);
 
-	distances[startNode] = 0;
+	gScore[startNode] = 0;
 
-	while (true) {
-		let shortestDistance = Number.MAX_VALUE;
-		let currentNode: number | null = null;
+	while (!openSet.isEmpty()) {
+		const current = openSet.dequeue();
 
-		// retrieve the current node
-		for (let node in distances) {
-			if (distances[node] < shortestDistance && !visited[node]) {
-				shortestDistance = distances[node];
-				currentNode = parseInt(node, 10);
-			}
+		if (current === undefined) {
+			break;
 		}
 
-		// end node was never reached
-		if (currentNode === null) {
-			return { visited };
-		}
-
-		// end node found, construct shortest path
-		if (currentNode === endNode) {
-			const shortestPath: number[] = [];
-			let node: number | null = endNode;
-
-			while (node !== null) {
-				shortestPath.unshift(node);
-				node = parents[node] ?? null;
-			}
-
+		// we've reached the goal
+		if (current === endNode) {
 			return {
-				visited,
-				shortestPath,
+				shortestPath: reconstructPath(cameFrom, endNode),
+				visited: visited,
 				absoluteDistance: parseFloat(
-					(distances[endNode] + Number.EPSILON).toFixed(1)
+					(gScore[endNode] + Number.EPSILON).toFixed(1)
 				),
 			};
 		}
 
-		// actual neighbor processing for the current node
-		for (let neighbor of adjacencyList[currentNode]) {
-			let distanceToNeighbor = shortestDistance + 1;
+		// neighbor processing
+		for (const neighbor of adjacencyList[current]) {
+			let tentativeGScore = gScore[current] + 1;
 
-			if (isDiagonal(currentNode, neighbor, width)) {
-				distanceToNeighbor = shortestDistance + Math.sqrt(2);
+			if (isDiagonal(current, neighbor, width)) {
+				tentativeGScore = gScore[current] + Math.sqrt(2);
 			}
 
-			if (distanceToNeighbor <= distances[neighbor]) {
-				distances[neighbor] = distanceToNeighbor;
-				parents[neighbor] = currentNode;
+			// node prioritizing only includes the actual known distance
+			// no heuristic approximations are utilized
+			if (
+				!gScore.hasOwnProperty(neighbor) ||
+				tentativeGScore < gScore[neighbor]
+			) {
+				cameFrom[neighbor] = current;
+				gScore[neighbor] = tentativeGScore;
+
+				// add this new neighbor to the pq for later processing
+				if (!openSet.heap.some((item) => item.element === neighbor)) {
+					openSet.enqueue(neighbor, gScore[neighbor]);
+				}
 			}
 		}
 
-		visited[currentNode] = true;
+		visited[current] = true;
 	}
+
+	// pq empty but no path found
+	return { visited: visited };
+}
+
+// helper function to reconstruct the shortest found path
+function reconstructPath(
+	cameFrom: Record<number, number>,
+	current: number
+): number[] {
+	const path = [current];
+
+	while (cameFrom[current] !== undefined) {
+		current = cameFrom[current];
+		path.unshift(current);
+	}
+
+	return path;
 }

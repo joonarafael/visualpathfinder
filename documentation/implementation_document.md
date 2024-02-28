@@ -38,7 +38,7 @@ This is a helper function to check whether or not two given points are located o
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/pq.ts "Redirect to file 'pq.ts'").
 
-This is an important class for the A* and JPS algorithms. It is a specific class object to store individual nodes and their respective priorities in a binary heap data structure. With the utilization of the Priority Queue, A* and JPS may process nodes in a specific order depending on the node priorities.
+This is an important class for all pathfinding algorithms. It is a specific class object to store individual nodes and their respective priorities in a binary heap data structure.
 
 Special thanks for the suggestion by [psangi-hy](https://github.com/psangi-hy "psangi-hy on GitHub") to change to a heap structure (course peer review issue).
 
@@ -52,7 +52,7 @@ Every included algorithm utilizes the one-dimensional adjacency list to perform 
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/dijkstra.ts "Redirect to file 'dijkstra.ts'").
 
-Dijkstra algorithm blindly expands from the start node and continues to widen the search area until it finds the end node or alternatively visits all nodes but never finds the end node. It has no higher understanding of the graph, every node is equally important.
+Dijkstra algorithm expands from the start node and calculates the known shortest distance for all new neighbors. These nodes are kept in a priority queue and new neighbors are processed depending the order of the queue.
 
 The Dijkstra version implemented in this web application has one added optimization; it cuts the scanning process when it reaches the end node. If e.g. the start and end nodes are immediately adjacent, no other nodes have to be processed.
 
@@ -60,7 +60,7 @@ The Dijkstra version implemented in this web application has one added optimizat
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/astar.ts "Redirect to file 'astar.ts'").
 
-A\* is drastically faster than Dijkstra. It performs better due to the fact that it knows the location of the end node. Therefore it always prioritizes nodes closer to the end node. It will process lesser nodes only after reaching a dead end.
+A\* is 'the optimized Dijkstra'. It performs slightly better due to the fact that it knows the location of the end node. Therefore it always prioritizes nodes closer to the end node. It will process lesser nodes only after reaching a dead end.
 
 A\* still has to process each immediately adjacent node, but the amount of nodes cuts down so low that it finds the end noticeably faster than Dijkstra.
 
@@ -68,7 +68,7 @@ A\* still has to process each immediately adjacent node, but the amount of nodes
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/jps.ts "Redirect to file 'jps.ts'").
 
-JPS is a specially optimized version of A\*. It is blessed with the knowledge of the end node location and therefore utilizes the same kind of node prioritizing as the base A\*.
+JPS is a specially optimized version of A\*. It is, too, blessed with the knowledge of the end node location and therefore utilizes the same kind of node prioritizing as the base A\*.
 
 The JPS algorithm takes advantage of the known fact that **tile maps** (e.g. pixel maps, uniform grids, undirected, unweighted) have some special attributes in their symmetry. What does this mean?
 

@@ -18,7 +18,7 @@ describe("basic logic for dijkstra", () => {
 
 		const dijkstraReturn = dijkstra(adjacencyList, 13, 15, 4);
 
-		expect(Object.keys(dijkstraReturn.visited).length).toEqual(11);
+		expect(Object.keys(dijkstraReturn.visited).length).toEqual(10);
 	});
 
 	it("solve a solvable matrix", () => {
@@ -39,7 +39,7 @@ describe("basic logic for dijkstra", () => {
 		const dijkstraReturn = dijkstra(adjacencyList, 13, 15, 4);
 
 		expect(dijkstraReturn.visited["11"]).toEqual(true);
-		expect(dijkstraReturn.visited["15"]).toEqual(false);
+		expect(dijkstraReturn.visited["12"]).toEqual(true);
 
 		if (dijkstraReturn.shortestPath) {
 			expect(dijkstraReturn.shortestPath.length).toEqual(7);
