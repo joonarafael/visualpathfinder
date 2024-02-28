@@ -2,7 +2,7 @@
 
 - Fixed Dijkstra's algorithm to work like the required PQ implementation.
 
-- Wrote the final (properly working) JPS algorithm.
+- Wrote JPS algorithm.
 
 - Fixed old tests to suit the new diagonal euclidean distance calculation.
 
@@ -10,4 +10,4 @@
 
 - Added more quality-of-life updates to the interface.
 
-Hours spent: 15 h (course total 57 h)
+Hours spent: 16 h (course total 58 h)

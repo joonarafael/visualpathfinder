@@ -20,8 +20,13 @@ import Menu from "./menu";
 import RunMatrix from "./running/matrix";
 import RunBar from "./running/runbar";
 import updateUserView from "./running/updateuserview";
+import updateJPSPath from "./running/updatejpspath";
+import buildJPSPath from "./running/buildjpspath";
 
 type AdjacencyList = Record<number, number[]>;
+
+const WIDTH = 72;
+const HEIGHT = 48;
 
 const PathFinder = () => {
 	// initialize all state variables
@@ -54,12 +59,12 @@ const PathFinder = () => {
 	});
 
 	// initialize field
-	const field = Array.from({ length: 72 * 46 }, (_, index) => index);
+	const field = Array.from({ length: WIDTH * HEIGHT }, (_, index) => index);
 	const [fieldStatus, setFieldStatus] = useState(
-		Array.from({ length: 72 * 46 }, (_, index) => 0)
+		Array.from({ length: WIDTH * HEIGHT }, (_, index) => 0)
 	);
 	const [runFieldStatus, setRunFieldStatus] = useState(
-		Array.from({ length: 72 * 46 }, (_, index) => 0)
+		Array.from({ length: WIDTH * HEIGHT }, (_, index) => 0)
 	);
 
 	// eventlistener for the window resizing
@@ -72,7 +77,7 @@ const PathFinder = () => {
 		};
 	}, []);
 
-	const breakpoint = 720;
+	const breakpoint = 1048;
 
 	// if map is changed, the old stats will be reset after an algorithm run
 	useEffect(() => {
@@ -148,7 +153,7 @@ const PathFinder = () => {
 	) => {
 		setAlgorithm("dijkstra");
 
-		return dijkstra(adjacencyList, start, finish, 72);
+		return dijkstra(adjacencyList, start, finish, WIDTH);
 	};
 
 	const callAStar = (
@@ -158,7 +163,7 @@ const PathFinder = () => {
 	) => {
 		setAlgorithm("a*");
 
-		return aStar(adjacencyList, start, finish, 72);
+		return aStar(adjacencyList, start, finish, WIDTH);
 	};
 
 	const callJPS = (
@@ -168,7 +173,7 @@ const PathFinder = () => {
 	) => {
 		setAlgorithm("jps");
 
-		return jumpPointSearch(adjacencyList, start, finish, 72, fieldStatus);
+		return jumpPointSearch(adjacencyList, start, finish, WIDTH, fieldStatus);
 	};
 
 	// function to handle the pathfinding calls (for all algorithms)
@@ -182,7 +187,7 @@ const PathFinder = () => {
 			const finish = tmp.indexOf(3);
 
 			try {
-				const adjacencyList = generateAdjacencyList(tmp, 72);
+				const adjacencyList = generateAdjacencyList(tmp, WIDTH);
 
 				let algorithmReturn;
 
@@ -277,14 +282,29 @@ const PathFinder = () => {
 					jps: jpsStats,
 				});
 
-				updateUserView(
-					tmp,
-					setRunFieldStatus,
-					algorithmReturn.visited,
-					tmp.indexOf(2),
-					tmp.indexOf(3),
-					algorithmReturn.shortestPath
-				);
+				// request full path drawing for JPS
+				if (algorithm === "jps") {
+					const fullJPSPath = buildJPSPath(WIDTH, algorithmReturn.shortestPath);
+
+					updateJPSPath(
+						tmp,
+						setRunFieldStatus,
+						algorithmReturn.visited,
+						tmp.indexOf(2),
+						tmp.indexOf(3),
+						algorithmReturn.shortestPath,
+						fullJPSPath
+					);
+				} else {
+					updateUserView(
+						tmp,
+						setRunFieldStatus,
+						algorithmReturn.visited,
+						tmp.indexOf(2),
+						tmp.indexOf(3),
+						algorithmReturn.shortestPath
+					);
+				}
 
 				if (mapChanged) {
 					setMapChanged(false);
@@ -301,7 +321,7 @@ const PathFinder = () => {
 
 	// viewport too narrow
 	if (windowWidth < breakpoint) {
-		return <PageError message={"Please increase window width to 720px."} />;
+		return <PageError message={"Please increase window width to 1048px."} />;
 	}
 
 	return (
@@ -325,7 +345,7 @@ const PathFinder = () => {
 						<div className="w-max">
 							{applicationState === "draw" && (
 								<Matrix
-									width={72}
+									width={WIDTH}
 									height={46}
 									field={field}
 									fieldStatus={fieldStatus}
@@ -337,7 +357,7 @@ const PathFinder = () => {
 							)}
 							{applicationState === "run" && (
 								<RunMatrix
-									width={72}
+									width={WIDTH}
 									height={46}
 									field={field}
 									fieldStatus={runFieldStatus}

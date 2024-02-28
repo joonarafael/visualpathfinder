@@ -41,6 +41,12 @@ const RunTile: React.FC<RunTileProps> = ({
 		} else {
 			bgColor = "bg-sky-500";
 		}
+	} else if (status === 6) {
+		if (contrast) {
+			bgColor = "bg-pink-800";
+		} else {
+			bgColor = "bg-emerald-800";
+		}
 	}
 
 	let size = "min-w-4 min-h-4";
