@@ -90,6 +90,6 @@ This makes the straight direction jump really straightforward. Diagonal jumps, o
 
 <img src="./images/forcedneighbor.png">
 
-The scanning process finishes once a forced neighbor is found. This creates the `x` as the natural neighbor and requests new scans in appropriate directions from the `x` node.
+The scanning process finishes once a forced neighbor is found. This makes the `x` the natural neighbor of the original parent node and then requests new scans in appropriate directions from `x`.
 
 Note that running directly into a wall **does not** create a jump point. Other previous diagonal steps (and their respective cardinal direction scans) have taken care of the immediately adjacent nodes to this 'into-a-wall-running' tile.
