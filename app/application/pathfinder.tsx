@@ -184,9 +184,9 @@ const PathFinder = () => {
 			try {
 				const adjacencyList = generateAdjacencyList(tmp, 72);
 
-				const startTime = performance.now();
-
 				let algorithmReturn;
+
+				const startTime = performance.now();
 
 				if (algorithm === "dijkstra") {
 					algorithmReturn = callDijkstra(adjacencyList, start, finish);
