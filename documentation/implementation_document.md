@@ -6,7 +6,7 @@ Other interesting documents include [Usage of AI Report](https://github.com/joon
 
 ## About Benchmarking and Other Performance Stuff
 
-The application is built with TypeScript and runs on a Node.js server. This somewhat indirectly means that no real empiric examination of the performance can/should be made. This application merely serves as a way to understand and learn the differences between the different pathfinding algorithms and see them in action.
+The application is built with TypeScript and runs on a Node.js server. This somewhat indirectly means that not too serious examination of the performance can/should be made. This application serves as a way to understand and learn the differences between the different pathfinding algorithms and see them in action.
 
 The built-in timer to measure algorithm runtime is accurate to a certain point, but no real conclusions can be drawn out from the resulting numbers. Decision of browser, as well as the general differences between machines and server environments affect too much the performance. Resulting performance numbers even within the **same environment**, **same map** and **same algorithm** can differ over 50% at times.
 
@@ -52,24 +52,36 @@ Every included algorithm utilizes the one-dimensional adjacency list to perform 
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/dijkstra.ts "Redirect to file 'dijkstra.ts'").
 
-Dijkstra algorithm expands from the start node and calculates the known shortest distance for all new neighbors. These nodes are kept in a priority queue and new neighbors are processed depending the order of the queue.
+Dijkstra algorithm always expands parent node in all directions and calculates the known distance for all new neighbors. These nodes are kept in a priority queue and new neighbors are processed depending the order of the queue.
 
-The Dijkstra version implemented in this web application has one added optimization; it cuts the scanning process when it reaches the end node. If e.g. the start and end nodes are immediately adjacent, no other nodes have to be processed.
+The Dijkstra version implemented in this web application has also one additional optimization; it cuts the scanning process when it reaches the end node. If e.g. the start and end nodes are immediately adjacent, no other nodes have to be processed.
 
 #### A\*
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/astar.ts "Redirect to file 'astar.ts'").
 
-A\* is 'the optimized Dijkstra'. It performs slightly better due to the fact that it knows the location of the end node. Therefore it always prioritizes nodes closer to the end node. It will process lesser nodes only after reaching a dead end.
+A\* is the _optimized Dijkstra_. It performs slightly better due to the fact that it knows the location of the end node. Therefore it always prioritizes nodes closer to the end node. It will process lesser nodes only after reaching a dead end.
 
-A\* still has to process each immediately adjacent node, but the amount of nodes cuts down so low that it finds the end noticeably faster than Dijkstra.
+A\* still has to process each immediately adjacent node, but the amount of nodes cuts down so low that it should practically always find the gaol faster than Dijkstra. However, some specifically cruel maps where the amount of processed nodes reaches the same as Dijkstra, A\* will perform identically to Dijkstra.
 
 #### Jump Point Search
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/jps.ts "Redirect to file 'jps.ts'").
 
-JPS is a specially optimized version of A\*. It is, too, blessed with the knowledge of the end node location and therefore utilizes the same kind of node prioritizing as the base A\*.
+JPS is a specially optimized version of A\*. It is, too, blessed with the knowledge of the end node location and therefore utilizes the same kind of heuristic node prioritizing as the base A\*.
 
 The JPS algorithm takes advantage of the known fact that **tile maps** (e.g. pixel maps, uniform grids, undirected, unweighted) have some special attributes in their symmetry. What does this mean?
 
-TODO: explain pruning and forced neighbors, maybe include images...
+As a default, only the starting node is expanded in every 8 direction. Expanding a "parent node" (in the relevant directions) means scanning the next nodes in the same line as long as a stopping condition is met. In such an event, the node is considered as a "jump point" for the parent node. The pathfinding continues by expanding this newly found jump point.
+
+While the required amount of processing for a single node is greater than in the base A\*, the sheer quantity of visited nodes reduces so much that the algorithm becomes more efficient (on a favorable map). Paths with a lot of turns, diagonal objects or other zigzagging hinder the performance of the JPS algorithm, sometimes rendering it slower than the A\*.
+
+**Interesting JPS rules:**
+
+![Neighbor Pruning Rules](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/images/neighborpruning.png)
+
+During the scanning of a suitable jump point for the parent node, all tiles greyed out can be discarded. This makes the straight direction jump really straightforward. Diagonal jumps, on the other hand, require quick scans in two cardinal directions before advancing further.
+
+![Forced Neighbors](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/images/forcedneighbor.png)
+
+The scanning process finishes once a forced neighbor is found. This creates the `x` as the natural neighbor and requests new scans in appropriate directions from the `x` node. Note that running directly into a wall **does not** create a jump point. Other previous diagonal steps (and their respective cardinal direction scans) have taken care of the immediately adjacent nodes to this 'into-a-wall-running' tile.

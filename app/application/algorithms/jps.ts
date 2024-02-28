@@ -3,9 +3,6 @@
 import heuristicEuclidean from "./euclidean";
 import PriorityQueue from "./pq";
 
-// jps is a special A* algorithm.
-// it removes the amount of nodes
-
 /**
  * Runs the Jump Point Search algorithm on the given grid.
  *
@@ -27,9 +24,12 @@ export default function jumpPointSearch(
 	const cameFrom: Record<number, number> = {};
 	const gScore: Record<number, number> = {};
 	const fScore: Record<number, number> = {};
-	const directions: Record<number, number[][]> = {};
 
 	const visited: { [node: number]: boolean } = {};
+
+	// directions record holds the requested directions in which a node should be expanded
+	// as a default, only the start node is expanded in every 8 direction.
+	const directions: Record<number, number[][]> = {};
 
 	openSet.enqueue(startNode, 0);
 
@@ -68,7 +68,8 @@ export default function jumpPointSearch(
 			};
 		}
 
-		// request all neighbors with their jump points
+		// request neighbors with their jump points
+		// with the help of the directions record, we can retrieve only relevant neighbors
 		const neighbors = getNeighborsWithJumpPoints(
 			current,
 			adjacencyList,
@@ -78,7 +79,6 @@ export default function jumpPointSearch(
 		);
 
 		for (const neighbor of neighbors) {
-			// distance calculation and pq logic works exactly the same as in A*
 			const tentativeGScore =
 				gScore[current] + heuristicEuclidean(current, neighbor, width);
 
@@ -127,6 +127,7 @@ function reconstructPath(
  * @param adjacencyList - the adjacency list of the master grid
  * @param width - the width of the master grid
  * @param fieldStatus - the status of each node in the master grid
+ * @param directions - the directions record, where relevant directions are added if we find something
  * @returns the target node if forced neighbors are found, null if it runs to a wall
  */
 function pruneStraightDirectionNeighbors(
@@ -149,6 +150,7 @@ function pruneStraightDirectionNeighbors(
 		const north = target - width;
 		const south = target + width;
 
+		// forced neighbor checking
 		if (north > 0 && !adjacencyList[target].includes(north)) {
 			if (adjacencyList[target].includes(north + dx)) {
 				forcedNeighbors = true;
@@ -174,17 +176,19 @@ function pruneStraightDirectionNeighbors(
 			return target;
 		}
 
+		// check if running to a wall, return null in this case
 		const next = target + dx;
 
 		if (!adjacencyList[target].includes(next)) {
 			return null;
 		}
 
-		// continue jump
+		// no stop conditions met, continue the jump
 		return jump(target, dx, dy, adjacencyList, width, fieldStatus, directions);
 	}
 
 	// y movement
+	// logic is identical
 	const west = target - 1;
 	const east = target + 1;
 
@@ -225,7 +229,6 @@ function pruneStraightDirectionNeighbors(
 		return null;
 	}
 
-	// continue jump
 	return jump(target, dx, dy, adjacencyList, width, fieldStatus, directions);
 }
 
@@ -239,6 +242,7 @@ function pruneStraightDirectionNeighbors(
  * @param adjacencyList - the adjacency list of the master grid
  * @param width - the width of the master grid
  * @param fieldStatus - the status of each node in the master grid
+ * @param directions - the directions record, where relevant directions are added if we find something
  * @returns the target node if forced neighbors are found, null if it runs to a wall
  */
 function pruneDiagonalNeighbors(
@@ -257,6 +261,7 @@ function pruneDiagonalNeighbors(
 	const xBlocker = target - dx;
 	const yBlocker = target - dy * width;
 
+	// forced neighbor checking
 	if (
 		Math.floor(xBlocker / width) === Math.floor(target / width) &&
 		!adjacencyList[target].includes(xBlocker)
@@ -288,9 +293,12 @@ function pruneDiagonalNeighbors(
 		}
 	}
 
+	// according to the jps rules, diagonal jump may not be continued before relevant cardinal directions are scanned
 	const xNeighbor = target + dx;
 	const yNeighbor = target + dy * width;
 
+	// if cardinal direction scans return something, the current node is marked as the jump point for the parent
+	// this jump point has to be expanded again in the future
 	if (adjacencyList[target].includes(xNeighbor)) {
 		const resultX = pruneStraightDirectionNeighbors(
 			xNeighbor,
@@ -331,13 +339,14 @@ function pruneDiagonalNeighbors(
 		}
 	}
 
+	// check if running to a wall, return null in this case
 	const next = target + dx + dy * width;
 
 	if (!adjacencyList[target].includes(next)) {
 		return null;
 	}
 
-	// continue jump
+	// continue the diagonal jump
 	return jump(target, dx, dy, adjacencyList, width, fieldStatus, directions);
 }
 
@@ -350,6 +359,7 @@ function pruneDiagonalNeighbors(
  * @param adjacencyList - the adjacency list of the master grid
  * @param width - the width of the master grid
  * @param fieldStatus - the status of each node in the master grid
+ * @param directions - the directions record
  * @returns the target node if endNode or forced neighbors are found, null if it runs to a wall
  */
 function jump(
@@ -361,7 +371,7 @@ function jump(
 	fieldStatus: number[],
 	directions: Record<number, number[][]>
 ) {
-	// check if we run into a wall
+	// check if we run into a wall, return null in this case
 	const target = parent + dx + width * dy;
 
 	if (!adjacencyList[parent].includes(target)) {
@@ -404,6 +414,7 @@ function jump(
  * @param adjacencyList - the adjacency list of the master grid
  * @param width - the width of the master grid
  * @param fieldStatus - the status of each node in the master grid
+ * @param directions - the directions record, where relevant directions are added if we find something
  * @returns an array of node indices that can be reached by a jump
  */
 function getNeighborsWithJumpPoints(
