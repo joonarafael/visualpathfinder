@@ -20,7 +20,7 @@ describe("Test algos on a proper 72x48 map", () => {
 		expect(Object.keys(aStarReturn.visited).length).toEqual(2566);
 
 		const jpsReturn = jps(adjacencyList, startIndex, endIndex, 72, fieldStatus);
-		expect(Object.keys(jpsReturn.visited).length).toEqual(48);
+		expect(Object.keys(jpsReturn.visited).length).toEqual(98);
 
 		expect(dijkstraReturn.absoluteDistance).toEqual(
 			aStarReturn.absoluteDistance
