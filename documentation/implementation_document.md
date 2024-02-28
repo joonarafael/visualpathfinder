@@ -76,12 +76,20 @@ As a default, only the starting node is expanded in every 8 direction. Expanding
 
 While the required amount of processing for a single node is greater than in the base A\*, the sheer quantity of visited nodes reduces so much that the algorithm becomes more efficient (on a favorable map). Paths with a lot of turns, diagonal objects or other zigzagging hinder the performance of the JPS algorithm, sometimes rendering it slower than the A\*.
 
-**Interesting JPS rules:**
+**Interesting JPS rules**
 
-![Neighbor Pruning Rules](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/images/neighborpruning.png)
+**_Neighbor Pruning_**
 
-During the scanning of a suitable jump point for the parent node, all tiles greyed out can be discarded. This makes the straight direction jump really straightforward. Diagonal jumps, on the other hand, require quick scans in two cardinal directions before advancing further.
+<img src="./images/neighborpruning.png">
 
-![Forced Neighbors](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/images/forcedneighbor.png)
+During the scanning of a suitable jump point for the parent node, all tiles greyed out can be discarded. We can safely do this based on the known facts of **tile maps**, where no better path to the target can be found that runs through those grey tiles.
 
-The scanning process finishes once a forced neighbor is found. This creates the `x` as the natural neighbor and requests new scans in appropriate directions from the `x` node. Note that running directly into a wall **does not** create a jump point. Other previous diagonal steps (and their respective cardinal direction scans) have taken care of the immediately adjacent nodes to this 'into-a-wall-running' tile.
+This makes the straight direction jump really straightforward. Diagonal jumps, on the other hand, require quick scans in two cardinal directions before advancing further.
+
+**_Forced Neighbors and Jump Point Creation Logic_**
+
+<img src="./images/forcedneighbor.png">
+
+The scanning process finishes once a forced neighbor is found. This creates the `x` as the natural neighbor and requests new scans in appropriate directions from the `x` node.
+
+Note that running directly into a wall **does not** create a jump point. Other previous diagonal steps (and their respective cardinal direction scans) have taken care of the immediately adjacent nodes to this 'into-a-wall-running' tile.
