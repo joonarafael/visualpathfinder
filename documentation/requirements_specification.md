@@ -2,7 +2,7 @@
 
 ## Important notice
 
-The software requirements were changed on the January 22nd as the course instructor gave feedback of the IDA\* algorithm > it's not really suitable for matrix (pixelmap) pathfinding.
+The software requirements were changed on the January 22nd as the course instructor gave feedback of the IDA\* algorithm > it's not really suitable for matrix (pixelmap) pathfinding. Later, on March 1st, some spelling issues were fixed.
 
 ## General
 
@@ -27,6 +27,6 @@ Each algorithm will have their respective results constantly displayed for the c
 ## For the course (in finnish)
 
 1. Toteutan JavaScriptillä yllä mainitut polunetsintäalgoritmit ja rakennan yksinkertaisen käyttöliittymän ohjelmaa varten. JS:n lisäksi Pythonia osaan hyvin.
-2. Ohjelma tulee olemaan kurssin ajan aina käynnissä ja saavutettavissä netissä, jossa sitä on kaikkien mahdollista kokeilla ja ihmetellä. Lähdekoodi löytyy tietysti GitHubista. Lisään käyttöohjeet josta käy ilmi, kuinka lähdekoodi on mahdollista lataa omalle koneelle ja saada ohjelma toimimaan myössä omassa Localhostissa.
+2. Ohjelma tulee olemaan kurssin ajan aina käynnissä ja saavutettavissä netissä, jossa sitä on kaikkien mahdollista kokeilla ja ihmetellä. Lähdekoodi löytyy tietysti GitHubista. Lisään käyttöohjeet josta käy ilmi, kuinka lähdekoodi on mahdollista ladata omalle koneelle ja saada ohjelma toimimaan myössä omassa Localhostissa.
 3. Kuulun tietojenkäsittelytieteiden kandidaattiohjelmaan.
 4. Dokumentoin kaiken englanniksi.

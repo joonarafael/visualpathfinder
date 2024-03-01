@@ -4,8 +4,6 @@ import heuristicEuclidean from "./euclidean";
 import isDiagonal from "./isdiagonal";
 import PriorityQueue from "./pq";
 
-// The A* algorithm.
-
 export default function aStar(
 	adjacencyList: Record<number, number[]>,
 	startNode: number,

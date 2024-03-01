@@ -31,6 +31,7 @@ export default function jumpPointSearch(
 
 	openSet.enqueue(startNode, 0);
 
+	// only the start node is expanded into every 8 direction as a default
 	directions[startNode] = [
 		[0, 1],
 		[0, -1],
@@ -66,7 +67,8 @@ export default function jumpPointSearch(
 			};
 		}
 
-		// request all neighbors with their jump points
+		// request all neighbors
+		// they are either immediately adjacent nodes or jump points far, far away
 		const neighbors = getNeighborsWithJumpPoints(
 			current,
 			adjacencyList,
@@ -146,6 +148,7 @@ function pruneStraightDirectionNeighbors(
 		const north = target - width;
 		const south = target + width;
 
+		// forced neighbor checking
 		if (north > 0 && !adjacencyList[target].includes(north)) {
 			if (adjacencyList[target].includes(north + dx)) {
 				forcedNeighbors.push([dx, -1]);
@@ -158,6 +161,8 @@ function pruneStraightDirectionNeighbors(
 			}
 		}
 
+		// forced neighbors detected
+		// terminate jump, return target and ask for later exploring in the relevant directions
 		if (forcedNeighbors.length > 0) {
 			forcedNeighbors.push([dx, dy]);
 			directions[target] = forcedNeighbors;
@@ -175,6 +180,7 @@ function pruneStraightDirectionNeighbors(
 	}
 
 	// y movement
+	// logic identical to x movement
 	const west = target - 1;
 	const east = target + 1;
 
@@ -208,7 +214,6 @@ function pruneStraightDirectionNeighbors(
 		return null;
 	}
 
-	// continue jump
 	return jump(target, dx, dy, adjacencyList, width, fieldStatus, directions);
 }
 
@@ -240,6 +245,7 @@ function pruneDiagonalNeighbors(
 	const xBlocker = target - dx;
 	const yBlocker = target - dy * width;
 
+	// check for forced neighbors
 	if (
 		Math.floor(xBlocker / width) === Math.floor(target / width) &&
 		!adjacencyList[target].includes(xBlocker)
@@ -271,6 +277,8 @@ function pruneDiagonalNeighbors(
 		}
 	}
 
+	// no forced neighbors
+	// perform cardinal direction scanning
 	const xNeighbor = target + dx;
 	const yNeighbor = target + dy * width;
 
@@ -308,6 +316,7 @@ function pruneDiagonalNeighbors(
 		}
 	}
 
+	// cardinal direction scans returned something
 	if (scans.length > 0) {
 		scans.push([dx, dy]);
 
@@ -315,22 +324,19 @@ function pruneDiagonalNeighbors(
 			directions[target] = [];
 		}
 
-		// Use a Set to ensure uniqueness of items
 		const uniqueItemsSet = new Set(directions[target].concat(scans));
-
-		// Convert the Set back to an array
 		directions[target] = Array.from(uniqueItemsSet);
 
 		return target;
 	}
 
+	// no forced neighbors, no hits from cardinal direction scans
 	const next = target + dx + dy * width;
 
 	if (!adjacencyList[target].includes(next)) {
 		return null;
 	}
 
-	// continue jump
 	return jump(target, dx, dy, adjacencyList, width, fieldStatus, directions);
 }
 
@@ -354,19 +360,16 @@ function jump(
 	fieldStatus: number[],
 	directions: Record<number, number[][]>
 ) {
-	// check if we run into a wall
 	const target = parent + dx + width * dy;
 
 	if (!adjacencyList[parent].includes(target)) {
 		return null;
 	}
 
-	// did we just find the goal?
 	if (fieldStatus[target] === 3) {
 		return target;
 	}
 
-	// diagonal moves
 	if (dx !== 0 && dy !== 0) {
 		return pruneDiagonalNeighbors(
 			target,
@@ -379,7 +382,6 @@ function jump(
 		);
 	}
 
-	// straight moves
 	return pruneStraightDirectionNeighbors(
 		target,
 		dx,
@@ -392,7 +394,7 @@ function jump(
 }
 
 /**
- * Returns all neighbors of the given parent node that can be reached by a jump.
+ * Returns all neighbors of the given parent node that can be reached by a jump (could be immediately adjacent nodes too).
  * @param parent - the node index of the parent node
  * @param adjacencyList - the adjacency list of the master grid
  * @param width - the width of the master grid

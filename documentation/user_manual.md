@@ -1,16 +1,12 @@
 # USER MANUAL
 
-This manual provides instructions for the [Live Application](https://visualpathfinder.vercel.app/ "Visual Pathfinder") running on the dedicated web server. If you're looking for the guide on how to clone this repository and get your own version running on your local machine, please consult [this document](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/installation_manual.md "Installation Manual").
+This manual provides instructions for the [Live Application](https://visualpathfinder.vercel.app/ "Visual Pathfinder Web Application") running on the dedicated web server. If you're looking for the guide on how to clone this repository and get your own version running on your local machine, please consult [this document](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/installation_manual.md "Installation Manual").
 
 ## General Performance Notice
 
-The 72 \* 46 matrix is quite large (3456 individual nodes), not for algorithmic reasons, in particular, but for the React rendering pipeline. More elements on screen will start to slow down rendering.
+The 72 \* 46 matrix is quite large (3456 individual nodes), not for algorithmic reasons, in particular, but for the React rendering pipeline. More elements on the screen would start to slow down rendering.
 
-Practically all of the application logic is run on the client machine by the client browser. Make sure you're running the latest version of your browser to ensure the best performance.
-
-If you're interested to test the algorithms on larger maps, read about [Virtual Maps](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/user_manual.md#virtual-maps "About Virtual Maps") or alternatively check one out right away [here](https://visualpathfinder.vercel.app/application/virtualmaps/hightown "Virtual Map 'High Town' on the Live Web Application")!
-
-Special thanks for the suggestion by [opturtio](https://github.com/opturtio "opturtio on GitHub") to include larger maps (course peer review issue).
+Practically all of the application logic is run on the client machine by the client browser. Make sure you're running the latest version of your browser to ensure the best performance. In my own personal experience, Chrome has the best support for the included features. Some Firefox versions, for example, may round the timer results to integer values, among other things.
 
 ## Important Notice
 
@@ -20,25 +16,25 @@ Special thanks for the suggestion by [opturtio](https://github.com/opturtio "opt
 
 Application is divided into three main sections:
 
-### Grid
+### Map
 
-Major part of the screen is covered by the main application grid. It is where the map is displayed and where it can be drawn. Algorithm runs will also be displayed on this grid.
+Major part of the screen is covered by the map screen. It is where the map is displayed and where it can be drawn. Algorithm runs will also be displayed on this grid.
 
 The grid has a total of 72 tiles horizontally and 46 vertically. If the grid zoom is at minimum and application is running in Fullscreen mode, the map should be shown completely at once.
 
-Interact with the grid with mouse. Drawing happens either by clicking individual tiles or "_painting_"; click and hold mouse down and hover over multiple tiles.
+Interact with the grid with your mouse. Drawing happens either by clicking individual tiles or "_painting_"; click and hold mouse down and hover over multiple tiles.
 
 ### Tool Bar / Run Bar
 
-Depending on the application state, drawing / running, the section of the right side of the screen will be either the _Tool Bar_ or the _Run Bar_:
+Depending on the application state ('drawing' or 'running'), the section of the right side of the screen will be either the _Tool Bar_ or the _Run Bar_:
 
 **Tool Bar**
 
-Tool Bar includes selection for the current tool.
+Tool Bar includes the selection for the current tool.
 
 - Start: Select the start tile. Only one start tile may exist at a time, so the old one will be removed.
 
-- Finish: Select the end tile. Only one goal tile may exist at a time, so the old one will be removed.
+- Finish: Select the end tile. Only one end tile may exist at a time, so the old one will be removed.
 
 - Eraser: Erase wall tiles and turn them into regular path tiles.
 
@@ -54,29 +50,29 @@ Here you may compare the different algorithms against each other **on the same m
 
 The statistics will always show
 
-- Runtime: The total amount of time spent executing the algorithm. This time **includes** the generation of the adjacency list.
+- Runtime: The total amount of time spent executing the algorithm. This time **does not** include the generation of the adjacency list.
 
 - Nodes Visited: The total amount of nodes that were visited during the algorithm execution. These nodes will appear grey on the map.
 
-- Path Length: If the finish is found, the path length will be displayed. The number in the parentheses represents the "Euclidean length" of the path (where diagonal moves are equal to $\sqrt{2}$). The other number is the total amount of traversed nodes. If the finish was never found, it will be indicated in a red text instead of these numbers.
+- Path Length: If the finish is found, the path length will be displayed. The number in the parentheses represents the "Euclidean length" of the path (where diagonal moves are equal to $\sqrt{2}$). The first integer number is the total amount of traversed nodes. If the finish was never found, it will be indicated in a red text instead of these numbers.
 
 ### Menu
 
-Nearly every feature of the application can be accessed through the menu.
+Nearly every feature of the application can be accessed through the menu located at the top part of the screen.
 
 **File**
 
-- Run Algorithm: Select the algorithm to run on current map.
+- Run Algorithm: Select the algorithm to run on the current map.
 
-- Edit Grid: Switch back to drawing mode.
+- Edit Grid: Switch back to drawing mode (accessible after an algorithm run).
 
 - Load Map: Load ready-made maps. Current map state will be lost.
 
 - Empty Grid: Completely erase the current grid.
 
-- Virtual Maps (opens in a new tab): Select a virtual map for pathfinding. These maps are not interactive (as they are so large) but are more suitable for rigorous algorithm benchmarking.
+- Virtual Maps (opens in a new tab): Select a virtual map for pathfinding. These maps are not interactive but are more suitable for rigorous algorithm benchmarking.
 
-- Log Field to Console: Log the 72x46 grid as a one-dimensional array to the browser console (open with F12). This feature is helpful if you decide to run this software on your own machine and manipulate the source code. Own maps could be exported with this method (see how maps are stored [within the software](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps "Maps Folder")).
+- Log Field to Console: Log the 72x46 grid as a one-dimensional array to the browser console. This feature is helpful if you decide to run this software on your own machine and manipulate the source code. Own maps could be exported with this method (see how maps are stored [within the software](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps "Maps Folder")).
 
 - Exit: Exit to Main Menu.
 
@@ -84,9 +80,9 @@ Nearly every feature of the application can be accessed through the menu.
 
 - Toggle Borderless Mode: Switch between the original bordered layout and the borderless pixelmap mode. It's recommended not to change to the borderless mode until you've established a large enough map as no scale can be seen in the borderless mode.
 
-- Toggle High Contrast Mode: Switch between the smoother toned-down colors and the contrasted colors enhanced with more saturation and brightness.
+- Toggle High Contrast Mode: Switch between the smoother toned-down colors and the contrasted colors (enhanced with more saturation and brightness).
 
-- Toggle Indexes: Whether or not display the grid tile indexes or not. Visible only with zoom level greater than 3.
+- Toggle Indexes: Whether or not display the grid tile indexes. Visible only with zoom level greater than 3. Useful if you decide to debug the pathfinding algorithms on your own machine.
 
 **View**
 
@@ -104,11 +100,11 @@ Nearly every feature of the application can be accessed through the menu.
 
 ## Virtual Maps
 
-Virtual Maps can be accessed through the File menu within the main application. The selected virtual map will be opened into a new tab.
+Virtual Maps can be accessed through the _File menu_ within the main application. The selected virtual map will be opened into a new tab. Virtual maps are non-interactive and support absolutely no special rendering functionality. Simple text-based preview is still provided.
 
-Virtual maps are non-interactive and support absolutely no special rendering functionality. Simple text-based preview is provided, though.
+Virtual maps are significantly larger than the base 72x46 maps in the main application. This might enable some more interesting scenarios for the algorithm comparison.
 
-Virtual maps are significantly larger than the base 72x46 maps within the main application. This might enable some more interesting scenarios for the algorithm comparison.
+Special thanks for the suggestion by [opturtio](https://github.com/opturtio "opturtio on GitHub") to include larger maps (course peer review issue).
 
 Virtual Map page is divided into two sections:
 

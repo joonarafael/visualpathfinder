@@ -1,14 +1,14 @@
 # IMPLEMENTATION DOCUMENT
 
-This document details the implementation of all used algorithms and data structures. I'll also try to explain my thought process and reasons why the software is structured the way it is. Design choices for the user interface and other general web application logic are not provided.
+This document details the implementation of all used algorithms and data structures. It will also try to explain the reasons why the software is structured the way it is. Design choices for the user interface and other general web application logic are not provided.
 
 Other interesting documents include [Usage of AI Report](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/usage_of_ai_report.md "Usage of AI Report") and [Software Testing Report](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/software_testing_report.md "Software Testing Report").
 
 ## About Benchmarking and Other Performance Stuff
 
-The application is built with TypeScript and runs on a Node.js server. This somewhat indirectly means that not too serious examination of the performance can/should be made. However, this application does work as a way to understand and learn the differences between the different pathfinding algorithms and see them in action.
+The application is built in TypeScript and runs on a Node.js server. This somewhat indirectly means that no too serious examination of the performance can/should be made. However, this application does work as a way to understand and learn the differences between the different pathfinding algorithms and see them in action.
 
-The built-in timer to measure algorithm runtime is accurate to a certain point, but no real conclusions can be drawn out from the resulting numbers. Decision of browser, as well as the general differences between machines and server environments affect too much the performance. Resulting performance numbers even within the **same environment**, **same map** and **same algorithm** can differ over 50% at times.
+The built-in timer to measure algorithm runtime is accurate to a certain point, but read the numbers with a good amount of criticism. Decision of browser, as well as the general differences between machines and server environments affect greatly the performance. Resulting performance numbers even within the **same environment**, **same map** and **same algorithm** can differ over 50% at times.
 
 However, the accuracy of the algorithms is still very relevant and the resulting path lengths (both in node count and euclidean distance) should be examined closely. All pathfinders are designed to find **_some shortest path_** (maybe different but equally long) and if given results differ, we have to start searching for issues and inconsistencies within the code logic.
 
@@ -20,7 +20,7 @@ However, the accuracy of the algorithms is still very relevant and the resulting
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/euclidean.ts "Redirect to file 'euclidean.ts'").
 
-The Euclidean distance function calculates the absolute distance between two given points on the map. It also enables diagonal distance calculation where two directly diagonal points have an absolute distance of $\sqrt{2}$.
+The Euclidean distance function calculates the absolute distance between two given points on the map. It also enables diagonal distance calculation where two immediately adjacent diagonal points have an absolute distance of $\sqrt{2}$.
 
 #### Function for Adjacency List Generation
 
@@ -32,7 +32,7 @@ This is a helper function to generate a one-dimensional adjacency list of the cu
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/isdiagonal.ts "Redirect to file 'isdiagonal.ts'").
 
-This is a helper function to check whether or not two given points are located on the same diagonal line. The given points do not need to be immediately adjacent (e.g. absolute distance > $\sqrt{2}$).
+This is a helper function to check whether or not two given points are located on the same diagonal line. The given points do not need to be immediately adjacent (e.g. their respective absolute distance may be greater than $\sqrt{2}$).
 
 #### Priority Queue Class
 
@@ -44,15 +44,13 @@ Special thanks for the suggestion by [psangi-hy](https://github.com/psangi-hy "p
 
 ### Pathfinding Algorithms
 
-Dijkstra and A\* were required foreknowledge for the course. I'll still briefly explain them. JPS was the new thing I learned during the completion of this project.
-
-Every included algorithm utilizes the one-dimensional adjacency list to perform the pathfinding. JPS requests the current field status to check if scanning reaches the edge of the map. Other two algorithms perform the pathfinding solely on the given adjacency list.
+Every included algorithm utilizes the one-dimensional adjacency list to perform the pathfinding. JPS also requests the current field status to check if scanning reaches the edge of the map. Other two algorithms perform the pathfinding solely on the given adjacency list.
 
 #### Dijkstra
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/dijkstra.ts "Redirect to file 'dijkstra.ts'").
 
-Dijkstra algorithm always expands parent node in all directions and calculates the known distance for all new neighbors. These nodes are kept in a priority queue and new neighbors are processed depending the order of the queue.
+Dijkstra algorithm always expands parent node in all directions and calculates the best known distance from start to all new neighbors. These nodes are kept in a priority queue based on the distance calculation and new neighbors are processed depending the order of the queue.
 
 The Dijkstra version implemented in this web application has also one additional optimization; it cuts the scanning process when it reaches the end node. If e.g. the start and end nodes are immediately adjacent, no other nodes have to be processed.
 
@@ -62,21 +60,21 @@ See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/
 
 A\* is the _optimized Dijkstra_. It performs slightly better due to the fact that it knows the location of the end node. Therefore it always prioritizes nodes closer to the end node. It will process lesser nodes only after reaching a dead end.
 
-A\* still has to process each immediately adjacent node, but the amount of nodes cuts down so low that it should practically always find the gaol faster than Dijkstra. However, some specifically cruel maps where the amount of processed nodes reaches the same as Dijkstra, A\* will perform identically to Dijkstra.
+A\* still has to process every immediately adjacent node. The amount of nodes, however, is reduced from Dijkstra so much that it should always be faster. Sometimes, if the amount of processed nodes can't be cut down, both A\* and Dijkstra will perform just about the same.
 
 #### Jump Point Search
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/jps.ts "Redirect to file 'jps.ts'").
 
-JPS is a specially optimized version of A\*. It is, too, blessed with the knowledge of the end node location and therefore utilizes the same kind of heuristic node prioritizing as the base A\*.
+JPS, for it's own part, is _a specially optimized version of A\*_. It is, too, blessed with the knowledge of the end node location and therefore utilizes the same kind of heuristic node prioritizing as the base A\*.
 
-The JPS algorithm takes advantage of the known fact that **tile maps** (e.g. pixel maps, uniform grids, undirected, unweighted) have some special attributes in their symmetry. What does this mean?
+The JPS algorithm takes advantage of the known fact that **tile maps** (e.g. undirected & unweighted uniform grids) have some special attributes in their symmetry. More details about the grid scanning and neighbor pruning can be found below.
 
-As a default, only the starting node is expanded in every 8 direction. Expanding a "parent node" (in the relevant directions) means scanning the next nodes in the same line as long as a stopping condition is met. In such an event, the node is considered as a "jump point" for the parent node. The pathfinding continues by expanding this newly found jump point.
+As a default, only the starting node is expanded in every 8 direction. Expanding a "parent node" (in the relevant directions) means scanning the next nodes in the same line as long as a stopping condition is met. In such an event, the found node is considered as a _jump point_ for the parent node. The pathfinding continues by expanding this newly found jump point.
 
 While the required amount of processing for a single node is greater than in the base A\*, the sheer quantity of visited nodes reduces so much that the algorithm becomes more efficient (on a favorable map). Paths with a lot of turns, diagonal objects or other zigzagging hinder the performance of the JPS algorithm, sometimes rendering it slower than the A\*.
 
-Good examples of potential JPS performance are, for example, the maps called _Baldur's Gate 1_ and _Benchmark 1_. On the other hand, JPS performs poorly on nearly all city maps as the algorithm is never able to jump more than 2 steps at a time! This makes the amount of processing skyrocket.
+Good examples of potential JPS performance in this application are, for example, the maps called _Baldur's Gate 1_ and _Benchmark 1_. On the other hand, JPS performs poorly on nearly all city maps as the algorithm is never able to jump more than 2 steps at a time!
 
 **Interesting JPS rules**
 
@@ -84,14 +82,14 @@ Good examples of potential JPS performance are, for example, the maps called _Ba
 
 <img src="./images/neighborpruning.png">
 
-During the scanning of a suitable jump point for the parent node, all tiles greyed out can be discarded. We can safely do this based on the known facts of **tile maps**, where no better path to the target can be found that runs through those grey tiles.
+During the scanning of a suitable jump point for the parent node, all tiles greyed out can be discarded. We can do this safely based on the known fact of **tile maps**: no better path to the future target can be found that runs through those grey tiles.
 
-This makes the straight direction jump really straightforward. Diagonal jumps, on the other hand, require quick scans in two cardinal directions (north & east in the picture) before advancing further.
+This makes the straight direction jump really straightforward. Diagonal jumps, on the other hand, require quick scans in two cardinal directions (north & east in the picture) before advancing further. If the cardinal direction scans return something (meaning a possible jump point), the diagonal jump is terminated and the `x` tile as marked as a jump point for the original parent node.
 
 **_Forced Neighbors and Jump Point Creation Logic_**
 
 <img src="./images/forcedneighbor.png">
 
-The scanning process finishes once a forced neighbor is found. This makes the `x` the natural neighbor of the original parent node and then requests new scans in appropriate directions from `x`.
+The scanning process finishes once a forced neighbor is found. This makes the `x` tile the natural neighbor (and a jump point) for the original parent node. The relevant directions, as to where the grid scanning should continue from the newly created jump point `x`, are stored in to a separate data structure.
 
 Note that running directly into a wall **does not** create a jump point. Other previous diagonal steps (and their respective cardinal direction scans) have taken care of the immediately adjacent nodes to this 'into-a-wall-running' tile.

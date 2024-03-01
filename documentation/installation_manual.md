@@ -1,8 +1,8 @@
 # INSTALLATION MANUAL
 
-This manual provides instructions for the cloning of the repository and the installation procedure to get this application running on your own local machine. If you're looking for the general user manual on how to use the [Live Application](https://visualpathfinder.vercel.app/ "https://visualpathfinder.vercel.app/") running on the dedicated web server, consult [this document](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/user_manual.md "User Manual").
+This manual provides instructions for the cloning of the repository and the installation procedure to get this application running on your own local machine. If you're looking for the general user manual on how to use the [Live Application](https://visualpathfinder.vercel.app/ "Visual Pathfinder Web Application") running on the dedicated web server, consult [this document](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/user_manual.md "User Manual").
 
-**This installation manual describes the process for LINUX systems.** Users of other operating systems might need to consult other documentation to get the application running on their own local machine. However, the installation procedure should be largely similar to the one described here.
+**This installation manual describes the process for LINUX systems.** Users of other operating systems might need to consult other documentation to get the application running on their own local machine. However, the installation procedure should look largely similar to the one described here.
 
 ## Node.js
 
@@ -24,13 +24,13 @@ npm --version
 sudo snap install node --classic
 ```
 
-in the terminal. Ensure successful installation by checking the versions with the commands provided above.
+in the terminal. Ensure successful installation by checking the versions again with the commands provided above.
 
 If encountering issues with the installation procedure of Node.js, please visit [their homepage](https://nodejs.org/en "Node.js Homepage").
 
 ## Yarn (optional)
 
-I recommend using _Yarn_ instead of NPM as your package manager. Yarn is much faster (provides parallel installation) and has a better track record of handling security issues.
+_Yarn_ is recommended over NPM as your package manager. Yarn is much faster (provides parallel installation) and has a better track record of handling security issues.
 
 Install Yarn as your package manager with
 
@@ -48,13 +48,7 @@ You may also continue to use NPM as your package manager (automatically installe
 
 ## Cloning the repository
 
-Clone the repository to your local machine either with SSH
-
-```
-git clone git@github.com:joonarafael/visualpathfinder.git
-```
-
-or HTTPS
+Clone the repository to your local machine by executing
 
 ```
 git clone https://github.com/joonarafael/visualpathfinder.git
@@ -82,7 +76,7 @@ or with
 npm install
 ```
 
-if you decided to go with NPM. Replace always `yarn` with `npm` if you're using NPM.
+if you decided to go with NPM. Always replace `yarn` with `npm` if you're using NPM.
 
 Both NPM and Yarn will give you detailed error messages if the installation of associated dependencies fails. In this case, please follow closely the instructions given within the error notices.
 

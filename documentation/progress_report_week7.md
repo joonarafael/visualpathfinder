@@ -4,7 +4,7 @@
 
 - Wrote the final JPS algorithm implementation.
 
-- Fixed old tests to suit the new diagonal euclidean distance calculation.
+- Fixed old tests to suit the new diagonal Euclidean distance calculation.
 
 - Added more documentation and commented the code.
 
@@ -12,4 +12,4 @@
 
 - Added "virtual maps"; algorithms can now be tested on large non-interactive maps in a separate application layout.
 
-Hours spent: 20 h (course total 62 h)
+Hours spent: 22 h (course total 64 h)
