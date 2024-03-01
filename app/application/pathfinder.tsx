@@ -34,6 +34,7 @@ const PathFinder = () => {
 	const [isError, setIsError] = useState(false);
 	const [smoothing, setSmoothing] = useState(true);
 	const [contrast, setContrast] = useState(false);
+	const [indexing, setIndexing] = useState(false);
 	const [mapChanged, setMapChanged] = useState(false);
 	const [zoom, setZoom] = useState(4);
 	const [tool, setTool] = useState("START");
@@ -339,6 +340,8 @@ const PathFinder = () => {
 					contrast={contrast}
 					fieldStatus={fieldStatus}
 					setContrast={setContrast}
+					indexing={indexing}
+					setIndexing={setIndexing}
 				/>
 				<div className="flex flex-row gap-4">
 					<div className="border rounded-lg w-5/6 h-[80svh] overflow-scroll">
@@ -353,6 +356,7 @@ const PathFinder = () => {
 									tileClick={tileClick}
 									smoothing={smoothing}
 									contrast={contrast}
+									indexing={indexing}
 								/>
 							)}
 							{applicationState === "run" && (
@@ -364,6 +368,7 @@ const PathFinder = () => {
 									zoom={zoom}
 									smoothing={smoothing}
 									contrast={contrast}
+									indexing={indexing}
 								/>
 							)}
 						</div>

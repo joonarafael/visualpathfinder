@@ -76,6 +76,8 @@ As a default, only the starting node is expanded in every 8 direction. Expanding
 
 While the required amount of processing for a single node is greater than in the base A\*, the sheer quantity of visited nodes reduces so much that the algorithm becomes more efficient (on a favorable map). Paths with a lot of turns, diagonal objects or other zigzagging hinder the performance of the JPS algorithm, sometimes rendering it slower than the A\*.
 
+Good examples of potential JPS performance are, for example, the maps called _Baldur's Gate 1_ and _Benchmark 1_. On the other hand, JPS performs poorly on nearly all city maps as the algorithm is never able to jump more than 2 steps at a time! This makes the amount of processing skyrocket.
+
 **Interesting JPS rules**
 
 **_Neighbor Pruning_**
@@ -84,7 +86,7 @@ While the required amount of processing for a single node is greater than in the
 
 During the scanning of a suitable jump point for the parent node, all tiles greyed out can be discarded. We can safely do this based on the known facts of **tile maps**, where no better path to the target can be found that runs through those grey tiles.
 
-This makes the straight direction jump really straightforward. Diagonal jumps, on the other hand, require quick scans in two cardinal directions before advancing further.
+This makes the straight direction jump really straightforward. Diagonal jumps, on the other hand, require quick scans in two cardinal directions (north & east in the picture) before advancing further.
 
 **_Forced Neighbors and Jump Point Creation Logic_**
 

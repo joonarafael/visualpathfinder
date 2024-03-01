@@ -14,4 +14,8 @@ Tests are automated and integrated to the CI pipeline. Performed for every singl
 
 ## Tests for Helper Functions and Classes
 
+Helper functions and classes used in the software are lightly tested with simple use-cases. These include checking normal functionality as well as some edge cases and error situations.
+
 ## Proper Pathfinder Tests
+
+The complete pathfinder algorithms are tested both with simpler unit tests and larger 'real-life cases', 72x48 map, tests.

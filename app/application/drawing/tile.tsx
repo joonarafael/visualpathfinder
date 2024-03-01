@@ -10,6 +10,7 @@ interface TileProps {
 	tileClick: (index: number) => void;
 	smoothing: boolean;
 	contrast: boolean;
+	indexing: boolean;
 }
 
 const Tile: React.FC<TileProps> = ({
@@ -20,6 +21,7 @@ const Tile: React.FC<TileProps> = ({
 	tileClick,
 	smoothing,
 	contrast,
+	indexing,
 }) => {
 	let bgColor = "transparent";
 
@@ -58,6 +60,20 @@ const Tile: React.FC<TileProps> = ({
 	const realClick = () => {
 		tileClick(index);
 	};
+
+	if (indexing && zoom > 3) {
+		return (
+			<div
+				onMouseEnter={handlePaint}
+				onClick={realClick}
+				className={`${
+					smoothing && "border rounded"
+				} flex items-center justify-center p-2 cursor-pointer ${bgColor} ${size} text-xs`}
+			>
+				{index}
+			</div>
+		);
+	}
 
 	return (
 		<div

@@ -8,6 +8,7 @@ interface RunTileProps {
 	status: number;
 	smoothing: boolean;
 	contrast: boolean;
+	indexing: boolean;
 }
 
 const RunTile: React.FC<RunTileProps> = ({
@@ -16,6 +17,7 @@ const RunTile: React.FC<RunTileProps> = ({
 	status,
 	zoom,
 	contrast,
+	indexing,
 }) => {
 	let bgColor = "transparent";
 
@@ -63,11 +65,23 @@ const RunTile: React.FC<RunTileProps> = ({
 		size = "min-w-24 min-h-24";
 	}
 
+	if (indexing && zoom > 3) {
+		return (
+			<div
+				className={`${
+					smoothing && "border rounded"
+				} flex items-center justify-center p-2 ${bgColor} ${size} text-xs`}
+			>
+				{index}
+			</div>
+		);
+	}
+
 	return (
 		<div
 			className={`${
 				smoothing && "border rounded"
-			} flex items-center justify-center p-2 ${bgColor} ${size} text-xs`}
+			} flex items-center justify-center p-2 ${bgColor} ${size}`}
 		></div>
 	);
 };

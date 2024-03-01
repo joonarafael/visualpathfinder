@@ -36,6 +36,8 @@ interface MenuProps {
 	setSmoothing: (value: boolean) => void;
 	contrast: boolean;
 	setContrast: (value: boolean) => void;
+	indexing: boolean;
+	setIndexing: (value: boolean) => void;
 	fieldStatus: number[];
 }
 
@@ -51,6 +53,8 @@ const Menu: React.FC<MenuProps> = ({
 	contrast,
 	fieldStatus,
 	setContrast,
+	indexing,
+	setIndexing,
 }) => {
 	const zoomIn = () => {
 		if (zoom < 6) {
@@ -144,20 +148,6 @@ const Menu: React.FC<MenuProps> = ({
 									}}
 								>
 									Jump Point Search
-								</MenubarItem>
-							</MenubarSubContent>
-						</MenubarSub>
-						<MenubarSub>
-							<MenubarSubTrigger>Run Virtual Maps</MenubarSubTrigger>
-							<MenubarSubContent>
-								<MenubarItem disabled onClick={() => {}}>
-									None
-								</MenubarItem>
-								<MenubarItem disabled onClick={() => {}}>
-									None
-								</MenubarItem>
-								<MenubarItem disabled onClick={() => {}}>
-									None
 								</MenubarItem>
 							</MenubarSubContent>
 						</MenubarSub>
@@ -290,6 +280,21 @@ const Menu: React.FC<MenuProps> = ({
 							</MenubarSubContent>
 						</MenubarSub>
 						<MenubarSeparator />
+						<MenubarSub>
+							<MenubarSubTrigger>Virtual Maps...</MenubarSubTrigger>
+							<MenubarSubContent>
+								<MenubarItem disabled onClick={() => {}}>
+									None
+								</MenubarItem>
+								<MenubarItem disabled onClick={() => {}}>
+									None
+								</MenubarItem>
+								<MenubarItem disabled onClick={() => {}}>
+									None
+								</MenubarItem>
+							</MenubarSubContent>
+						</MenubarSub>
+						<MenubarSeparator />
 						<MenubarItem
 							onClick={() => {
 								console.log(fieldStatus);
@@ -309,7 +314,23 @@ const Menu: React.FC<MenuProps> = ({
 					</MenubarContent>
 				</MenubarMenu>
 				<MenubarMenu>
-					<MenubarTrigger>Visuals</MenubarTrigger>
+					<MenubarTrigger>View</MenubarTrigger>
+					<MenubarContent>
+						<MenubarItem onClick={zoomIn}>Zoom In</MenubarItem>
+						<MenubarItem onClick={zoomOut}>Zoom Out</MenubarItem>
+						<MenubarSeparator />
+						<MenubarItem onClick={zoomDefault}>Zoom Default</MenubarItem>
+						<MenubarSeparator />
+						<MenubarItem onClick={zoomMin}>Minimum Zoom</MenubarItem>
+						<MenubarItem onClick={zoomMax}>Maximum Zoom</MenubarItem>
+						<MenubarSeparator />
+						<MenubarItem onClick={toggleFullscreen}>
+							Toggle Fullscreen <MenubarShortcut>F11</MenubarShortcut>
+						</MenubarItem>
+					</MenubarContent>
+				</MenubarMenu>
+				<MenubarMenu>
+					<MenubarTrigger>Display</MenubarTrigger>
 					<MenubarContent>
 						<MenubarItem
 							onClick={() => {
@@ -325,21 +346,14 @@ const Menu: React.FC<MenuProps> = ({
 						>
 							Toggle High Contrast Mode
 						</MenubarItem>
-					</MenubarContent>
-				</MenubarMenu>
-				<MenubarMenu>
-					<MenubarTrigger>View</MenubarTrigger>
-					<MenubarContent>
-						<MenubarItem onClick={zoomIn}>Zoom In</MenubarItem>
-						<MenubarItem onClick={zoomOut}>Zoom Out</MenubarItem>
 						<MenubarSeparator />
-						<MenubarItem onClick={zoomDefault}>Zoom Default</MenubarItem>
-						<MenubarSeparator />
-						<MenubarItem onClick={zoomMin}>Minimum Zoom</MenubarItem>
-						<MenubarItem onClick={zoomMax}>Maximum Zoom</MenubarItem>
-						<MenubarSeparator />
-						<MenubarItem onClick={toggleFullscreen}>
-							Toggle Fullscreen
+						<MenubarItem
+							onClick={() => {
+								setIndexing(!indexing);
+							}}
+						>
+							Toggle Indexes
+							<MenubarShortcut>{`(Zoom > 3)`}</MenubarShortcut>
 						</MenubarItem>
 					</MenubarContent>
 				</MenubarMenu>

@@ -12,6 +12,7 @@ interface RunMatrixProps {
 	zoom: number;
 	smoothing: boolean;
 	contrast: boolean;
+	indexing: boolean;
 }
 
 const RunMatrix: React.FC<RunMatrixProps> = ({
@@ -22,6 +23,7 @@ const RunMatrix: React.FC<RunMatrixProps> = ({
 	zoom,
 	smoothing,
 	contrast,
+	indexing,
 }) => {
 	return (
 		<div className="flex flex-col p-2">
@@ -39,6 +41,7 @@ const RunMatrix: React.FC<RunMatrixProps> = ({
 									index={item}
 									zoom={zoom}
 									contrast={contrast}
+									indexing={indexing}
 								/>
 							</div>
 						);
