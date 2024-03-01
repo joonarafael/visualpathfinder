@@ -8,7 +8,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import Container from "../components/container";
 import PageError from "../components/pageerror";
 import aStar from "./algorithms/astar";
 import dijkstra from "./algorithms/dijkstra";
@@ -26,7 +25,7 @@ import buildJPSPath from "./running/buildjpspath";
 type AdjacencyList = Record<number, number[]>;
 
 const WIDTH = 72;
-const HEIGHT = 48;
+const HEIGHT = 46;
 
 const PathFinder = () => {
 	// initialize all state variables
@@ -326,75 +325,73 @@ const PathFinder = () => {
 	}
 
 	return (
-		<Container>
-			<div className="flex flex-col gap-4">
-				<Menu
-					zoom={zoom}
-					setZoom={setZoom}
-					setFieldStatus={setFieldStatus}
-					applicationState={applicationState}
-					setApplicationState={setApplicationState}
-					runAlgorithm={runAlgorithm}
-					smoothing={smoothing}
-					setSmoothing={setSmoothing}
-					contrast={contrast}
-					fieldStatus={fieldStatus}
-					setContrast={setContrast}
-					indexing={indexing}
-					setIndexing={setIndexing}
-				/>
-				<div className="flex flex-row gap-4">
-					<div className="border rounded-lg w-5/6 h-[80svh] overflow-scroll">
-						<div className="w-max">
-							{applicationState === "draw" && (
-								<Matrix
-									width={WIDTH}
-									height={46}
-									field={field}
-									fieldStatus={fieldStatus}
-									zoom={zoom}
-									tileClick={tileClick}
-									smoothing={smoothing}
-									contrast={contrast}
-									indexing={indexing}
-								/>
-							)}
-							{applicationState === "run" && (
-								<RunMatrix
-									width={WIDTH}
-									height={46}
-									field={field}
-									fieldStatus={runFieldStatus}
-									zoom={zoom}
-									smoothing={smoothing}
-									contrast={contrast}
-									indexing={indexing}
-								/>
-							)}
-						</div>
+		<div className="flex flex-col gap-4">
+			<Menu
+				zoom={zoom}
+				setZoom={setZoom}
+				setFieldStatus={setFieldStatus}
+				applicationState={applicationState}
+				setApplicationState={setApplicationState}
+				runAlgorithm={runAlgorithm}
+				smoothing={smoothing}
+				setSmoothing={setSmoothing}
+				contrast={contrast}
+				fieldStatus={fieldStatus}
+				setContrast={setContrast}
+				indexing={indexing}
+				setIndexing={setIndexing}
+			/>
+			<div className="flex flex-row gap-4">
+				<div className="border rounded-lg w-5/6 h-[80svh] overflow-scroll">
+					<div className="w-max">
+						{applicationState === "draw" && (
+							<Matrix
+								width={WIDTH}
+								height={46}
+								field={field}
+								fieldStatus={fieldStatus}
+								zoom={zoom}
+								tileClick={tileClick}
+								smoothing={smoothing}
+								contrast={contrast}
+								indexing={indexing}
+							/>
+						)}
+						{applicationState === "run" && (
+							<RunMatrix
+								width={WIDTH}
+								height={46}
+								field={field}
+								fieldStatus={runFieldStatus}
+								zoom={zoom}
+								smoothing={smoothing}
+								contrast={contrast}
+								indexing={indexing}
+							/>
+						)}
 					</div>
-					<div className="border rounded-lg w-1/6 h-[80svh] overflow-scroll">
-						<div className="w-full">
-							{applicationState === "draw" ? (
-								<ToolBar
-									tool={tool}
-									setTool={setTool}
-									setApplicationState={setApplicationState}
-								/>
-							) : (
-								<RunBar
-									runsStats={runsStats}
-									showNote={showNote}
-									setShowNote={setShowNote}
-									algorithm={algorithm}
-									setApplicationState={setApplicationState}
-								/>
-							)}
-						</div>
+				</div>
+				<div className="border rounded-lg w-1/6 h-[80svh] overflow-scroll">
+					<div className="w-full">
+						{applicationState === "draw" ? (
+							<ToolBar
+								tool={tool}
+								setTool={setTool}
+								setApplicationState={setApplicationState}
+							/>
+						) : (
+							<RunBar
+								runsStats={runsStats}
+								showNote={showNote}
+								setShowNote={setShowNote}
+								algorithm={algorithm}
+								setApplicationState={setApplicationState}
+							/>
+						)}
 					</div>
 				</div>
 			</div>
-		</Container>
+		</div>
 	);
 };
 

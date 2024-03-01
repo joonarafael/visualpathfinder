@@ -4,15 +4,19 @@ This manual provides instructions for the [Live Application](https://visualpathf
 
 ## General Performance Notice
 
-The 72 \* 48 matrix is quite large (3456 individual nodes), not for algorithmic reasons, in particular, but for the React rendering pipeline. More elements on screen will start to slow down rendering.
+The 72 \* 46 matrix is quite large (3456 individual nodes), not for algorithmic reasons, in particular, but for the React rendering pipeline. More elements on screen will start to slow down rendering.
 
-Practically all of the application logic is run on the client machine by the client browser. Make sure you're running the latest version of your browser to ensure the best performance. The less wall tiles, the more possible paths for the selected algorithm to consider. If you're experiencing performance issues, try placing the start and end nodes closer together and increase the number of wall tiles.
+Practically all of the application logic is run on the client machine by the client browser. Make sure you're running the latest version of your browser to ensure the best performance.
+
+If you're interested to test the algorithms on larger maps, read about [Virtual Maps](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/uiser_manual.md#virtual_maps "About Virtual Maps") or alternatively check one out right away [here](https://visualpathfinder.vercel.app/application/virtualmaps/hightown "Virtual Map 'High Town' on the Live Web Application")!
+
+Special thanks for the suggestion by [opturtio](https://github.com/opturtio "opturtio on GitHub") to include larger maps (course peer review issue).
 
 ## Important Notice
 
 **Remember that** all recorded statistics will be lost once the map is changed **and** a new algorithm is run. Previous records will be stored as long as no new algorithm is run on the changed map.
 
-## Application Layout
+## Pathfinder Application
 
 Application is divided into three main sections:
 
@@ -20,7 +24,7 @@ Application is divided into three main sections:
 
 Major part of the screen is covered by the main application grid. It is where the map is displayed and where it can be drawn. Algorithm runs will also be displayed on this grid.
 
-The grid has a total of 72 tiles horizontally and 48 vertically. If the grid zoom is at minimum and application is running in Fullscreen mode, the map should be shown completely at once.
+The grid has a total of 72 tiles horizontally and 46 vertically. If the grid zoom is at minimum and application is running in Fullscreen mode, the map should be shown completely at once.
 
 Interact with the grid with mouse. Drawing happens either by clicking individual tiles or "_painting_"; click and hold mouse down and hover over multiple tiles.
 
@@ -64,15 +68,15 @@ Nearly every feature of the application can be accessed through the menu.
 
 - Run Algorithm: Select the algorithm to run on current map.
 
-- Run Virtual Maps: Select a virtual map for pathfinding. These maps are not interactive (as they are so large) but are more suitable for rigorous algorithm benchmarking.
-
 - Edit Grid: Switch back to drawing mode.
 
 - Load Map: Load ready-made maps. Current map state will be lost.
 
 - Empty Grid: Completely erase the current grid.
 
-- Log Field to Console: Log the 72x48 grid as a one-dimensional array to the browser console (open with F12). This feature is helpful if you decide to run this software on your own machine and manipulate the source code. Own maps could be exported with this method (see how maps are stored [within the software](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps "Maps Folder")).
+- Virtual Maps (opens in a new tab): Select a virtual map for pathfinding. These maps are not interactive (as they are so large) but are more suitable for rigorous algorithm benchmarking.
+
+- Log Field to Console: Log the 72x46 grid as a one-dimensional array to the browser console (open with F12). This feature is helpful if you decide to run this software on your own machine and manipulate the source code. Own maps could be exported with this method (see how maps are stored [within the software](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps "Maps Folder")).
 
 - Exit: Exit to Main Menu.
 
@@ -81,6 +85,8 @@ Nearly every feature of the application can be accessed through the menu.
 - Toggle Borderless Mode: Switch between the original bordered layout and the borderless pixelmap mode. It's recommended not to change to the borderless mode until you've established a large enough map as no scale can be seen in the borderless mode.
 
 - Toggle High Contrast Mode: Switch between the smoother toned-down colors and the contrasted colors enhanced with more saturation and brightness.
+
+- Toggle Indexes: Whether or not display the grid tile indexes or not. Visible only with zoom level greater than 3.
 
 **View**
 
@@ -95,3 +101,21 @@ Nearly every feature of the application can be accessed through the menu.
 - Maximum Zoom: Set the maximum available zoom level / zoom as close in as possible.
 
 - Toggle Fullscreen: Enter and exit the fullscreen mode (F11).
+
+## Virtual Maps
+
+Virtual Maps can be accessed through the File menu within the main application. The selected virtual map will be opened into a new tab.
+
+Virtual maps are non-interactive and support absolutely no special rendering functionality. Simple text-based preview is provided, though.
+
+Virtual maps are significantly larger than the base 72x46 maps within the main application. This might enable some more interesting scenarios for the algorithm comparison.
+
+Virtual Map page is divided into two sections:
+
+### Preview
+
+A large text-based preview of the current virtual map is shown on the screen. It's non-interactive and does not support zooming / other visual features. It does not show start, finish, or pathfinding results at all.
+
+### Control Bar
+
+TODO

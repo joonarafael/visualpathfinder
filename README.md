@@ -26,7 +26,7 @@ The source code for all the core features, such as the pathfinding algorithms, l
 
 All other files merely support the web application and e.g. provide the rendering of the user interface.
 
-## Credits for Ready Maps
+## Credits for Maps
 
 Benchmark maps are created entirely by me.
 
@@ -43,3 +43,7 @@ Downloaded from the [MovingAI Benchmarks](https://www.movingai.com/benchmarks/in
 - **CITY 3** (stored in the file named [city2](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps/cities/city2.tsx "Open File 'city2.tsx'")) generated from [this map](https://s.hdnux.com/photos/61/76/04/13099293/3/rawImage.jpg "Open Original Reference for City 3").
 
 Same kind of processing has been done for the city maps as was described in the [Baldur's Gate maps](https://github.com/joonarafael/visualpathfinder?tab=readme-ov-file#baldursgate).
+
+### Virtual Maps
+
+Downloaded from the [MovingAI Benchmarks](https://www.movingai.com/benchmarks/index.html "Moving AI Lab Map Benchmarks"). These maps have been converted into one-dimensional arrays using a specific [Python script](https://github.com/joonarafael/visualpathfinder/tree/main/supportingtools/convertmaptoarray.py "Convert Moving AI map to Array Python Script") to suit the application logic.

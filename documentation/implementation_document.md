@@ -1,16 +1,16 @@
 # IMPLEMENTATION DOCUMENT
 
-This document details the implementation of all used algorithms and data structures. I'll also try to explain my though process and reasons why the software is structured the way it is. Design choices for the user interface and other general web application logic are not provided.
+This document details the implementation of all used algorithms and data structures. I'll also try to explain my thought process and reasons why the software is structured the way it is. Design choices for the user interface and other general web application logic are not provided.
 
 Other interesting documents include [Usage of AI Report](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/usage_of_ai_report.md "Usage of AI Report") and [Software Testing Report](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/software_testing_report.md "Software Testing Report").
 
 ## About Benchmarking and Other Performance Stuff
 
-The application is built with TypeScript and runs on a Node.js server. This somewhat indirectly means that not too serious examination of the performance can/should be made. This application serves as a way to understand and learn the differences between the different pathfinding algorithms and see them in action.
+The application is built with TypeScript and runs on a Node.js server. This somewhat indirectly means that not too serious examination of the performance can/should be made. However, this application does work as a way to understand and learn the differences between the different pathfinding algorithms and see them in action.
 
 The built-in timer to measure algorithm runtime is accurate to a certain point, but no real conclusions can be drawn out from the resulting numbers. Decision of browser, as well as the general differences between machines and server environments affect too much the performance. Resulting performance numbers even within the **same environment**, **same map** and **same algorithm** can differ over 50% at times.
 
-However, the accuracy of the algorithms is still very relevant and the resulting path lengths (both in node count and euclidean distance) should be examined closely. All pathfinders are designed to find the shortest path (maybe different but equally long) and if given results differ, we have to start searching for issues and inconsistencies within the code logic.
+However, the accuracy of the algorithms is still very relevant and the resulting path lengths (both in node count and euclidean distance) should be examined closely. All pathfinders are designed to find **_some shortest path_** (maybe different but equally long) and if given results differ, we have to start searching for issues and inconsistencies within the code logic.
 
 ## Design Choices
 
@@ -26,7 +26,7 @@ The Euclidean distance function calculates the absolute distance between two giv
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/generateadjacencylist.ts "Redirect to file 'generateadjacencylist.ts'").
 
-This is a helper function to generate a one-dimensional adjacency list of the current grid status. It completely scans through the current grid and adds every single node and their respective neighbors as 'key, value' pairs into the record. It deals with general wall detection, horizontal obstacle detection and borders. This way the pathfinders do not need their own obstacle detection logic, reading the given adjacency list is enough.
+This is a helper function to generate a one-dimensional adjacency list of the current grid status. It completely scans through the current grid and adds every single node and their respective neighbors as a 'key, values' pair into the record. It deals with general wall detection, horizontal obstacle detection and borders. This way the pathfinders do not need their own obstacle detection logic, reading the given adjacency list is enough.
 
 #### Diagonal Checking
 

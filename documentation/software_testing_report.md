@@ -18,4 +18,6 @@ Helper functions and classes used in the software are lightly tested with simple
 
 ## Proper Pathfinder Tests
 
-The complete pathfinder algorithms are tested both with simpler unit tests and larger 'real-life cases', 72x48 map, tests.
+The complete pathfinder algorithms are tested both with simpler unit tests and larger 'real-life cases', 72x46 map, tests.
+
+TODO

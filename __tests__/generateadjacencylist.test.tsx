@@ -1,12 +1,12 @@
 import generateAdjacencyList from "@/app/application/algorithms/generateadjacencylist";
 
 describe("basic functionality for generateAdjacencyList", () => {
-	it("should generate adjacency list for 72 * 48 input", () => {
-		const fieldStatus = Array.from({ length: 72 * 48 }, (_, index) => 0);
+	it("should generate adjacency list for 72 * 46 input", () => {
+		const fieldStatus = Array.from({ length: 72 * 46 }, (_, index) => 0);
 
 		const adjacencyList = generateAdjacencyList(fieldStatus, 72);
 
-		expect(Object.keys(adjacencyList).length).toEqual(3456);
+		expect(Object.keys(adjacencyList).length).toEqual(3312);
 	});
 
 	it("should return empty for full wall grid", () => {

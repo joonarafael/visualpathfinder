@@ -81,22 +81,24 @@ const Menu: React.FC<MenuProps> = ({
 	};
 
 	const emptyGrid = () => {
-		setFieldStatus(Array.from({ length: 72 * 46 }, (_, index) => 0));
+		setFieldStatus(Array.from({ length: 3312 }, (_, index) => 0));
 		setApplicationState("draw");
 	};
 
 	const generateRandom = (walls: number) => {
-		const tmp: number[] = Array.from({ length: 72 * 46 }, (_, index) => {
+		const tmp: number[] = Array.from({ length: 3312 }, (_, index) => {
 			const randomValue = Math.random() * 100;
 			return randomValue <= walls ? 1 : 0;
 		});
 
-		const startPoint = Math.floor(Math.random() * 3455);
-		let endPoint = Math.floor(Math.random() * 3455);
+		const startPoint = Math.floor(Math.random() * 3311);
+		let endPoint = Math.floor(Math.random() * 3311);
 
 		while (startPoint === endPoint) {
-			endPoint = Math.floor(Math.random() * 3455);
+			endPoint = Math.floor(Math.random() * 3311);
 		}
+
+		console.log(startPoint, endPoint);
 
 		tmp[startPoint] = 2;
 		tmp[endPoint] = 3;
@@ -283,14 +285,22 @@ const Menu: React.FC<MenuProps> = ({
 						<MenubarSub>
 							<MenubarSubTrigger>Virtual Maps...</MenubarSubTrigger>
 							<MenubarSubContent>
-								<MenubarItem disabled onClick={() => {}}>
-									None
+								<MenubarItem
+									onClick={() =>
+										window.open("/application/virtualmap/hightown", "_blank")
+									}
+								>
+									High Town
 								</MenubarItem>
-								<MenubarItem disabled onClick={() => {}}>
-									None
-								</MenubarItem>
-								<MenubarItem disabled onClick={() => {}}>
-									None
+								<MenubarItem
+									onClick={() =>
+										window.open(
+											"/application/virtualmap/woundedcoast",
+											"_blank"
+										)
+									}
+								>
+									Wounded Coast
 								</MenubarItem>
 							</MenubarSubContent>
 						</MenubarSub>
@@ -325,7 +335,7 @@ const Menu: React.FC<MenuProps> = ({
 						<MenubarItem onClick={zoomMax}>Maximum Zoom</MenubarItem>
 						<MenubarSeparator />
 						<MenubarItem onClick={toggleFullscreen}>
-							Toggle Fullscreen <MenubarShortcut>F11</MenubarShortcut>
+							Toggle Fullscreen
 						</MenubarItem>
 					</MenubarContent>
 				</MenubarMenu>
@@ -353,7 +363,6 @@ const Menu: React.FC<MenuProps> = ({
 							}}
 						>
 							Toggle Indexes
-							<MenubarShortcut>{`(Zoom > 3)`}</MenubarShortcut>
 						</MenubarItem>
 					</MenubarContent>
 				</MenubarMenu>

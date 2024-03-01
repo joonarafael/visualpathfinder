@@ -4,12 +4,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-import { Inter } from "next/font/google";
+import { Roboto_Mono } from "next/font/google";
 
 import Footer from "./components/footer";
 import { Toaster } from "./components/ui/sonner";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Visual Pathfinder",
@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
+			<body className={roboto.className}>
 				<div className="py-4">{children}</div>
 				<Footer />
 				<Toaster />
