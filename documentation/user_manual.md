@@ -8,7 +8,7 @@ The 72 \* 46 matrix is quite large (3456 individual nodes), not for algorithmic 
 
 Practically all of the application logic is run on the client machine by the client browser. Make sure you're running the latest version of your browser to ensure the best performance.
 
-If you're interested to test the algorithms on larger maps, read about [Virtual Maps](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/uiser_manual.md#virtual_maps "About Virtual Maps") or alternatively check one out right away [here](https://visualpathfinder.vercel.app/application/virtualmaps/hightown "Virtual Map 'High Town' on the Live Web Application")!
+If you're interested to test the algorithms on larger maps, read about [Virtual Maps](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/user_manual.md#virtual-maps "About Virtual Maps") or alternatively check one out right away [here](https://visualpathfinder.vercel.app/application/virtualmaps/hightown "Virtual Map 'High Town' on the Live Web Application")!
 
 Special thanks for the suggestion by [opturtio](https://github.com/opturtio "opturtio on GitHub") to include larger maps (course peer review issue).
 
