@@ -12,4 +12,4 @@
 
 - Added "virtual maps"; algorithms can now be tested on large non-interactive maps in a separate application layout.
 
-Hours spent: 22 h (course total 64 h)
+Hours spent: 24 h (course total 66 h)

@@ -7,8 +7,10 @@ interface IParams {
 }
 
 const VirtualMapPage = async ({ params }: { params: IParams }) => {
+	const accepted = ["hightown", "woundedcoast", "aurora", "inferno"];
+
 	if (params.mapId) {
-		if (params.mapId === "hightown" || params.mapId === "woundedcoast") {
+		if (accepted.includes(params.mapId)) {
 			return (
 				<ClientOnly>
 					<VirtualMapClient map={params.mapId} />

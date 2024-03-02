@@ -10,6 +10,7 @@ import aStar from "../../algorithms/astar";
 import jps from "../../algorithms/jps";
 import ResultElement from "../../running/resultelement";
 import NotRunElement from "../../running/notrunelement";
+import heuristicEuclidean from "../../algorithms/euclidean";
 
 type AdjacencyList = Record<number, number[]>;
 
@@ -20,7 +21,6 @@ interface VirtualMapProps {
 }
 
 const VirtualMap: React.FC<VirtualMapProps> = ({ map, width, height }) => {
-	// initialize all state variables
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [isError, setIsError] = useState(false);
 	const [runsStats, setRunsStats] = useState({
@@ -47,6 +47,12 @@ const VirtualMap: React.FC<VirtualMapProps> = ({ map, width, height }) => {
 		size: map.length,
 		nodes: [...map].filter((x) => x == 0).length,
 	};
+
+	const [points, setPoints] = useState({
+		start: -1,
+		end: -1,
+		distance: -1,
+	});
 
 	// eventlistener for the window resizing
 	useEffect(() => {
@@ -170,6 +176,14 @@ const VirtualMap: React.FC<VirtualMapProps> = ({ map, width, height }) => {
 		tmp[start] = 2;
 		tmp[finish] = 3;
 
+		setPoints({
+			start: start,
+			end: finish,
+			distance: parseFloat(
+				(heuristicEuclidean(start, finish, width) + Number.EPSILON).toFixed(1)
+			),
+		});
+
 		runAlgorithm(tmp, start, finish);
 	};
 
@@ -186,7 +200,10 @@ const VirtualMap: React.FC<VirtualMapProps> = ({ map, width, height }) => {
 			<div className="border rounded-lg h-full p-2">
 				MAP SIZE: {details.size}, where WIDTH: {details.width} and HEIGHT:{" "}
 				{details.height}. TOTAL WALL TILES: {details.size - details.nodes} and
-				PATH TILES: {details.nodes}.
+				PATH TILES: {details.nodes}.<br />
+				{points.start >= 0 && points.end >= 0 && (
+					<>{`START POINT at ${points.start} and END at ${points.end} with an ABSOLUTE DISTANCE of ${points.distance}.`}</>
+				)}
 			</div>
 			<div className="border rounded-lg h-full grid grid-cols-5 p-2 gap-2">
 				<Button
@@ -197,14 +214,6 @@ const VirtualMap: React.FC<VirtualMapProps> = ({ map, width, height }) => {
 					}}
 				>
 					RUN ONCE
-				</Button>
-				<Button
-					className="h-full w-full font-bold"
-					variant={"destructive"}
-					disabled
-					onClick={() => {}}
-				>
-					RUN 100 TIMES ?!?
 				</Button>
 				{runsStats.dijkstra.visited_nodes > 0 ? (
 					<ResultElement

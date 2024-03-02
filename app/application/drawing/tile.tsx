@@ -68,7 +68,9 @@ const Tile: React.FC<TileProps> = ({
 				onClick={realClick}
 				className={`${
 					smoothing && "border rounded"
-				} flex items-center justify-center p-2 cursor-pointer ${bgColor} ${size} text-xs`}
+				} flex items-center justify-center p-2 cursor-pointer ${bgColor} ${size} text-xs ${
+					contrast && status !== 0 && "text-slate-950"
+				}`}
 			>
 				{index}
 			</div>

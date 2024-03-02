@@ -70,7 +70,9 @@ const RunTile: React.FC<RunTileProps> = ({
 			<div
 				className={`${
 					smoothing && "border rounded"
-				} flex items-center justify-center p-2 ${bgColor} ${size} text-xs`}
+				} flex items-center justify-center p-2 ${bgColor} ${size} text-xs ${
+					contrast && status !== 0 && status !== 4 && "text-slate-950"
+				}`}
 			>
 				{index}
 			</div>

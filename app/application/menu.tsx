@@ -287,10 +287,24 @@ const Menu: React.FC<MenuProps> = ({
 							<MenubarSubContent>
 								<MenubarItem
 									onClick={() =>
+										window.open("/application/virtualmap/aurora", "_blank")
+									}
+								>
+									Aurora
+								</MenubarItem>
+								<MenubarItem
+									onClick={() =>
 										window.open("/application/virtualmap/hightown", "_blank")
 									}
 								>
 									High Town
+								</MenubarItem>
+								<MenubarItem
+									onClick={() =>
+										window.open("/application/virtualmap/inferno", "_blank")
+									}
+								>
+									Inferno
 								</MenubarItem>
 								<MenubarItem
 									onClick={() =>
