@@ -30,7 +30,7 @@ The pathfinding algorithms are tested both with the smaller interactive 72x46 ma
 
 Smaller maps refer to the same maps available to the user in the **interactive application**. These have dimensions of 72x46.
 
-The 3 algorithms are run in a parallel manner 100 times for each of the 5 included smaller test maps. Every single iteration has new randomly picked start point and end point. After every single iteration, the return values are compared and the test immediately fails if any algorithm returns a different result for the shortest path.
+**The 3 algorithms are run in a parallel manner 100 times for each of the 5 included smaller test maps**. Every single iteration has new randomly picked start point and end point. After every single iteration, the return values are compared and the test immediately fails if any algorithm returns a different result for the shortest path.
 
 These tests are located [here](https://github.com/joonarafael/visualpathfinder/tree/main/__tests__/interactive "Interactive Map Tests").
 
@@ -38,6 +38,6 @@ These tests are located [here](https://github.com/joonarafael/visualpathfinder/t
 
 Larger maps refer to the virtual maps available to the user in the **non-interactive application**. These have dimensions of up to 768x768.
 
-The 3 algorithms are run in a parallel manner 10 times for each of the 2 included larger test maps. Every single iteration has new randomly picked start point and end point. After every single iteration, the return values are compared and the test immediately fails if any algorithm returns a different result for the shortest path.
+**The 3 algorithms are run in a parallel manner 10 times for each of the 2 included larger test maps**. Every single iteration has new randomly picked start point and end point. After every single iteration, the return values are compared and the test immediately fails if any algorithm returns a different result for the shortest path.
 
 These tests are located [here](https://github.com/joonarafael/visualpathfinder/tree/main/__tests__/virtual "Virtual Map Tests").

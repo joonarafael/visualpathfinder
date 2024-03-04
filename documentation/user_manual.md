@@ -106,12 +106,28 @@ Virtual maps are significantly larger than the base 72x46 maps in the main appli
 
 Special thanks for the suggestion by [opturtio](https://github.com/opturtio "opturtio on GitHub") to include larger maps (course peer review issue).
 
-Virtual Map page is divided into two sections:
+Virtual Map page is divided into three different sections:
 
-### Preview
+### Map Preview
 
 A large text-based preview of the current virtual map is shown on the screen. It's non-interactive and does not support zooming / other visual features. It does not show start, finish, or pathfinding results at all.
 
+### Statistics Bar
+
+A compact text-window is located right below the map preview window. It describes the exact details of the current map, including e.g. width, height, and amount of traversable path tiles.
+
+After the algorithms have been run, it will also inform the locations of the randomly generated start point and end point. It will also display the the straight line distance between the start and end points. This could be useful to estimate the algorithm run times and overall performance.
+
 ### Control Bar
 
-TODO
+Control bar includes two buttons and three information panels:
+
+**Buttons**
+
+- Exit: Close the tab.
+
+- Run Algorithms: Generates first a random start point and a random end point, then runs all 3 algorithms one after the other.
+
+**Information Panels**
+
+One information panel is reserved for each algorithm. After user runs the algorithms, the results will be updated to these panels. Included information is identical to the one provided on the [interactive side](https://github.com/joonarafael/visualpathfinder/blob/main/documentation/user_manual.md#tool-bar--run-bar "Tool Bar / Run Bar").

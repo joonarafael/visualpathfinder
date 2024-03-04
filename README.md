@@ -18,7 +18,7 @@ This is a React web application built in TypeScript running on a Node.js server.
 
 Application uses Tailwind CSS for styling and additionally features ready-made UI components provided by the [shadcn/ui library](https://ui.shadcn.com/ "shadcn/ui Homepage").
 
-Automatic software testing powered by the Jest library. Tests cover the core application logic. The user interface is not covered by automatic testing. Coverage report of the automatic testing can be found [here](https://app.codecov.io/gh/joonarafael/visualpathfinder "Codecov Report for Visual Pathfinder").
+Automatic software testing powered by the Jest library. Tests cover the core application logic and perform robust testing for the 3 provided algorithms. The user interface is not covered by automatic testing. Coverage report of the automatic testing can be found [here](https://app.codecov.io/gh/joonarafael/visualpathfinder "Codecov Report for Visual Pathfinder").
 
 ## Algorithms
 
