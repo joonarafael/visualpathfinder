@@ -10,7 +10,7 @@ const config = {
 	setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
 	testEnvironment: "jest-environment-jsdom",
 	preset: "ts-jest",
-	testMatch: ["**/__tests__/unittests/*.test.tsx"],
+	testMatch: ["**/__tests__/**/*.test.tsx"],
 };
 
 module.exports = createJestConfig(config);

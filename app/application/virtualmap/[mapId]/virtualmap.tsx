@@ -15,12 +15,18 @@ import heuristicEuclidean from "../../algorithms/euclidean";
 type AdjacencyList = Record<number, number[]>;
 
 interface VirtualMapProps {
+	name: string;
 	map: number[];
 	width: number;
 	height: number;
 }
 
-const VirtualMap: React.FC<VirtualMapProps> = ({ map, width, height }) => {
+const VirtualMap: React.FC<VirtualMapProps> = ({
+	name,
+	map,
+	width,
+	height,
+}) => {
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [isError, setIsError] = useState(false);
 	const [runsStats, setRunsStats] = useState({
@@ -64,7 +70,7 @@ const VirtualMap: React.FC<VirtualMapProps> = ({ map, width, height }) => {
 		};
 	}, []);
 
-	const breakpoint = 1048;
+	const breakpoint = 1170;
 
 	// if any unexpected runtime errors are encountered, render the error page
 	if (isError) {
@@ -189,31 +195,56 @@ const VirtualMap: React.FC<VirtualMapProps> = ({ map, width, height }) => {
 
 	// viewport too narrow
 	if (windowWidth < breakpoint) {
-		return <PageError message={"Please increase window width to 1048px."} />;
+		return <PageError message={"Please increase window width to 1170px."} />;
 	}
 
+	const nodeIndexToXYcoords = (node: number, width: number) => {
+		const x = node % width;
+		const y = Math.floor(node / width);
+
+		return `x: ${x}, y: ${y}`;
+	};
+
 	return (
-		<div className="flex flex-col gap-4">
-			<div className="border rounded-lg h-[60svh] overflow-scroll">
-				<Preview map={map} width={width} height={height} />
+		<div className="flex flex-row gap-4 h-[80svh]">
+			<div className="flex flex-col gap-2 w-4/5">
+				<div className="border rounded-lg overflow-scroll">
+					<Preview map={map} width={width} />
+				</div>
+				<div className="border rounded-lg p-2">
+					<strong>MAP</strong>: {name}; <strong>SIZE</strong>: {details.size};{" "}
+					<strong>WIDTH</strong>: {details.width}; <strong>HEIGHT</strong>{" "}
+					{details.height}; <strong>WALL TILES</strong>{" "}
+					{details.size - details.nodes}; <strong>PATH TILES</strong>{" "}
+					{details.nodes};<br />
+					{points.start >= 0 && points.end >= 0 && (
+						<>{`START POINT: ${nodeIndexToXYcoords(
+							points.start,
+							width
+						)}; END POINT: ${nodeIndexToXYcoords(
+							points.end,
+							width
+						)}; STRAIGHT LINE DISTANCE: ${points.distance};`}</>
+					)}
+				</div>
 			</div>
-			<div className="border rounded-lg h-full p-2">
-				MAP SIZE: {details.size}, where WIDTH: {details.width} and HEIGHT:{" "}
-				{details.height}. TOTAL WALL TILES: {details.size - details.nodes} and
-				PATH TILES: {details.nodes}.<br />
-				{points.start >= 0 && points.end >= 0 && (
-					<>{`START POINT at ${points.start} and END at ${points.end} with a STRAIGHT LINE DISTANCE of ${points.distance}.`}</>
-				)}
-			</div>
-			<div className="border rounded-lg h-full grid grid-cols-5 p-2 gap-2">
+			<div className="border flex flex-col rounded-lg p-2 gap-2 w-1/5">
 				<Button
-					className="h-full w-full font-light"
+					variant={"destructive"}
+					onClick={() => {
+						window.close();
+					}}
+				>
+					EXIT
+				</Button>
+				<Button
+					className="font-bold"
 					variant={"secondary"}
 					onClick={() => {
 						runOnce();
 					}}
 				>
-					RUN ONCE
+					RUN ALGORITHMS
 				</Button>
 				{runsStats.dijkstra.visited_nodes > 0 ? (
 					<ResultElement

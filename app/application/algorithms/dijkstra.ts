@@ -25,7 +25,7 @@ export default function dijkstra(
 
 	gScore[startNode] = 0;
 
-	while (!visited[endNode]) {
+	while (!openSet.isEmpty()) {
 		const current = openSet.dequeue();
 
 		if (current === undefined) {
@@ -57,8 +57,10 @@ export default function dijkstra(
 				cameFrom[neighbor] = current;
 				gScore[neighbor] = tentativeGScore;
 
-				// add this new neighbor to the pq for later processing
-				if (!openSet.contains(neighbor)) {
+				if (openSet.contains(neighbor)) {
+					openSet.decreasePriority(neighbor, gScore[neighbor]);
+					openSet.bubbleUp(openSet.findIndex(neighbor));
+				} else {
 					openSet.enqueue(neighbor, gScore[neighbor]);
 				}
 			}

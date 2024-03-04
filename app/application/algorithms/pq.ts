@@ -28,8 +28,8 @@ export default class PriorityQueue<T> {
 	}
 
 	// method to transfer the newly added element to its correct position in the binary heap
-	bubbleUp(): void {
-		let index = this.heap.length - 1;
+	bubbleUp(startIndex?: number): void {
+		let index = startIndex !== undefined ? startIndex : this.heap.length - 1;
 
 		while (index > 0) {
 			const parentIndex = Math.floor((index - 1) / 2);
@@ -83,6 +83,20 @@ export default class PriorityQueue<T> {
 		const temp = this.heap[i];
 		this.heap[i] = this.heap[j];
 		this.heap[j] = temp;
+	}
+
+	decreasePriority(element: T, newPriority: number): void {
+		const index = this.findIndex(element);
+
+		if (index !== -1 && newPriority < this.heap[index].priority) {
+			this.heap[index].priority = newPriority;
+			this.bubbleUp(index);
+		}
+	}
+
+	// helper function to find the index of an element in the heap
+	findIndex(element: T): number {
+		return this.heap.findIndex((item) => item.element === element);
 	}
 
 	// check if heap is empty

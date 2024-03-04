@@ -20,7 +20,12 @@ const VirtualMapClient: React.FC<VirtualMapClientProps> = ({ map }) => {
 
 		return (
 			<Container>
-				<VirtualMap map={highTown} height={height} width={width} />
+				<VirtualMap
+					name={"High Town"}
+					map={highTown}
+					height={height}
+					width={width}
+				/>
 			</Container>
 		);
 	}
@@ -31,7 +36,12 @@ const VirtualMapClient: React.FC<VirtualMapClientProps> = ({ map }) => {
 
 		return (
 			<Container>
-				<VirtualMap map={woundedCoast} height={height} width={width} />
+				<VirtualMap
+					name={"Wounded Coast"}
+					map={woundedCoast}
+					height={height}
+					width={width}
+				/>
 			</Container>
 		);
 	}
@@ -42,7 +52,12 @@ const VirtualMapClient: React.FC<VirtualMapClientProps> = ({ map }) => {
 
 		return (
 			<Container>
-				<VirtualMap map={aurora} height={height} width={width} />
+				<VirtualMap
+					name={"Aurora"}
+					map={aurora}
+					height={height}
+					width={width}
+				/>
 			</Container>
 		);
 	}
@@ -53,7 +68,12 @@ const VirtualMapClient: React.FC<VirtualMapClientProps> = ({ map }) => {
 
 		return (
 			<Container>
-				<VirtualMap map={inferno} height={height} width={width} />
+				<VirtualMap
+					name={"Inferno"}
+					map={inferno}
+					height={height}
+					width={width}
+				/>
 			</Container>
 		);
 	}

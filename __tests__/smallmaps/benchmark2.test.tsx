@@ -2,12 +2,25 @@ import dijkstra from "@/app/application/algorithms/dijkstra";
 import aStar from "@/app/application/algorithms/astar";
 import jps from "@/app/application/algorithms/jps";
 
-import inferno from "@/app/maps/virtual/inferno";
+import benchmark2 from "@/app/maps/benchmarks/benchmark2";
 import generateAdjacencyList from "@/app/application/algorithms/generateadjacencylist";
 
-describe("Test algos on the virtual map 'Inferno'", () => {
-	const fieldStatus = inferno;
-	const width = 768;
+describe("Test algos on the map 'benchmark2.tsx'", () => {
+	const fieldStatus = benchmark2;
+
+	const originalStartIndex = fieldStatus.indexOf(2);
+
+	if (originalStartIndex !== -1) {
+		fieldStatus[originalStartIndex] = 0;
+	}
+
+	const originalEndIndex = fieldStatus.indexOf(3);
+
+	if (originalEndIndex !== -1) {
+		fieldStatus[originalEndIndex] = 0;
+	}
+
+	const width = 72;
 
 	const runAlgorithm = (tmp: number[], start: number, finish: number) => {
 		const adjacencyList = generateAdjacencyList(tmp, width);
@@ -28,7 +41,7 @@ describe("Test algos on the virtual map 'Inferno'", () => {
 	it("pathfinding algorithms should yield the same Euclidean path length", () => {
 		const tmp = [...fieldStatus];
 
-		for (let i = 0; i < 10; i++) {
+		for (let i = 0; i < 100; i++) {
 			let start = Math.floor(Math.random() * (tmp.length - 1));
 			let finish = Math.floor(Math.random() * (tmp.length - 1));
 

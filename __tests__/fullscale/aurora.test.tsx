@@ -28,28 +28,26 @@ describe("Test algos on the virtual map 'Aurora'", () => {
 	it("pathfinding algorithms should yield the same Euclidean path length", () => {
 		const tmp = [...fieldStatus];
 
-		for (let i = 0; i < 2; i++) {
-			let start = Math.floor(Math.random() * (aurora.length - 1));
-			let finish = Math.floor(Math.random() * (aurora.length - 1));
+		for (let i = 0; i < 10; i++) {
+			let start = Math.floor(Math.random() * (tmp.length - 1));
+			let finish = Math.floor(Math.random() * (tmp.length - 1));
 
 			while (tmp[start] === 1) {
-				start = Math.floor(Math.random() * (aurora.length - 1));
+				start = Math.floor(Math.random() * (tmp.length - 1));
 			}
 
 			while (tmp[finish] === 1) {
-				finish = Math.floor(Math.random() * (aurora.length - 1));
+				finish = Math.floor(Math.random() * (tmp.length - 1));
 			}
 
 			while (start === finish) {
-				finish = Math.floor(Math.random() * (aurora.length - 1));
+				finish = Math.floor(Math.random() * (tmp.length - 1));
 			}
 
 			tmp[start] = 2;
 			tmp[finish] = 3;
 
 			const stats = runAlgorithm(tmp, start, finish);
-
-			console.log(stats, start, finish);
 
 			if (stats.dijkstra && stats.aStar && stats.jps) {
 				expect(stats.dijkstra).toEqual(stats.aStar);

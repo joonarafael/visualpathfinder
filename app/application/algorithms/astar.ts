@@ -22,7 +22,7 @@ export default function aStar(
 	gScore[startNode] = 0;
 	fScore[startNode] = heuristicEuclidean(startNode, endNode, width);
 
-	while (!visited[endNode]) {
+	while (!openSet.isEmpty()) {
 		const current = openSet.dequeue();
 
 		if (current === undefined) {
@@ -51,7 +51,7 @@ export default function aStar(
 			// use the newly found better path if distance is less or neighbor does not exist already
 			if (
 				!gScore.hasOwnProperty(neighbor) ||
-				tentativeGScore <= gScore[neighbor]
+				tentativeGScore < gScore[neighbor]
 			) {
 				cameFrom[neighbor] = current;
 
@@ -61,8 +61,10 @@ export default function aStar(
 					Math.floor(heuristicEuclidean(neighbor, endNode, width) * 1000) /
 						1000;
 
-				// add this new neighbor to the pq for later processing
-				if (!openSet.contains(neighbor)) {
+				if (openSet.contains(neighbor)) {
+					openSet.decreasePriority(neighbor, fScore[neighbor]);
+					openSet.bubbleUp(openSet.findIndex(neighbor));
+				} else {
 					openSet.enqueue(neighbor, fScore[neighbor]);
 				}
 			}

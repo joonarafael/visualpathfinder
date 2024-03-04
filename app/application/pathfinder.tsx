@@ -77,7 +77,7 @@ const PathFinder = () => {
 		};
 	}, []);
 
-	const breakpoint = 1048;
+	const breakpoint = 1170;
 
 	// if map is changed, the old stats will be reset after an algorithm run
 	useEffect(() => {
@@ -321,11 +321,11 @@ const PathFinder = () => {
 
 	// viewport too narrow
 	if (windowWidth < breakpoint) {
-		return <PageError message={"Please increase window width to 1048px."} />;
+		return <PageError message={"Please increase window width to 1170px."} />;
 	}
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-2">
 			<Menu
 				zoom={zoom}
 				setZoom={setZoom}
@@ -341,7 +341,7 @@ const PathFinder = () => {
 				indexing={indexing}
 				setIndexing={setIndexing}
 			/>
-			<div className="flex flex-row gap-4">
+			<div className="flex flex-row gap-2">
 				<div className="border rounded-lg w-5/6 h-[80svh] overflow-scroll">
 					<div className="w-max">
 						{applicationState === "draw" && (
