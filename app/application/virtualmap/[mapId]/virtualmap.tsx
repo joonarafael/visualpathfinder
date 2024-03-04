@@ -1,5 +1,8 @@
 "use client";
 
+// Core logic for the virtual map service.
+// It handles all the basic functionality and stores the data structures.
+
 import PageError from "@/app/components/pageerror";
 import { useEffect, useState } from "react";
 import Preview from "./preview";
@@ -11,8 +14,6 @@ import jps from "../../algorithms/jps";
 import ResultElement from "../../running/resultelement";
 import NotRunElement from "../../running/notrunelement";
 import heuristicEuclidean from "../../algorithms/euclidean";
-
-type AdjacencyList = Record<number, number[]>;
 
 interface VirtualMapProps {
 	name: string;
@@ -27,6 +28,7 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 	width,
 	height,
 }) => {
+	// initialize all state variables
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [isError, setIsError] = useState(false);
 	const [runsStats, setRunsStats] = useState({
@@ -60,7 +62,6 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 		distance: -1,
 	});
 
-	// eventlistener for the window resizing
 	useEffect(() => {
 		const handleResizeWindow = () => setWindowWidth(window.innerWidth);
 		window.addEventListener("resize", handleResizeWindow);
@@ -72,7 +73,6 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 
 	const breakpoint = 1170;
 
-	// if any unexpected runtime errors are encountered, render the error page
 	if (isError) {
 		return (
 			<PageError
@@ -83,6 +83,7 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 		);
 	}
 
+	// function to request all 3 algorithms
 	const runAlgorithm = (tmp: number[], start: number, finish: number) => {
 		try {
 			const adjacencyList = generateAdjacencyList(tmp, width);
@@ -161,6 +162,7 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 		}
 	};
 
+	// intermediate helper function to generate the random start and end points
 	const runOnce = () => {
 		const tmp = [...map];
 
@@ -193,7 +195,6 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 		runAlgorithm(tmp, start, finish);
 	};
 
-	// viewport too narrow
 	if (windowWidth < breakpoint) {
 		return <PageError message={"Please increase window width to 1170px."} />;
 	}

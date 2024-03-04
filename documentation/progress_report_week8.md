@@ -6,4 +6,4 @@
 
 - Added more visual improvements for the Virtual Map layout and display.
 
-Hours spent: 5 h (course total 71 h)
+Hours spent: 6 h (course total 72 h)

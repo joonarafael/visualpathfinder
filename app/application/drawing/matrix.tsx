@@ -1,6 +1,6 @@
 "use client";
 
-// This module renders the interactive grid map during drawing.
+// This module renders the interactive grid map while in drawing mode.
 
 import { useEffect, useState } from "react";
 
@@ -42,11 +42,9 @@ const Matrix: React.FC<MatrixProps> = ({
 			setMouseState(false);
 		};
 
-		// Attach event listeners when the component mounts
 		document.addEventListener("mousedown", handleMouseDown);
 		document.addEventListener("mouseup", handleMouseUp);
 
-		// Detach event listeners when the component unmounts
 		return () => {
 			document.removeEventListener("mousedown", handleMouseDown);
 			document.removeEventListener("mouseup", handleMouseUp);
@@ -58,10 +56,10 @@ const Matrix: React.FC<MatrixProps> = ({
 		tileClick(index);
 
 		if (!requestRender) {
-			setRequestRender(1); // indicate that a render has been requested
+			setRequestRender(1);
 
 			setTimeout(() => {
-				setRequestRender(0); // reset to 0 after the debounce time
+				setRequestRender(0);
 			}, 100);
 		}
 	};

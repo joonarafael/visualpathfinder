@@ -32,6 +32,7 @@ export default function dijkstra(
 			break;
 		}
 
+		// we've reached the goal
 		if (current === endNode) {
 			return {
 				shortestPath: reconstructPath(cameFrom, endNode),
@@ -57,6 +58,7 @@ export default function dijkstra(
 				cameFrom[neighbor] = current;
 				gScore[neighbor] = tentativeGScore;
 
+				// openSet needs reordering if a better path is found
 				if (openSet.contains(neighbor)) {
 					openSet.decreasePriority(neighbor, gScore[neighbor]);
 					openSet.bubbleUp(openSet.findIndex(neighbor));

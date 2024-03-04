@@ -15,6 +15,5 @@ export default function heuristicEuclidean(
 	const rowDiff = row1 - row0;
 	const colDiff = col1 - col0;
 
-	// Euclidean distance formula
 	return Math.sqrt(rowDiff * rowDiff + colDiff * colDiff);
 }

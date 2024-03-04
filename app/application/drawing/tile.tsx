@@ -1,6 +1,6 @@
 "use client";
 
-// Individual INTERACTIVE tile elements (for drawing grid)
+// Individual INTERACTIVE tile element (for drawing grid)
 
 interface TileProps {
 	index: number;

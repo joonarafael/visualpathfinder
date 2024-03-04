@@ -1,5 +1,7 @@
 "use client";
 
+// Handles the rendering of the virtual map.
+
 interface PreviewProps {
 	map: number[];
 	width: number;

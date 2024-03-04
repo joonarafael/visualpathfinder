@@ -1,3 +1,5 @@
+// VIRTUAL MAP PAGE
+
 import ClientOnly from "@/app/components/clientonly";
 import VirtualMapClient from "./virtualmapclient";
 import PageError from "@/app/components/pageerror";

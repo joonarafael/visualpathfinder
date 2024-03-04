@@ -1,5 +1,7 @@
 "use client";
 
+// Element to display algorithm results.
+
 interface ResultElementProps {
 	name: string;
 	data: { time: number; visited_nodes: number; path_length: string };

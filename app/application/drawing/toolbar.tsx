@@ -1,6 +1,6 @@
 "use client";
 
-// Tool selection menu.
+// Tool selection menu (drawing mode).
 
 import { Button } from "@/app/components/ui/button";
 

@@ -14,7 +14,6 @@ export default function generateAdjacencyList(
 
 	const adjacencyList: AdjacencyList = {};
 
-	// function to get a single index for a (x, y) coordinate.
 	const getIndex = (row: number, col: number): number => row * colCount + col;
 
 	for (let row = 0; row < rowCount; row++) {

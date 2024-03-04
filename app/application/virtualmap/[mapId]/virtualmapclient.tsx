@@ -1,6 +1,6 @@
 "use client";
 
-// Client View for Virtual Map Running
+// Client View for Virtual Map Page
 
 import Container from "@/app/components/container";
 import VirtualMap from "./virtualmap";

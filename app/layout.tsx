@@ -1,4 +1,4 @@
-// APPLICATION ROOT LAYOUT
+// APPLICATION ROOT
 // Web app entry point, main HTML structure
 
 import type { Metadata } from "next";

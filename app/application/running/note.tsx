@@ -1,5 +1,7 @@
 "use client";
 
+// Note element to display the alerts / tips for the user
+
 import { Button } from "@/app/components/ui/button";
 import { MouseEventHandler } from "react";
 

@@ -42,6 +42,7 @@ export default function jumpPointSearch(
 		"-1,1",
 		"-1,-1",
 	]);
+
 	gScore[startNode] = 0;
 	fScore[startNode] = heuristicEuclidean(startNode, endNode, width);
 
@@ -89,6 +90,7 @@ export default function jumpPointSearch(
 					Math.floor(heuristicEuclidean(neighbor, endNode, width) * 1000) /
 						1000;
 
+				// openSet needs reordering if a better path is found
 				if (openSet.contains(neighbor)) {
 					openSet.decreasePriority(neighbor, fScore[neighbor]);
 					openSet.bubbleUp(openSet.findIndex(neighbor));
@@ -373,6 +375,7 @@ function pruneDiagonalNeighbors(
 		return null;
 	}
 
+	// continue the diagonal jump
 	return jump(target, dx, dy, adjacencyList, width, fieldStatus, directions);
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-// Core Web Application Logic.
+// Core Web Application Logic (72x46 interactive maps).
 // All core features are provided by this element.
 // Data structures for grid state and other variables are initialized and stored here.
 // It's quite a mess.
@@ -58,7 +58,7 @@ const PathFinder = () => {
 		},
 	});
 
-	// initialize field
+	// initialize the field
 	const field = Array.from({ length: WIDTH * HEIGHT }, (_, index) => index);
 	const [fieldStatus, setFieldStatus] = useState(
 		Array.from({ length: WIDTH * HEIGHT }, (_, index) => 0)
@@ -79,12 +79,10 @@ const PathFinder = () => {
 
 	const breakpoint = 1170;
 
-	// if map is changed, the old stats will be reset after an algorithm run
 	useEffect(() => {
 		setMapChanged(true);
 	}, [fieldStatus]);
 
-	// if any unexpected runtime errors are encountered, render the error page
 	if (isError) {
 		return (
 			<PageError
@@ -319,7 +317,6 @@ const PathFinder = () => {
 		}
 	};
 
-	// viewport too narrow
 	if (windowWidth < breakpoint) {
 		return <PageError message={"Please increase window width to 1170px."} />;
 	}

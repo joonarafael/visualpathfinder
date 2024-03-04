@@ -56,11 +56,14 @@ export default function aStar(
 				cameFrom[neighbor] = current;
 
 				gScore[neighbor] = tentativeGScore;
+
+				// heuristic approximation
 				fScore[neighbor] =
 					tentativeGScore +
 					Math.floor(heuristicEuclidean(neighbor, endNode, width) * 1000) /
 						1000;
 
+				// openSet needs reordering if a better path is found
 				if (openSet.contains(neighbor)) {
 					openSet.decreasePriority(neighbor, fScore[neighbor]);
 					openSet.bubbleUp(openSet.findIndex(neighbor));

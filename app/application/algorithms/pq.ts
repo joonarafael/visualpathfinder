@@ -28,6 +28,7 @@ export default class PriorityQueue<T> {
 	}
 
 	// method to transfer the newly added element to its correct position in the binary heap
+	// it is also used to reorder the elements if a priority is updated later for an existing element
 	bubbleUp(startIndex?: number): void {
 		let index = startIndex !== undefined ? startIndex : this.heap.length - 1;
 
@@ -85,6 +86,7 @@ export default class PriorityQueue<T> {
 		this.heap[j] = temp;
 	}
 
+	// better path was found, reorder the elements
 	decreasePriority(element: T, newPriority: number): void {
 		const index = this.findIndex(element);
 
@@ -94,12 +96,10 @@ export default class PriorityQueue<T> {
 		}
 	}
 
-	// helper function to find the index of an element in the heap
 	findIndex(element: T): number {
 		return this.heap.findIndex((item) => item.element === element);
 	}
 
-	// check if heap is empty
 	isEmpty(): boolean {
 		return this.heap.length === 0;
 	}

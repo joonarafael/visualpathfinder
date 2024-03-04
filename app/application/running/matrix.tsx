@@ -1,6 +1,6 @@
 "use client";
 
-// This module renders the grid map during the algorithm run.
+// This module renders the grid map during the algorithm run state.
 
 import RunTile from "./tile";
 

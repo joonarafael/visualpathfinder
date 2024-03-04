@@ -1,5 +1,7 @@
 "use client";
 
+// Element to show that the algorithm is not run yet.
+
 interface NotRunElementProps {
 	name: string;
 }
