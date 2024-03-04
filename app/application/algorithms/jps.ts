@@ -25,35 +25,31 @@ export default function jumpPointSearch(
 	const gScore: Record<number, number> = {};
 	const fScore: Record<number, number> = {};
 
-	const directions: Record<number, number[][]> = {};
+	const directions: Record<number, Set<string>> = {};
 
 	const visited: { [node: number]: boolean } = {};
 
 	openSet.enqueue(startNode, 0);
 
 	// only the start node is expanded into every 8 direction as a default
-	directions[startNode] = [
-		[0, 1],
-		[0, -1],
-		[1, 0],
-		[-1, 0],
-		[1, 1],
-		[-1, -1],
-		[1, -1],
-		[-1, 1],
-	];
+	directions[startNode] = new Set([
+		"1,0",
+		"-1,0",
+		"0,1",
+		"0,-1",
+		"1,-1",
+		"1,1",
+		"-1,1",
+		"-1,-1",
+	]);
 	gScore[startNode] = 0;
 	fScore[startNode] = heuristicEuclidean(startNode, endNode, width);
 
-	while (!openSet.isEmpty()) {
+	while (!visited[endNode]) {
 		const current = openSet.dequeue();
 
 		if (current === undefined) {
 			break;
-		}
-
-		if (fieldStatus[current] === 1) {
-			continue;
 		}
 
 		// we've reached the goal
@@ -89,9 +85,12 @@ export default function jumpPointSearch(
 
 				gScore[neighbor] = tentativeGScore;
 				fScore[neighbor] =
-					tentativeGScore + heuristicEuclidean(neighbor, endNode, width);
+					tentativeGScore +
+					Math.floor(heuristicEuclidean(neighbor, endNode, width) * 1000) /
+						1000;
 
-				if (!openSet.heap.some((item) => item.element === neighbor)) {
+				// add this new neighbor to the pq for later processing
+				if (!openSet.contains(neighbor)) {
 					openSet.enqueue(neighbor, fScore[neighbor]);
 				}
 			}
@@ -135,13 +134,13 @@ function pruneStraightDirectionNeighbors(
 	adjacencyList: Record<number, number[]>,
 	width: number,
 	fieldStatus: number[],
-	directions: Record<number, number[][]>
+	directions: Record<number, Set<string>>
 ): any {
 	if (fieldStatus[target] === 3) {
 		return target;
 	}
 
-	let forcedNeighbors: number[][] = [];
+	let forcedNeighbors: string[] = [];
 
 	// x movement
 	if (dy === 0) {
@@ -151,21 +150,29 @@ function pruneStraightDirectionNeighbors(
 		// forced neighbor checking
 		if (north > 0 && !adjacencyList[target].includes(north)) {
 			if (adjacencyList[target].includes(north + dx)) {
-				forcedNeighbors.push([dx, -1]);
+				forcedNeighbors.push(`${dx},-1`);
 			}
 		}
 
 		if (south < fieldStatus.length && !adjacencyList[target].includes(south)) {
 			if (adjacencyList[target].includes(south + dx)) {
-				forcedNeighbors.push([dx, 1]);
+				forcedNeighbors.push(`${dx},1`);
 			}
 		}
 
 		// forced neighbors detected
 		// terminate jump, return target and ask for later exploring in the relevant directions
 		if (forcedNeighbors.length > 0) {
-			forcedNeighbors.push([dx, dy]);
-			directions[target] = forcedNeighbors;
+			forcedNeighbors.push(`${dx},${dy}`);
+
+			if (!(target in directions)) {
+				directions[target] = new Set();
+			}
+
+			for (const item of forcedNeighbors) {
+				directions[target].add(item);
+			}
+
 			return target;
 		}
 
@@ -189,7 +196,7 @@ function pruneStraightDirectionNeighbors(
 		!adjacencyList[target].includes(west)
 	) {
 		if (adjacencyList[target].includes(west + dy * width)) {
-			forcedNeighbors.push([-1, dy]);
+			forcedNeighbors.push(`-1,${dy}`);
 		}
 	}
 
@@ -198,13 +205,21 @@ function pruneStraightDirectionNeighbors(
 		!adjacencyList[target].includes(east)
 	) {
 		if (adjacencyList[target].includes(east + dy * width)) {
-			forcedNeighbors.push([1, dy]);
+			forcedNeighbors.push(`1,${dy}`);
 		}
 	}
 
 	if (forcedNeighbors.length > 0) {
-		forcedNeighbors.push([dx, dy]);
-		directions[target] = forcedNeighbors;
+		forcedNeighbors.push(`${dx},${dy}`);
+
+		if (!(target in directions)) {
+			directions[target] = new Set();
+		}
+
+		for (const item of forcedNeighbors) {
+			directions[target].add(item);
+		}
+
 		return target;
 	}
 
@@ -236,7 +251,7 @@ function pruneDiagonalNeighbors(
 	adjacencyList: Record<number, number[]>,
 	width: number,
 	fieldStatus: number[],
-	directions: Record<number, number[][]>
+	directions: Record<number, Set<string>>
 ): any {
 	if (fieldStatus[target] === 3) {
 		return target;
@@ -251,12 +266,21 @@ function pruneDiagonalNeighbors(
 		!adjacencyList[target].includes(xBlocker)
 	) {
 		if (adjacencyList[target].includes(xBlocker + dy * width)) {
-			directions[target] = [
-				[dx, dy],
-				[-dx, dy],
-				[0, dy],
-				[dx, 0],
+			const forcedNeighbors = [
+				`${dx},${dy}`,
+				`${-dx},${dy}`,
+				`0,${dy}`,
+				`${dx},0`,
 			];
+
+			if (!(target in directions)) {
+				directions[target] = new Set();
+			}
+
+			for (const item of forcedNeighbors) {
+				directions[target].add(item);
+			}
+
 			return target;
 		}
 	}
@@ -267,12 +291,21 @@ function pruneDiagonalNeighbors(
 		!adjacencyList[target].includes(yBlocker)
 	) {
 		if (adjacencyList[target].includes(yBlocker + dx)) {
-			directions[target] = [
-				[dx, dy],
-				[dx, -dy],
-				[0, dy],
-				[dx, 0],
+			const forcedNeighbors = [
+				`${dx},${dy}`,
+				`${dx},${-dy}`,
+				`0,${dy}`,
+				`${dx},0`,
 			];
+
+			if (!(target in directions)) {
+				directions[target] = new Set();
+			}
+
+			for (const item of forcedNeighbors) {
+				directions[target].add(item);
+			}
+
 			return target;
 		}
 	}
@@ -282,7 +315,7 @@ function pruneDiagonalNeighbors(
 	const xNeighbor = target + dx;
 	const yNeighbor = target + dy * width;
 
-	let scans: number[][] = [];
+	let scans: string[] = [];
 
 	if (adjacencyList[target].includes(xNeighbor)) {
 		const resultX = pruneStraightDirectionNeighbors(
@@ -296,7 +329,7 @@ function pruneDiagonalNeighbors(
 		);
 
 		if (resultX !== null) {
-			scans.push([dx, 0]);
+			scans.push(`${dx},0`);
 		}
 	}
 
@@ -312,20 +345,21 @@ function pruneDiagonalNeighbors(
 		);
 
 		if (resultY !== null) {
-			scans.push([0, dy]);
+			scans.push(`0,${dy}`);
 		}
 	}
 
 	// cardinal direction scans returned something
 	if (scans.length > 0) {
-		scans.push([dx, dy]);
+		scans.push(`${dx},${dy}`);
 
-		if (!directions.hasOwnProperty(target)) {
-			directions[target] = [];
+		if (!(target in directions)) {
+			directions[target] = new Set();
 		}
 
-		const uniqueItemsSet = new Set(directions[target].concat(scans));
-		directions[target] = Array.from(uniqueItemsSet);
+		for (const item of scans) {
+			directions[target].add(item);
+		}
 
 		return target;
 	}
@@ -358,7 +392,7 @@ function jump(
 	adjacencyList: Record<number, number[]>,
 	width: number,
 	fieldStatus: number[],
-	directions: Record<number, number[][]>
+	directions: Record<number, Set<string>>
 ) {
 	const target = parent + dx + width * dy;
 
@@ -406,13 +440,29 @@ function getNeighborsWithJumpPoints(
 	adjacencyList: Record<number, number[]>,
 	width: number,
 	fieldStatus: number[],
-	directions: Record<number, number[][]>
+	directions: Record<number, Set<string>>
 ) {
 	const neighbors: number[] = [];
 
-	for (const direction of directions[parent]) {
-		const dx = direction[0];
-		const dy = direction[1];
+	let absoluteDirections: Set<string>;
+
+	if (!directions.hasOwnProperty(parent)) {
+		absoluteDirections = new Set([
+			"1,0",
+			"-1,0",
+			"0,1",
+			"0,-1",
+			"1,-1",
+			"1,1",
+			"-1,1",
+			"-1,-1",
+		]);
+	} else {
+		absoluteDirections = directions[parent];
+	}
+
+	for (const direction of absoluteDirections) {
+		const [dx, dy] = direction.split(",").map(Number);
 
 		const neighbor = jump(
 			parent,

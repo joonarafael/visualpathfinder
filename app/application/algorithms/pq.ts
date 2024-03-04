@@ -89,4 +89,8 @@ export default class PriorityQueue<T> {
 	isEmpty(): boolean {
 		return this.heap.length === 0;
 	}
+
+	contains(element: T): boolean {
+		return this.heap.some((item) => item.element === element);
+	}
 }

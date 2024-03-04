@@ -25,14 +25,13 @@ export default function dijkstra(
 
 	gScore[startNode] = 0;
 
-	while (!openSet.isEmpty()) {
+	while (!visited[endNode]) {
 		const current = openSet.dequeue();
 
 		if (current === undefined) {
 			break;
 		}
 
-		// we've reached the goal
 		if (current === endNode) {
 			return {
 				shortestPath: reconstructPath(cameFrom, endNode),
@@ -51,17 +50,15 @@ export default function dijkstra(
 				tentativeGScore = gScore[current] + Math.sqrt(2);
 			}
 
-			// node prioritizing only includes the actual known distance
-			// no heuristic approximations are utilized
 			if (
 				!gScore.hasOwnProperty(neighbor) ||
-				tentativeGScore < gScore[neighbor]
+				tentativeGScore <= gScore[neighbor]
 			) {
 				cameFrom[neighbor] = current;
 				gScore[neighbor] = tentativeGScore;
 
 				// add this new neighbor to the pq for later processing
-				if (!openSet.heap.some((item) => item.element === neighbor)) {
+				if (!openSet.contains(neighbor)) {
 					openSet.enqueue(neighbor, gScore[neighbor]);
 				}
 			}

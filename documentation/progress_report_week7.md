@@ -2,7 +2,7 @@
 
 - Fixed Dijkstra's algorithm to work like the required PQ implementation.
 
-- Wrote the final JPS algorithm implementation.
+- Wrote much of the JPS algorithm implementation.
 
 - Fixed old tests to suit the new diagonal Euclidean distance calculation.
 

@@ -202,7 +202,7 @@ const VirtualMap: React.FC<VirtualMapProps> = ({ map, width, height }) => {
 				{details.height}. TOTAL WALL TILES: {details.size - details.nodes} and
 				PATH TILES: {details.nodes}.<br />
 				{points.start >= 0 && points.end >= 0 && (
-					<>{`START POINT at ${points.start} and END at ${points.end} with an ABSOLUTE DISTANCE of ${points.distance}.`}</>
+					<>{`START POINT at ${points.start} and END at ${points.end} with a STRAIGHT LINE DISTANCE of ${points.distance}.`}</>
 				)}
 			</div>
 			<div className="border rounded-lg h-full grid grid-cols-5 p-2 gap-2">
