@@ -14,6 +14,8 @@ import jps from "../../algorithms/jps";
 import ResultElement from "../../running/resultelement";
 import NotRunElement from "../../running/notrunelement";
 import heuristicEuclidean from "../../algorithms/euclidean";
+import XAxis from "./xaxis";
+import YAxis from "./yaxis";
 
 interface VirtualMapProps {
 	name: string;
@@ -210,7 +212,15 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 		<div className="flex flex-row gap-4 h-[80svh]">
 			<div className="flex flex-col gap-2 w-4/5">
 				<div className="border rounded-lg overflow-scroll">
-					<Preview map={map} width={width} />
+					<div className="sticky top-0">
+						<XAxis width={width} />
+					</div>
+					<div className="flex flex-row">
+						<Preview map={map} width={width} />
+						<div className="sticky right-0">
+							<YAxis height={height} />
+						</div>
+					</div>
 				</div>
 				<div className="border rounded-lg p-2">
 					<strong>MAP</strong>: {name}; <strong>SIZE</strong>: {details.size};{" "}
@@ -229,7 +239,7 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 					)}
 				</div>
 			</div>
-			<div className="border flex flex-col rounded-lg p-2 gap-2 w-1/5">
+			<div className="border flex flex-col rounded-lg p-2 gap-2 w-1/5 z-0">
 				<Button
 					variant={"destructive"}
 					onClick={() => {
