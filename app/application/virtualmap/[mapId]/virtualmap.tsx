@@ -31,6 +31,7 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 	height,
 }) => {
 	// initialize all state variables
+	const [field, setField] = useState(map);
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 	const [isError, setIsError] = useState(false);
 	const [runsStats, setRunsStats] = useState({
@@ -186,6 +187,8 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 		tmp[start] = 2;
 		tmp[finish] = 3;
 
+		setField(tmp);
+
 		setPoints({
 			start: start,
 			end: finish,
@@ -211,12 +214,12 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 	return (
 		<div className="flex flex-row gap-2 h-[80svh]">
 			<div className="flex flex-col gap-2 w-4/5">
-				<div className="rounded-lg overflow-scroll">
+				<div className="border rounded-lg overflow-scroll">
 					<div className="sticky top-0">
 						<XAxis width={width} />
 					</div>
 					<div className="flex flex-row">
-						<Preview map={map} width={width} />
+						<Preview map={field} width={width} />
 						<div className="sticky right-0">
 							<YAxis height={height} />
 						</div>
@@ -239,7 +242,7 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 					)}
 				</div>
 			</div>
-			<div className="border flex flex-col rounded-lg p-2 gap-2 w-1/5 z-0">
+			<div className="border flex flex-col rounded-lg p-2 gap-2 w-1/5 z-0 overflow-y-auto">
 				<Button
 					variant={"destructive"}
 					onClick={() => {
@@ -247,6 +250,18 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 					}}
 				>
 					EXIT
+				</Button>
+				<hr />
+				<Button
+					variant={"outline"}
+					onClick={() =>
+						window.open(
+							`/maps/virtual/${name.replace(" ", "").toLowerCase()}`,
+							"_blank"
+						)
+					}
+				>
+					VIEW MAP SOURCE AS PNG
 				</Button>
 				<Button
 					className="font-bold"
@@ -257,6 +272,7 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 				>
 					RUN ALGORITHMS
 				</Button>
+				<hr />
 				{runsStats.dijkstra.visited_nodes > 0 ? (
 					<ResultElement
 						name={"dijkstra"}

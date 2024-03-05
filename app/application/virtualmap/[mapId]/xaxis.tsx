@@ -11,7 +11,7 @@ const XAxis: React.FC<XAxisProps> = ({ width }) => {
 	};
 
 	const generateXAxis = () => {
-		let axis = `     0000`;
+		let axis = `    0000`;
 		let index = 0;
 
 		while (true) {
@@ -29,7 +29,7 @@ const XAxis: React.FC<XAxisProps> = ({ width }) => {
 
 	return (
 		<div
-			className={`flex flex-col text-justify text-[11px] p-2 font-bold text-indigo-500`}
+			className={`flex flex-col text-justify text-[11px] p-2 font-bold text-yellow-300`}
 			style={{ userSelect: "none" }}
 		>
 			<pre>{generateXAxis()}</pre>

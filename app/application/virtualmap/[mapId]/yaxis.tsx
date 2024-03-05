@@ -22,7 +22,7 @@ const YAxis: React.FC<YAxisProps> = ({ height }) => {
 
 	return (
 		<div
-			className={`flex flex-col text-justify text-[11px] font-bold text-indigo-500`}
+			className={`flex flex-col text-justify text-[11px] font-bold text-yellow-300`}
 			style={{ userSelect: "none" }}
 		>
 			{rows.map((row, index) => (

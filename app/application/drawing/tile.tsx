@@ -25,6 +25,10 @@ const Tile: React.FC<TileProps> = ({
 }) => {
 	let bgColor = "transparent";
 
+	if (!smoothing) {
+		bgColor = "bg-zinc-900";
+	}
+
 	if (status === 1) {
 		if (contrast) {
 			bgColor = `bg-stone-300`;

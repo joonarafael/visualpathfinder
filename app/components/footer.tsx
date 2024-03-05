@@ -35,7 +35,7 @@ const Footer = () => {
 					}
 					className="flex flex-row gap-2 items-center cursor-pointer hover:underline"
 				>
-					<p className="font-light">in GitHub</p> <FaExternalLinkAlt />
+					<p className="font-light">on GitHub</p> <FaExternalLinkAlt />
 				</div>
 			</div>
 			<div className="font-light">by Joona Kettunen</div>

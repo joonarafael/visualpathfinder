@@ -17,7 +17,11 @@ const Preview: React.FC<PreviewProps> = ({ map, width }) => {
 
 	for (let i = 0; i < map.length; i += width) {
 		const chunk = map.slice(i, i + width).join("");
-		const row = chunk.replaceAll("0", "_").replaceAll("1", "#");
+		const row = chunk
+			.replaceAll("0", " ")
+			.replaceAll("1", "_")
+			.replace("2", "S")
+			.replace("3", "F");
 
 		rows.push(row);
 	}
@@ -26,7 +30,7 @@ const Preview: React.FC<PreviewProps> = ({ map, width }) => {
 
 	return (
 		<div
-			className={`flex flex-col text-justify text-[11px] text-zinc-300`}
+			className={`flex flex-col text-justify text-[11px]`}
 			style={{ userSelect: "none" }}
 		>
 			{rows.map((row, index) => (

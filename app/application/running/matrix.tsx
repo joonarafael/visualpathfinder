@@ -26,7 +26,7 @@ const RunMatrix: React.FC<RunMatrixProps> = ({
 	indexing,
 }) => {
 	return (
-		<div className="flex flex-col p-2">
+		<div className="flex flex-col p-2" style={{ userSelect: "none" }}>
 			{Array.from({ length: height }).map((_, rowIndex) => (
 				<div key={rowIndex} className="flex">
 					{Array.from({ length: width }).map((_, colIndex) => {
