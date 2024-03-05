@@ -22,6 +22,8 @@ const Preview: React.FC<PreviewProps> = ({ map, width }) => {
 		rows.push(row);
 	}
 
+	rows.push(" ");
+
 	return (
 		<div
 			className={`flex flex-col text-justify text-[11px] text-zinc-300`}
@@ -29,7 +31,7 @@ const Preview: React.FC<PreviewProps> = ({ map, width }) => {
 		>
 			{rows.map((row, index) => (
 				<span key={index}>
-					<pre>{`${row} `}</pre>
+					<pre>{`     ${row} `}</pre>
 				</span>
 			))}
 		</div>

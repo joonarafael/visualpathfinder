@@ -209,9 +209,9 @@ const VirtualMap: React.FC<VirtualMapProps> = ({
 	};
 
 	return (
-		<div className="flex flex-row gap-4 h-[80svh]">
+		<div className="flex flex-row gap-2 h-[80svh]">
 			<div className="flex flex-col gap-2 w-4/5">
-				<div className="border rounded-lg overflow-scroll">
+				<div className="rounded-lg overflow-scroll">
 					<div className="sticky top-0">
 						<XAxis width={width} />
 					</div>
