@@ -4,21 +4,21 @@
 
 _Aineopintojen harjoitustyö: Algoritmit ja tekoäly_, Joona Kettunen, periodi 3 kevät 2024.
 
-Application is constantly up and running [here](https://visualpathfinder.vercel.app/ "Visual Pathfinder Web Application") hosted by [Vercel](https://vercel.com/ "Vercel Homepage").
+The application is constantly up and running [here](https://visualpathfinder.vercel.app/ "Visual Pathfinder Web Application") hosted by [Vercel](https://vercel.com/ "Vercel Homepage").
 
-It's recommended to **check all the documentation** provided within [this folder](https://github.com/joonarafael/visualpathfinder/tree/main/documentation "Project Documentation Folder"). Instructions on how to clone this repository, modify the source code for your use, and **get it up and running on your own machine** can be also found within that folder.
+It's recommended to **check all the documentation** provided within [this folder](https://github.com/joonarafael/visualpathfinder/tree/main/documentation "Project Documentation Folder"). Instructions on how to clone this repository, modify the source code for your own use, and **get it up and running on your local machine** can be also found within that folder.
 
 ## General
 
-This is a web application demonstrating visually different pathfinding algorithms with an interactive map, allowing detailed algorithm comparing on both ready-made maps and custom user maps. Included algorithms are _Dijkstra_, _A\*_, and _JPS_. All 3 algorithms support 8-way movement (e.g. cardinal directions and diagonal traversal).
+This is a web application demonstrating visually different pathfinding algorithms with an interactive map allowing detailed algorithm comparison on both ready-made maps and custom user maps. Included algorithms are _Dijkstra_, _A\*_, and _JPS_. All 3 algorithms support 8-way movement (e.g. cardinal directions and diagonal traversal). There's also additionally _virtual maps_: larger non-interactive maps to create more complex scenarios for the algorithms!
 
 ## Technical overview
 
-This is a React web application built in TypeScript running on a Node.js server. All algorithms and other application logic executes on the client machine to safeguard the server.
+This is a _React_ web application built in _TypeScript_ running on a _Node.js_ server. All algorithms and other application logic executes on the client machine.
 
-Application uses Tailwind CSS for styling and additionally features ready-made UI components provided by the [shadcn/ui library](https://ui.shadcn.com/ "shadcn/ui Homepage").
+Application uses _Tailwind CSS_ for styling and additionally features ready-made UI components provided by the [_shadcn/ui_ library](https://ui.shadcn.com/ "shadcn/ui Homepage").
 
-Automatic software testing powered by the Jest library. Tests cover the core application logic and perform robust testing for the 3 provided algorithms. The user interface is not covered by automatic testing. Coverage report of the automatic testing can be found [here](https://app.codecov.io/gh/joonarafael/visualpathfinder "Codecov Report for Visual Pathfinder").
+Automatic software testing powered by the _Jest_ library. Tests cover the core application logic and perform robust testing for the 3 provided algorithms. The user interface is not covered by automatic testing. Coverage report of the automatic testing can be found [here](https://app.codecov.io/gh/joonarafael/visualpathfinder "Codecov Report for Visual Pathfinder").
 
 ## Algorithms
 

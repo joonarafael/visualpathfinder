@@ -16,15 +16,15 @@ Tests are automated and integrated to the CI pipeline. They are executed for eve
 
 ### Basic Unit Testing
 
-Helper functions and classes used in the software are lightly tested with simple use-cases. These include checking normal functionality as well as some edge cases and error situations. Also the pathfinding algorithms are unit tested for really small and simple maps where we check for obstacle detection and situations for no solution.
+Helper functions and classes used in the software are lightly tested with simple use-cases. These tests check normal functionality as well as some edge cases and error situations. Also the pathfinding algorithms are unit tested for really small and simple maps where we check for general obstacle detection and situations for no solution.
 
 These tests are located [here](https://github.com/joonarafael/visualpathfinder/tree/main/__tests__/unittests "Unit Tests").
 
 ### Pathfinder Tests
 
-The basic unit tests are not a clear sign of working pathfinding algorithms. Thus more robust tests are required to be sure the algorithms work as intended and always find the shortest path. While the route of the shortest path might differ, its absolute length (as in nodes and Euclidean distance) should always be identical.
+The basic unit tests are not a clear sign of working pathfinding algorithms. Thus more robust tests are required to be sure the algorithms work as intended and that they always find a true shortest path. While the route of the shortest path might differ, its absolute length (as in nodes and Euclidean distance) should be always identical.
 
-The pathfinding algorithms are tested both with the smaller interactive 72x46 maps as well as with the larger MovingAI maps (up to 768x768).
+The pathfinding algorithms are tested both with the smaller interactive 72x46 maps as well as with the larger "_virtual maps_" (MovingAI maps up to 1024x768).
 
 #### Smaller Maps
 
@@ -36,7 +36,7 @@ These tests are located [here](https://github.com/joonarafael/visualpathfinder/t
 
 #### Larger Maps
 
-Larger maps refer to the virtual maps available to the user in the **non-interactive application**. These have dimensions of up to 768x768.
+Larger maps refer to the virtual maps available to the user in the **non-interactive application**. These have dimensions of up to 1024x768.
 
 **The 3 algorithms are run in a parallel manner 10 times for each of the 2 included larger test maps**. Every single iteration has new randomly picked start point and end point. After every single iteration, the return values are compared and the test immediately fails if any algorithm returns a different result for the shortest path.
 

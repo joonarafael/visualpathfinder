@@ -4,9 +4,9 @@ This manual provides instructions for the [Live Application](https://visualpathf
 
 ## General Performance Notice
 
-The 72 \* 46 matrix is quite large (3456 individual nodes), not for algorithmic reasons, in particular, but for the React rendering pipeline. More elements on the screen would start to slow down rendering.
+The 72 \* 46 matrix is quite large (3456 individual nodes), not for algorithmic reasons, in particular, but for the React rendering pipeline. More elements on the screen would start to slow down rendering (in my app) (more advanced rendering solutions do exist to circumvent this issue).
 
-Practically all of the application logic is run on the client machine by the client browser. Make sure you're running the latest version of your browser to ensure the best performance. In my own personal experience, Chrome has the best support for the included features. Some Firefox versions, for example, may round the timer results to integer values, among other things.
+Practically all of the application logic (including the algorithms) is run on the client machine by the client browser. Make sure you're running the latest version of your browser to ensure the best performance. In my own personal experience, Chrome has the best support for the included features. Some Firefox versions, for example, may round the timer results to integer values, among other things.
 
 ## Important Notice
 
@@ -58,7 +58,7 @@ The statistics will always show
 
 ### Menu
 
-Nearly every feature of the application can be accessed through the menu located at the top part of the screen.
+Every feature of the application can be accessed through the menu located at the top part of the screen.
 
 **File**
 
@@ -78,7 +78,7 @@ Nearly every feature of the application can be accessed through the menu located
 
 **Visuals**
 
-- Toggle Borderless Mode: Switch between the original bordered layout and the borderless pixelmap mode. It's recommended not to change to the borderless mode until you've established a large enough map as no scale can be seen in the borderless mode.
+- Toggle Borderless Mode: Switch between the original bordered layout and the borderless pixelmap mode.
 
 - Toggle High Contrast Mode: Switch between the smoother toned-down colors and the contrasted colors (enhanced with more saturation and brightness).
 
@@ -100,7 +100,7 @@ Nearly every feature of the application can be accessed through the menu located
 
 ## Virtual Maps
 
-Virtual Maps can be accessed through the _File menu_ within the main application. The selected virtual map will be opened into a new tab. Virtual maps are non-interactive and support absolutely no special rendering functionality. Simple text-based preview is still provided.
+Virtual Maps can be accessed through the _File menu_ within the main application. The selected virtual map will be opened into a new tab. Virtual maps are non-interactive. Simple text-based preview is still provided and once algorithms are run, the start point and end point will be rendered onto the map.
 
 Virtual maps are significantly larger than the base 72x46 maps in the main application. This might enable some more interesting scenarios for the algorithm comparison.
 
@@ -110,7 +110,9 @@ Virtual Map page is divided into three different sections:
 
 ### Map Preview
 
-A large text-based preview of the current virtual map is shown on the screen. It's non-interactive and does not support zooming / other visual features. It does not show start, finish, or pathfinding results at all.
+A large text-based preview of the current virtual map is shown on the screen. It's non-interactive and does not support zooming or other visual features. It will show start and finish points after algorithms run. However, the found path won't be rendered.
+
+Utilize the X and Y axis of the virtual map preview window to locate the start and end points!
 
 ### Statistics Bar
 
@@ -120,14 +122,16 @@ After the algorithms have been run, it will also inform the locations of the ran
 
 ### Control Bar
 
-Control bar includes two buttons and three information panels:
+Control bar includes three buttons and three information panels:
 
 **Buttons**
 
 - Exit: Close the tab.
 
-- Run Algorithms: Generates first a random start point and a random end point, then runs all 3 algorithms one after the other.
+- View Map Source as PNG (opens in a new tab): Display the virtual map as a PNG image. It is scaled down to be seen at once.
+
+- Run Algorithms: Generates first a random start point and a random end point, then runs all 3 algorithms one after the other. Results will update once every algorithm is finished.
 
 **Information Panels**
 
-One information panel is reserved for each algorithm. After user runs the algorithms, the results will be updated to these panels. Included information is identical to the one provided on the [interactive side](https://github.com/joonarafael/visualpathfinder/blob/main/documentation/user_manual.md#tool-bar--run-bar "Tool Bar / Run Bar").
+One information panel is reserved for each algorithm. After user runs the algorithms, the results will be updated to these panels. Included information is identical to the one provided on the [interactive side](https://github.com/joonarafael/visualpathfinder/blob/main/documentation/user_manual.md#tool-bar--run-bar "Tool Bar / Run Bar") of the application.

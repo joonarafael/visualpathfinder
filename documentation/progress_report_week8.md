@@ -6,4 +6,8 @@
 
 - Added more visual improvements for the Virtual Map layout and display.
 
-Hours spent: 7 h (course total 73 h)
+- Fine-tuned the application to get ready for the final release.
+
+- Many updates to documentation.
+
+Hours spent: 10 h (course total 76 h)
