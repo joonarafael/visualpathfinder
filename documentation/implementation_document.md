@@ -68,7 +68,7 @@ The JPS algorithm takes advantage of the known fact that **tile maps** (e.g. und
 
 As a default, **only the starting node is expanded in every 8 direction**. Expanding a "parent node" (in the relevant directions) means scanning the next nodes in the same line as long as a stopping condition is met. In such an event, the found node is considered as a _jump point_ for the parent node. The pathfinding continues by expanding this newly found jump point.
 
-While the required amount of processing for a single node is greater than in the base A\*, the sheer quantity of visited nodes reduces so much that the algorithm becomes more efficient (on a favorable map). Paths with a lot of turns, diagonal objects or other zigzagging hinder the performance of the JPS algorithm, sometimes rendering it slower than the A\*.
+While the required amount of processing for a single node is greater than in the base A\*, the sheer quantity of visited nodes reduces so much that the algorithm becomes more efficient (on a favorable map). Paths with a lot of turns, diagonal objects or other zigzagging hinder the performance of the JPS algorithm, **sometimes rendering it slower than the A\***.
 
 Good examples of potential JPS performance in this application are, for example, the maps called _Baldur's Gate 1_ and _Benchmark 1_. On the other hand, JPS performs poorly on nearly all included city maps as the algorithm is never able to jump more than ~2 steps at a time! Great testimonies of JPS performance are also the included _virtual maps_. JPS will almost always be the fastest candidate in maps that large (assuming long straight/diagonal lines).
 
@@ -86,6 +86,28 @@ This makes the straight direction jump really straightforward. Diagonal jumps, o
 
 <img src="./images/forcedneighbor.png">
 
-The neighbor pruning process finishes once a forced neighbor is found. This makes the `x` tile the natural neighbor (and a jump point) for the original parent node. The relevant directions, as to where the grid scanning should continue from the newly created jump point `x`, are stored in to a separate data structure. As an example, in the left picture above, requested directions for `x` (as where to expand it in the future) are only northeast and east (towards tiles `3` and `5`).
+The neighbor pruning process finishes once a forced neighbor is found. This makes the `x` tile the **natural neighbor** (and therefore a jump point) for the original parent node. The relevant directions, as to where the grid scanning should continue from the newly created jump point `x`, are stored in to a separate data structure. As an example, in the left picture above, requested directions for `x` (as where to expand it in the future) are only northeast and east (towards tiles `3` and `5`).
 
 Note that running directly into a wall **does not** create a jump point. Other previous diagonal steps (and their respective cardinal direction scans) have taken care of the immediately adjacent nodes to this 'into-a-wall-running' tile.
+
+## My Own Thoughts; Summary and Analysis
+
+The performance side is not really that empirical. JavaScript, and especially the React "framework", are quite infamous of **terrible performance**, **hoggish memory usage**, and **poor CPU performance**. However, that being said, the algorithms do perform as expected **against each other**.
+
+In my own opinion, the implementation of the algorithms is generally quite successful. The algorithms work reasonably well both in simple and small situations, as well as in large and complex environments. They really follow the "text-book examples". Logic seems to work as expected (seen in node visiting), no walls are ever traversed through, and the goal is always found (if just possible). The algorithms also seem to find the/some shortest path successfully.
+
+Every 3 algorithm has the "same shared core" to drive the logic. However, as opposed to Dijkstra, the A\* queues new neighbor nodes to the priority queue based on the heuristic assumption, not based on the "known distance". And JPS handles the situation similarly to A\*, although the next neighbor nodes might not be immediately adjacent but rather jump points far, far away.
+
+## References and Further Reading
+
+Original JPS Documentation:
+
+- [Online Graph Pruning for Pathfinding on Grid Maps](https://users.cecs.anu.edu.au/~dharabor/data/papers/harabor-grastien-aaai11.pdf "Original JPS Documentation by Daniel Harabor & Alban Grastien")
+
+Interesting video by Daniel Harabor on possible improvements for his JPS, talks also briefly about the JPS logic in general at first:
+
+- [ICAPS 2014: Daniel Harabor on "Improving Jump Point Search"](https://www.youtube.com/watch?v=NmM4pv8uQwI "Harabor on 'Possible Improvements for JPS' on YouTube")
+
+Extremely helpful, simple and visual guide to get started with JPS:
+
+- [Jump Search Algorithm in Python – A Helpful Guide](https://www.youtube.com/watch?v=afoQvbXvaiQ "Visual and Simple JPS Tutorial")

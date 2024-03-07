@@ -10,4 +10,4 @@
 
 - Many updates to documentation.
 
-Hours spent: 10 h (course total 76 h)
+Hours spent: 12 h (course total 78 h)

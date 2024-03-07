@@ -24,7 +24,7 @@ const PNGViewer: React.FC<PNGViewerProps> = ({ map }) => {
 
 	return (
 		<div>
-			<img width="712" height="712" src={data.src} alt="map" />
+			<img width="612" height="612" src={data.src} alt="map" />
 		</div>
 	);
 };

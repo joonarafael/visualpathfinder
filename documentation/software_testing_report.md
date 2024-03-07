@@ -41,3 +41,9 @@ Larger maps refer to the virtual maps available to the user in the **non-interac
 **The 3 algorithms are run in a parallel manner 10 times for each of the 2 included larger test maps**. Every single iteration has new randomly picked start point and end point. After every single iteration, the return values are compared and the test immediately fails if any algorithm returns a different result for the shortest path.
 
 These tests are located [here](https://github.com/joonarafael/visualpathfinder/tree/main/__tests__/virtual "Virtual Map Tests").
+
+#### Performance Tests
+
+One performance test is also associated with the pathfinding tests located [here](https://github.com/joonarafael/visualpathfinder/tree/main/__tests__/performance "Performance Test").
+
+The test runs the 3 algorithms in a parallel fashion 20 times with different start and end points (large virtual map) and records the elapsed times. Elapsed times for each iteration are added into algorithm's own 'cumulative time sum' variable. Finally, after all 20 runs, the total cumulative times are compared and JPS is expected to average out to be the fastest, followed by A\*, and finally Dijkstra.
