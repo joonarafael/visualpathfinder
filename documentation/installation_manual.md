@@ -88,7 +88,7 @@ After all dependencies have been successfully installed, the application can be 
 yarn run dev
 ```
 
-Now the application can be accessed with the web browser of your choice. Default port for the application is **3000** ([localhost:3000](localhost:3000 "Port 3000 on your localhost")), but you can retrieve the port information also from the console logs after launching the application.
+Now the application can be accessed with the web browser of your choice. Default port for the application is **3000** ([localhost:3000](localhost:3000 "Port 3000 on your localhost")), but you can retrieve the port information also from the terminal logs after launching the application.
 
 ## Software tests
 

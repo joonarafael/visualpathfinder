@@ -10,11 +10,11 @@ It's recommended to **check all the documentation** provided within [this folder
 
 ## General
 
-This is a web application demonstrating visually different pathfinding algorithms with an interactive map allowing detailed algorithm comparison on both ready-made maps and custom user maps. Included algorithms are _Dijkstra_, _A\*_, and _JPS_. All 3 algorithms support 8-way movement (e.g. cardinal directions and diagonal traversal). There's also additionally _virtual maps_: larger non-interactive maps to create more complex scenarios for the algorithms!
+This is a web application demonstrating visually different pathfinding algorithms with an interactive map allowing detailed algorithm comparison on both ready-made maps and custom user maps. Included algorithms are _**Dijkstra**_, **_A\*_**, and _**JPS** (Jump Point Search)_ (main learning content for the course). All 3 algorithms support 8-way movement (e.g. cardinal directions and diagonal traversal).
 
 ## Technical overview
 
-This is a _React_ web application built in _TypeScript_ running on a _Node.js_ server. All algorithms and other application logic executes on the client machine.
+This is a _React_ web application built in _TypeScript_ constantly running on a _Node.js_ server. All algorithms and other application logic executes on the client machine.
 
 Application uses _Tailwind CSS_ for styling and additionally features ready-made UI components provided by the [_shadcn/ui_ library](https://ui.shadcn.com/ "shadcn/ui Homepage").
 
@@ -24,15 +24,13 @@ Automatic software testing powered by the _Jest_ library. Tests cover the core a
 
 All three pathfinding algorithms, as well as all helper functions and classes, are written in TypeScript. More detailed documentation about the algorithms can be found from [this document](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/implementation_document.md "Implementation Document").
 
-The source for the algorithms can be found in [this folder](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms "Application Algorithm Folder"). All other files merely support the web application and e.g. provide the rendering of the user interface.
-
 ## Credits for Maps
 
 Benchmark maps are created entirely by me.
 
 ### Baldur's Gate
 
-Downloaded from the [MovingAI Benchmarks](https://www.movingai.com/benchmarks/index.html "Moving AI Lab Map Benchmarks"). These Baldur's Gate maps have been cropped, rescaled, and converted into 1bit color scheme. Out of this 1bit image, a specific [Python script](https://github.com/joonarafael/visualpathfinder/tree/main/supportingtools/1bitimagetolist.py "1 Bit Image to Array Python Script") has been used to generate an appropriate array for permanent data storing.
+Downloaded from the [MovingAI Benchmarks](https://www.movingai.com/benchmarks/index.html "Moving AI Lab Map Benchmarks").
 
 ### City Maps
 
@@ -42,8 +40,8 @@ Downloaded from the [MovingAI Benchmarks](https://www.movingai.com/benchmarks/in
 
 - **CITY 3** (stored in the file named [city2](https://github.com/joonarafael/visualpathfinder/tree/main/app/maps/cities/city2.tsx "Open File 'city2.tsx'")) generated from [this map](https://s.hdnux.com/photos/61/76/04/13099293/3/rawImage.jpg "Open Original Reference for City 3").
 
-Same kind of processing has been done for the city maps as was described earlier.
+These city maps have been cropped, rescaled, and converted into 1bit color scheme. Out of this 1bit image, a specific [Python script](https://github.com/joonarafael/visualpathfinder/tree/main/supportingtools/1bitimagetolist.py "1 Bit Image to Array Python Script") has been used to generate an appropriate array for permanent data storing.
 
 ### Virtual Maps
 
-All virtual maps are downloaded from [MovingAI Benchmarks](https://www.movingai.com/benchmarks/index.html "Moving AI Lab Map Benchmarks"). The original maps have been converted into one-dimensional arrays using a specific [Python script](https://github.com/joonarafael/visualpathfinder/tree/main/supportingtools/convertmaptoarray.py "Convert Moving AI map to Array Python Script") to suit the application logic (0/1 syntax).
+All virtual maps are downloaded from [MovingAI Benchmarks](https://www.movingai.com/benchmarks/index.html "Moving AI Lab Map Benchmarks"). The original `.map` files have been converted into one-dimensional arrays using a specific [Python script](https://github.com/joonarafael/visualpathfinder/tree/main/supportingtools/convertmaptoarray.py "Convert Moving AI map to Array Python Script") to suit the application logic (0/1 syntax).

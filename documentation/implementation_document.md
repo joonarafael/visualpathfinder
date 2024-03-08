@@ -1,14 +1,14 @@
 # IMPLEMENTATION DOCUMENT
 
-This document details the implementation of all used algorithms and data structures. It will also try to explain the reasons why the software is structured the way it is. Design choices for the user interface and other general web application logic are not provided.
+This document details the implementation of all used algorithms and data structures. It will also try to explain the reasons why the software is structured the way it is. Design choices for the user interface and other general web application logic is not provided.
 
 Other interesting documents include [Usage of AI Report](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/usage_of_ai_report.md "Usage of AI Report") and [Software Testing Report](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/software_testing_report.md "Software Testing Report").
 
 ## About Benchmarking and Other Performance Stuff
 
-The application is built in TypeScript and runs on a Node.js server. The built-in timer to measure algorithm runtime is accurate to a certain point, but read the numbers with a good amount of criticism. Decision of browser, as well as the general differences between machines and server environments, greatly affect the performance. Resulting performance numbers even within the **same environment**, **same map** and **same algorithm** can differ over 50% at times.
+The application is built in _TypeScript_ and runs on a _Node.js_ server. The built-in timer to measure algorithm runtime is accurate to a **certain point**, but read the numbers with a grain of salt. Decision of browser, as well as the general differences between machines and server environments, greatly affect the performance. Resulting performance numbers even within the **same environment**, **same map** and **same algorithm** can differ over 50% at times.
 
-However, the accuracy of the algorithms is still very relevant and the resulting path lengths (both in node count and Euclidean distance) should be examined closely. All pathfinders are designed to find **_some shortest path_** (maybe different but equally long) and if given results differ, the search for issues and inconsistencies within the code needs to start.
+**However**, the accuracy of the algorithms is still very relevant and the resulting path lengths (both in node count and Euclidean distance) should be examined closely. All pathfinders are designed to find **_some shortest path_** (maybe different but equally long) and if given results differ, the search for issues and inconsistencies within the code needs to start.
 
 ## Design Choices
 
@@ -24,7 +24,7 @@ The Euclidean distance function calculates the absolute distance between two giv
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/generateadjacencylist.ts "Redirect to file 'generateadjacencylist.ts'").
 
-This is a helper function to generate a one-dimensional adjacency list of the current grid status. It completely scans through the current grid and adds every single node and their respective neighbors as a 'key, values' pair into the record. It deals with general wall detection, horizontal obstacle detection and borders. This way the pathfinders do not need their own obstacle detection logic, reading the given adjacency list is enough.
+This is a helper function to generate a one-dimensional adjacency list (or a record) of the current grid status. It completely scans through the current grid and adds every single node and their respective neighbors as a 'key, values' pair into the record. It deals with general wall detection, horizontal obstacle detection and borders. This way the pathfinders **do not need** their own obstacle detection logic, reading the given adjacency list is enough.
 
 #### Diagonal Checking
 
@@ -42,19 +42,17 @@ Special thanks for the suggestion by [psangi-hy](https://github.com/psangi-hy "p
 
 ### Pathfinding Algorithms
 
-Every included algorithm utilizes the one-dimensional adjacency list to perform the pathfinding. JPS also requests the current field status to check if scanning reaches the edge of the map. Other two algorithms perform the pathfinding solely on the given adjacency list.
-
 #### Dijkstra
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/dijkstra.ts "Redirect to file 'dijkstra.ts'").
 
-Dijkstra algorithm always expands parent node in all directions and calculates the best known distance **from start** to all new neighbors. These nodes are kept in a priority queue based on the distance calculation and new neighbors are processed depending the order of the queue.
+Dijkstra's algorithm expands a parent node and calculates the best **known distance from start** to new neighbors. These nodes are kept in a priority queue based on the distance calculation and new neighbors are processed depending the order of the queue.
 
 #### A\*
 
 See the source code [here](https://github.com/joonarafael/visualpathfinder/tree/main/app/application/algorithms/astar.ts "Redirect to file 'astar.ts'").
 
-A\* is the _optimized Dijkstra_. It performs slightly better due to the fact that **it knows the location of the end node**. Therefore it always prioritizes nodes closer to the end node. It will process lesser nodes only after reaching a dead end.
+A\* is the _optimized Dijkstra_. It performs slightly better due to the fact that **it knows the location of the end node**. Therefore it can prioritize nodes closer to the end node. It will process lesser nodes only after reaching a dead end.
 
 A\* still has to process every immediately adjacent node. The amount of nodes, however, is reduced from Dijkstra so much that it should always be faster. Sometimes, if the amount of processed nodes can't be cut down, both A\* and Dijkstra will perform just about the same.
 
@@ -80,23 +78,21 @@ Good examples of potential JPS performance in this application are, for example,
 
 During the scanning of a suitable jump point for the parent node, all tiles greyed out can be discarded. We can do this safely based on the known fact of **tile maps**: no better path to the future target can be found that runs through those grey tiles.
 
-This makes the straight direction jump really straightforward. Diagonal jumps, on the other hand, require quick scans in two cardinal directions (north & east in the picture above) before advancing further. If the "_cardinal directions scan_" returns something (possible jump point(s)), the diagonal jump is terminated and the `x` tile as marked as a jump point for the original parent node.
+This makes the straight direction jump really straightforward. Diagonal jumps, on the other hand, require quick scans in two cardinal directions (north & east in the picture above) before advancing further. If the "_cardinal directions scan_" returns something (possible jump point(s)), the diagonal jump is terminated and the `x` tile is marked as a jump point for the original parent node.
 
 **_Forced Neighbors and Jump Point Creation Logic_**
 
 <img src="./images/forcedneighbor.png">
 
-The neighbor pruning process finishes once a forced neighbor is found. This makes the `x` tile the **natural neighbor** (and therefore a jump point) for the original parent node. The relevant directions, as to where the grid scanning should continue from the newly created jump point `x`, are stored in to a separate data structure. As an example, in the left picture above, requested directions for `x` (as where to expand it in the future) are only northeast and east (towards tiles `3` and `5`).
+The neighbor pruning process finishes once a forced neighbor is found. This makes the `x` tile the **natural neighbor** (and therefore a jump point) for the original parent node. The relevant directions, as to where the grid scanning should continue from the newly created jump point `x`, are stored in to a separate data structure. As an example, in the left picture above, requested directions for `x` (as where to expand it in the future), are only northeast and east (towards tiles `3` and `5`).
 
 Note that running directly into a wall **does not** create a jump point. Other previous diagonal steps (and their respective cardinal direction scans) have taken care of the immediately adjacent nodes to this 'into-a-wall-running' tile.
 
 ## My Own Thoughts; Summary and Analysis
 
-The performance side is not really that empirical. JavaScript, and especially the React "framework", are quite infamous of **terrible performance**, **hoggish memory usage**, and **poor CPU performance**. However, that being said, the algorithms do perform as expected **against each other**.
+The performance side is not really that empirical. JavaScript, and especially the React "framework", are quite infamous of **terrible performance**, **hoggish memory usage**, and **poor CPU performance**. However, that being said, the algorithms **do perform as expected against each other**.
 
-In my own opinion, the implementation of the algorithms is generally quite successful. The algorithms work reasonably well both in simple and small situations, as well as in large and complex environments. They really follow the "text-book examples". Logic seems to work as expected (seen in node visiting), no walls are ever traversed through, and the goal is always found (if just possible). The algorithms also seem to find the/some shortest path successfully.
-
-Every 3 algorithm has the "same shared core" to drive the logic. However, as opposed to Dijkstra, the A\* queues new neighbor nodes to the priority queue based on the heuristic assumption, not based on the "known distance". And JPS handles the situation similarly to A\*, although the next neighbor nodes might not be immediately adjacent but rather jump points far, far away.
+In my own opinion, the implementation of the algorithms is generally quite successful. The algorithms work reasonably well both in simple and small situations, as well as in large and complex environments. Logic seems to work as expected (seen in node visiting), no walls are ever traversed through, and the goal is always found (if just possible). The algorithms also seem to agree on the length of the shortest possible path.
 
 ## References and Further Reading
 

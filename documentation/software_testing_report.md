@@ -6,7 +6,7 @@ Other interesting documents include [Implementation Document](https://github.com
 
 ## About
 
-Software testing is performed by the _Jest_ library. Tests do not cover the user interface. Only appropriate functions, algorithms and other core logic is tested. All tests can be found within [this folder](https://github.com/joonarafael/visualpathfinder/tree/main/__tests__/ "Software Unit Tests").
+Software testing is powered by the _Jest_ library. Tests do not cover the user interface. Only appropriate functions, algorithms and other core logic is tested. All tests (source code) can be found within [this folder](https://github.com/joonarafael/visualpathfinder/tree/main/__tests__/ "Software Unit Tests").
 
 User interface and the application performance in general is manually tested both in development and production.
 
@@ -16,13 +16,13 @@ Tests are automated and integrated to the CI pipeline. They are executed for eve
 
 ### Basic Unit Testing
 
-Helper functions and classes used in the software are lightly tested with simple use-cases. These tests check normal functionality as well as some edge cases and error situations. Also the pathfinding algorithms are unit tested for really small and simple maps where we check for general obstacle detection and situations for no solution.
+Helper functions and classes used in the software are lightly tested with simple use-cases. These tests check normal functionality as well as some edge cases and other error situations. Also the pathfinding algorithms are unit tested for really small and simple maps where we check for general obstacle detection and situations for no solution.
 
 These tests are located [here](https://github.com/joonarafael/visualpathfinder/tree/main/__tests__/unittests "Unit Tests").
 
 ### Pathfinder Tests
 
-The basic unit tests are not a clear sign of working pathfinding algorithms. Thus more robust tests are required to be sure the algorithms work as intended and that they always find a true shortest path. While the route of the shortest path might differ, its absolute length (as in nodes and Euclidean distance) should be always identical.
+The basic unit tests are not a clear sign of working pathfinding algorithms. Thus more robust tests are required to be sure the algorithms work as intended and that they always find a true shortest path. While the exact route of the shortest path might differ, its absolute length (as in nodes and Euclidean distance) should be always identical.
 
 The pathfinding algorithms are tested both with the smaller interactive 72x46 maps as well as with the larger "_virtual maps_" (MovingAI maps up to 1024x768).
 
@@ -40,10 +40,12 @@ Larger maps refer to the virtual maps available to the user in the **non-interac
 
 **The 3 algorithms are run in a parallel manner 10 times for each of the 2 included larger test maps**. Every single iteration has new randomly picked start point and end point. After every single iteration, the return values are compared and the test immediately fails if any algorithm returns a different result for the shortest path.
 
+Note that running these "larger map tests" might take a while to complete. My own high-end PC might work for some 15-20 seconds per test.
+
 These tests are located [here](https://github.com/joonarafael/visualpathfinder/tree/main/__tests__/virtual "Virtual Map Tests").
 
 #### Performance Tests
 
 One performance test is also associated with the pathfinding tests located [here](https://github.com/joonarafael/visualpathfinder/tree/main/__tests__/performance "Performance Test").
 
-The test runs the 3 algorithms in a parallel fashion 20 times with different start and end points (large virtual map) and records the elapsed times. Elapsed times for each iteration are added into algorithm's own 'cumulative time sum' variable. Finally, after all 20 runs, the total cumulative times are compared and JPS is expected to average out to be the fastest, followed by A\*, and finally Dijkstra.
+**The test runs the 3 algorithms in a parallel fashion 20 times with different start and end points** (large virtual map) **and records the elapsed times**. Elapsed times for each iteration are added into algorithm's own 'cumulative time sum' variable. Finally, after all 20 runs, the total cumulative times are compared and JPS is expected to average out to be the fastest, followed by A\*, and finally Dijkstra.
