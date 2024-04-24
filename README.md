@@ -4,7 +4,7 @@
 
 _Aineopintojen harjoitustyö: Algoritmit ja tekoäly_, Joona Kettunen, periodi 3 kevät 2024.
 
-The application is constantly up and running [here](https://visualpathfinder.vercel.app/ "Visual Pathfinder Web Application") hosted by [Vercel](https://vercel.com/ "Vercel Homepage").
+The application is constantly up and running [here](https://visualpathfinder-production.up.railway.app/ "Visual Pathfinder Web Application") hosted by [Railway](https://railway.app/ "Railway").
 
 Website favicon is by [Freepik](https://www.freepik.com/ "Freepik - Create great designs, faster").
 

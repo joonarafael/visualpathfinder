@@ -1,6 +1,6 @@
 # USER MANUAL
 
-This manual provides instructions for the [Live Application](https://visualpathfinder.vercel.app/ "Visual Pathfinder Web Application") running on the dedicated web server. If you're looking for the guide on how to clone this repository and get your own version running on your local machine, please consult [this document](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/installation_manual.md "Installation Manual").
+This manual provides instructions for the [Live Application](https://visualpathfinder-production.up.railway.app/ "Visual Pathfinder Web Application") running on the dedicated web server. If you're looking for the guide on how to clone this repository and get your own version running on your local machine, please consult [this document](https://github.com/joonarafael/visualpathfinder/tree/main/documentation/installation_manual.md "Installation Manual").
 
 ## General Performance Notice
 
