@@ -17,9 +17,7 @@ const HomeClient = () => {
 							AINEOPINTOJEN HARJOITUSTYÖ: ALGORITMIT JA TEKOÄLY
 						</div>
 						<div className="text-lg font-light">University of Helsinki</div>
-						<div className="font-light text-neutral-500">
-							Joona Rafael Kettunen
-						</div>
+						<div className="font-light text-neutral-500">Joona Kettunen</div>
 						<Button
 							variant={"secondary"}
 							onClick={() => window.open("/application", "_self")}
