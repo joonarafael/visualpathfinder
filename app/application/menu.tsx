@@ -2,6 +2,8 @@
 
 // Menu bar component.
 
+import { useTheme } from "next-themes";
+
 import {
 	Menubar,
 	MenubarContent,
@@ -14,13 +16,13 @@ import {
 	MenubarTrigger,
 } from "@/app/components/ui/menubar";
 
+import baldur0 from "../maps/baldursgate/baldur0";
+import baldur1 from "../maps/baldursgate/baldur1";
+import baldur2 from "../maps/baldursgate/baldur2";
 import benchmark0 from "../maps/benchmarks/benchmark0";
 import benchmark1 from "../maps/benchmarks/benchmark1";
 import benchmark2 from "../maps/benchmarks/benchmark2";
-import baldur0 from "../maps/baldursgate/baldur0";
-import baldur1 from "../maps/baldursgate/baldur1";
 import city0 from "../maps/cities/city0";
-import baldur2 from "../maps/baldursgate/baldur2";
 import city1 from "../maps/cities/city1";
 import city2 from "../maps/cities/city2";
 
@@ -55,6 +57,8 @@ const Menu: React.FC<MenuProps> = ({
 	indexing,
 	setIndexing,
 }) => {
+	const { theme, setTheme } = useTheme();
+
 	const zoomIn = () => {
 		if (zoom < 6) {
 			setZoom(zoom + 1);
@@ -368,6 +372,14 @@ const Menu: React.FC<MenuProps> = ({
 							}}
 						>
 							Toggle High Contrast Mode
+						</MenubarItem>
+						<MenubarSeparator />
+						<MenubarItem
+							onClick={() => {
+								setTheme(theme === "dark" ? "light" : "dark");
+							}}
+						>
+							Toggle Theme
 						</MenubarItem>
 						<MenubarSeparator />
 						<MenubarItem
