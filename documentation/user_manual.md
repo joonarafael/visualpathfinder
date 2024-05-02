@@ -96,6 +96,8 @@ Every feature of the application can be accessed through the menu located at the
 
 - Toggle High Contrast Mode: Switch between the smoother toned-down colors and the contrasted colors (enhanced with more saturation and brightness).
 
+- Toggle Theme: Toggle between the light and dark themes. Global setting, will update all other open tabs (e.g. updates to virtual maps as well).
+
 - Toggle Indexes: Whether or not to display the grid tile indexes. Visible only with zoom level greater than 3. Useful if you decide to debug the pathfinding algorithms on your own machine.
 
 ## Virtual Maps
