@@ -19,7 +19,7 @@ const ToolBar: React.FC<ToolBarProps> = ({
 		setTool(tool);
 	};
 
-	const commonCSS = `cursor-pointer text-lg hover:pl-4 hover:underline rounded border p-2`;
+	const commonCSS = `text-lg hover:pl-4 hover:underline rounded border p-2`;
 
 	return (
 		<div className="flex flex-col p-2 gap-2 w-full">
@@ -28,7 +28,7 @@ const ToolBar: React.FC<ToolBarProps> = ({
 					setApplicationState("run");
 				}}
 				className="font-bold"
-				variant={"secondary"}
+				variant="outline"
 			>
 				VIEW PREVIOUS RUN
 			</Button>
@@ -37,29 +37,35 @@ const ToolBar: React.FC<ToolBarProps> = ({
 			<div className="font-bold text-2xl">{tool}</div>
 			<hr />
 			<div className="font-light text-neutral-500 text-xs">TOOL SELECTION</div>
-			<div
-				className={`${commonCSS} border-indigo-500`}
-				onClick={() => handleToolChange("START")}
-			>
-				START
-			</div>
-			<div
-				className={`${commonCSS} border-green-500`}
-				onClick={() => handleToolChange("FINISH")}
-			>
-				FINISH
-			</div>
-			<div
-				className={`${commonCSS} border-pink-500`}
-				onClick={() => handleToolChange("ERASER")}
-			>
-				ERASER
-			</div>
-			<div
-				className={`${commonCSS} border-slate-500`}
-				onClick={() => handleToolChange("WALL")}
-			>
-				WALL
+			<div className="flex flex-col gap-3">
+				<Button
+					onClick={() => handleToolChange("START")}
+					className="flex w-full p-0 text-left"
+					variant="ghost"
+				>
+					<div className={`${commonCSS} border-indigo-500 w-full`}>START</div>
+				</Button>
+				<Button
+					onClick={() => handleToolChange("FINISH")}
+					className="flex w-full p-0 text-left"
+					variant="ghost"
+				>
+					<div className={`${commonCSS} border-green-500 w-full`}>FINISH</div>
+				</Button>
+				<Button
+					onClick={() => handleToolChange("ERASER")}
+					className="flex w-full p-0 text-left"
+					variant="ghost"
+				>
+					<div className={`${commonCSS} border-pink-500 w-full`}>ERASER</div>
+				</Button>
+				<Button
+					onClick={() => handleToolChange("WALL")}
+					className="flex w-full p-0 text-left"
+					variant="ghost"
+				>
+					<div className={`${commonCSS} border-slate-500 w-full`}>WALL</div>
+				</Button>
 			</div>
 		</div>
 	);

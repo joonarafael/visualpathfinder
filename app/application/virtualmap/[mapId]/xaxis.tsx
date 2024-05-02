@@ -29,7 +29,7 @@ const XAxis: React.FC<XAxisProps> = ({ width }) => {
 
 	return (
 		<div
-			className={`flex flex-col text-justify text-[11px] p-2 font-bold text-yellow-300`}
+			className={`flex flex-col text-justify text-[11px] p-2 font-bold text-sky-500`}
 			style={{ userSelect: "none" }}
 		>
 			<pre>{generateXAxis()}</pre>

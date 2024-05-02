@@ -451,6 +451,8 @@ function getNeighborsWithJumpPoints(
 
 	let absoluteDirections: Set<string>;
 
+	// final failsafe
+	// if the parent node has no directions set, initialize all 8 directions
 	if (!directions.hasOwnProperty(parent)) {
 		absoluteDirections = new Set([
 			"1,0",

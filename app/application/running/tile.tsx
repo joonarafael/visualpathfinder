@@ -23,20 +23,16 @@ const RunTile: React.FC<RunTileProps> = ({
 
 	if (status === 1) {
 		if (contrast) {
-			bgColor = "bg-stone-300";
+			bgColor = "bg-foreground";
 		} else {
-			bgColor = "bg-stone-500";
+			bgColor = "bg-foreground/50";
 		}
 	} else if (status === 2) {
 		bgColor = "bg-indigo-500";
 	} else if (status === 3) {
 		bgColor = "bg-green-500";
 	} else if (status === 4) {
-		if (contrast) {
-			bgColor = "bg-zinc-700";
-		} else {
-			bgColor = "bg-zinc-800";
-		}
+		bgColor = "bg-foreground/25";
 	} else if (status === 5) {
 		if (contrast) {
 			bgColor = "bg-pink-500";
@@ -71,7 +67,7 @@ const RunTile: React.FC<RunTileProps> = ({
 				className={`${
 					smoothing && "border rounded"
 				} flex items-center justify-center p-2 ${bgColor} ${size} text-xs ${
-					contrast && status !== 0 && status !== 4 && "text-slate-950"
+					contrast && status !== 0 && status !== 4 && "text-background "
 				}`}
 			>
 				{index}

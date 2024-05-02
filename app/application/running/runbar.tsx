@@ -3,9 +3,10 @@
 // Sidebar for the run statistics.
 
 import { Button } from "@/app/components/ui/button";
-import ResultElement from "./resultelement";
+
 import Note from "./note";
 import NotRunElement from "./notrunelement";
+import ResultElement from "./resultelement";
 
 interface RunBarProps {
 	algorithm: string;
@@ -29,7 +30,7 @@ const RunBar: React.FC<RunBarProps> = ({
 					setApplicationState("draw");
 				}}
 				className="font-bold"
-				variant={"secondary"}
+				variant="outline"
 			>
 				EDIT GRID
 			</Button>
