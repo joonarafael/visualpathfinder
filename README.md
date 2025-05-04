@@ -4,8 +4,6 @@
 
 _Aineopintojen harjoitustyö: Algoritmit ja tekoäly_, Joona Kettunen, periodi 3 kevät 2024.
 
-The application is constantly up and running [here](https://visualpathfinder-production.up.railway.app/ "Visual Pathfinder Web Application") hosted by [Railway](https://railway.app/ "Railway").
-
 Website favicon is by [Freepik](https://www.freepik.com/ "Freepik - Create great designs, faster").
 
 It's recommended to **check all the documentation** provided within [this folder](https://github.com/joonarafael/visualpathfinder/tree/main/documentation "Project Documentation Folder"). Instructions on how to clone this repository, modify the source code for your own use, and **get it up and running on your local machine** can be also found within that folder.
